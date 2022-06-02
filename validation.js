@@ -1,3 +1,5 @@
+const { ObjectId } = require("mongodb");
+
 module.exports=
 {
     checkUserName(username)
@@ -15,6 +17,37 @@ module.exports=
            throw "Error: The Password is not in the correct format"
         }
         return password;
+    },
+    checkTag(tag)
+    {
+        if(typeof tag != "string" || tag.indexOf(" ")>-1)
+        {
+            throw "Error: The Tag is not in the correct format"
+        }
+        return tag;
+    },
+    checkBlogID(blogID)
+    {
+        if(!ObjectId.isValid(blogID))
+        {
+            throw "Error: BlogID is not valid"
+        }
+        return blogID;
+    },
+    checkCommentID(commentID)
+    {
+        if(!ObjectId.isValid(commentID))
+        {
+            throw "Error: CommentID is not valid"
+        }
+        return commentID;
+    },
+    checkpageID(pageID)
+    {
+        if(!ObjectId.isValid(pageID))
+        {
+            throw "Error: PageID is not valid"
+        }
+        return pageID;
     }
-
 }

@@ -12,6 +12,8 @@ async function main()
         let username="albertchen546";
         let password="albertchenthebest";
         await users.createUser(username,password);
+        let tag="cs546";
+        await users.addNewTag(username,tag);
     }catch(e)
     {
         console.log("Got error "+e);
