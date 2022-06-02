@@ -1,0 +1,25 @@
+{
+  "name": "wikipop",
+  "version": "1.0.0",
+  "description": "website with all the information about kpop",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "seed": "node seed.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ColleenQue/wikipop.git"
+  },
+  "author": "Cindy, Colleen, Suneedi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ColleenQue/wikipop/issues"
+  },
+  "homepage": "https://github.com/ColleenQue/wikipop#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "mongodb": "^4.6.0"
+  }
+}
