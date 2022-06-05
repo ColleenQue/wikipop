@@ -147,4 +147,87 @@ module.exports=
         }
         return numOfLikes;
     },
+    //Idol Validation
+    checkIdolName(name)
+    {
+        if(typeof name!="string" || name.trim()==="")
+        {
+            throw "Error: Idol Name is not valid"
+        }
+        return name;
+    },
+    checkRole(role)
+    {
+        if(typeof role!="string" || role.trim()==="")
+        {
+            throw "Error: Idol Role is not valid"
+        }
+        return role;
+    },
+    checkAge(age)
+    {
+        if(typeof age!="number" || age.trim()==="")
+        {
+            throw "Error: Idol Age is not valid"
+        }
+        return age;
+    },
+    checkDOB(dob)
+    {
+        //check if dob is in right format: format is MM/DD/YYYY
+        const birth = /^\d{2}\/\d{2}\/\d{4}$/;
+        if(!dob.match(birth))
+        {
+            throw "Error: Date of Birth is not in the right format"
+        }
+        return dob;
+    },
+    checkHeight(height)
+    {
+        if(typeof height!="number" || height.trim()==="")
+        {
+            throw "Error: Idol Height is not valid"
+        }
+        return height;
+    },
+    checkWeight(weight)
+    {
+        if(typeof weight!="number" || weight.trim()==="")
+        {
+            throw "Error: Idol Weight is not valid"
+        }
+        return weight;
+    },
+    checkfunFacts(funFacts)
+    {
+        if(!Array.isArray(funFacts))
+        {
+            throw "Error: Idol Fun Facts Are Not Valid"
+        }
+        for(let i=0;i<funFacts.length;i++)
+        {
+            if(typeof funFacts[i]!="string")
+            {
+                throw "Error: Idol Fun Facts Are Not Valid"
+            }
+        }
+        return funFacts;
+    },
+    //idk how to check if links are valid
+    checkBlogPageLink(blogLink)
+    {
+        if(typeof blogLink!="string" || blogLink.trim()==="")
+        {
+            throw "Error: Blog Link is not valid"
+        }
+        return blogLink;
+    },
+    checkIdolID(idolID)
+    {
+        if(!ObjectId.isValid(idolID))
+        {
+            throw "Error: IdolID is not valid"
+        }
+        return idolID;
+    }
 }

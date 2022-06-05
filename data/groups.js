@@ -4,7 +4,7 @@ const validation=require('../validation');
 
 let exportedMethods=
 {
-    async createGroup(name,numOfMembers,debutDate,awards,greeting,fandomName,fandomColor,socialMedia,membersLinks,numOfLikes,relatedBlogPages,comments)
+    async createGroup(name,numOfMembers,debutDate,awards,greeting,fandomName,fandomColor,socialMedia,membersLinks,numOfLikes)
     {
         name=validation.checkGroupName(name);
         numOfMembers=validation.checkNumOfMembers(numOfMembers);
@@ -67,6 +67,7 @@ let exportedMethods=
     },
     async addRelatedBlogPage(name,blogID)
     {
+        name=validation.checkGroupName(name);
         blogID=validation.checkBlogID(blogID);
         const theGroup=await this.findGroup(name);
         let theBlogs=theGroup.relatedBlogPages;
@@ -79,6 +80,21 @@ let exportedMethods=
         }
         return blogID;
     },
+    async addComment(name,commentID)
+    {
+        name=validation.checkGroupName(name);
+        commentID=validation.checkCommentID(commentID);
+        const theGroup=await this.findGroup(name);
+        let theComments=theGroup.comments;
+        theComments.push(commentID);
+        const groupsCollection=await groups();
+        const updateGroup=groupcollection.updateOne({_id:theGroup[0]._id},{$set:{comments: theComments}});
+        if(!updateGroup.matchedCount && !updateGroup.modifiedCount)
+        {
+            throw "Error: Update failed";
+        }
+        return commentID;
+    }
 };
 
 module.exports=exportedMethods;
