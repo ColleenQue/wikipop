@@ -229,5 +229,30 @@ module.exports=
             throw "Error: IdolID is not valid"
         }
         return idolID;
+    },
+    //Blogs Validation
+    checkBlogName(name)
+    {
+        if(typeof name!="string" || name.trim()==="")
+        {
+            throw "Error: Blog Name is not valid"
+        }
+        return name;
+    },
+    checkBlogTitle(title)
+    {
+        if(typeof title!="string" || title.trim()==="")
+        {
+            throw "Error: Blog Name is not valid"
+        }
+        return title;
+    },
+    checkBlogContent(content)
+    {
+        if(typeof content!="string" || content.trim()==="")
+        {
+            throw "Error: Blog Content is not valid"
+        }
+        return content;
     }
 }
