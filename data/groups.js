@@ -88,7 +88,7 @@ let exportedMethods=
         let theComments=theGroup.comments;
         theComments.push(commentID);
         const groupsCollection=await groups();
-        const updateGroup=groupcollection.updateOne({_id:theGroup[0]._id},{$set:{comments: theComments}});
+        const updateGroup=groupsCollection.updateOne({_id:theGroup[0]._id},{$set:{comments: theComments}});
         if(!updateGroup.matchedCount && !updateGroup.modifiedCount)
         {
             throw "Error: Update failed";

@@ -53,7 +53,7 @@ let exportedMethods=
         blogID=validation.checkBlogID(blogID);
         commentID=validation.checkCommentID(commentID);
         const theBlog=await this.findBlog(blogID);
-        let theComments=theBlog.comments;
+        let theComments=theBlog[0].comments;
         theComments.push(commentID);
         const blogCollections=await blogs();
         const updateBlog=blogCollections.updateOne({_id:theBlog[0]._id},{$set:{comments: theComments}});

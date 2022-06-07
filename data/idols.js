@@ -69,7 +69,7 @@ let exportedMethods=
         idolID=validation.checkIdolID(idolID);
         commentID=validation.checkCommentID(commentID);
         const theIdol=await this.findIdol(idolID);
-        let theComments=theIdol.comments;
+        let theComments=theIdol[0].comments;
         theComments.push(commentID);
         const idolCollections=await idols();
         const updateIdol=idolCollections.updateOne({_id:theIdol[0]._id},{$set:{comments: theComments}});

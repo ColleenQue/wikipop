@@ -254,5 +254,87 @@ module.exports=
             throw "Error: Blog Content is not valid"
         }
         return content;
+    },
+    //Story Validation
+    checkOwner(owner)
+    {
+        if(typeof owner!="string" || owner.trim()==="")
+        {
+            throw "Error: Story Owner is not valid"
+        }
+        return owner;
+    },
+    checkWriter(writer)
+    {
+        if(typeof writer!="string" || writer.trim()==="")
+        {
+            throw "Error: Story Writer is not valid"
+        }
+        return writer;
+    },
+    checkStoryCollection(storyCollection)
+    {
+        if(typeof storyCollection!= "object")
+        {
+            if(typeof storyCollection!="null")
+            {
+                throw "Error: storyCollection is not valid"
+            }
+        }
+        return storyCollection;
+    },
+    checkStoryTitle(title)
+    {
+        if(typeof title!="string" || title.trim()==="")
+        {
+            throw "Error: Story Title is not valid"
+        }
+        return title;
+    },
+    checkStoryText(text)
+    {
+        if(typeof text!="string" || text.trim()==="")
+        {
+            throw "Error: Story Text is not valid"
+        }
+        return text;
+    },
+    checkComments(comments)
+    {
+        if(!Array.isArray(comments))
+        {
+            throw "Error: Story Comments Are Not Valid"
+        }
+        for(let i=0;i>comments.length;i++)
+        {
+            if(!ObjectId.isValid(comments[i]))
+            {
+                throw "Error: Story Comments Are Not Valid"
+            }
+        }
+        return comments;
+    },
+    checkListOfTags(tagsList)
+    {
+        if(!Array.isArray(tagsList))
+        {
+            throw "Error: Story Tags Are Not Valid"
+        }
+        for(let i=0;i>tagsList.length;i++)
+        {
+            if(typeof tagsList[i]!="string")
+            {
+                throw "Error: Story Tags Are Not Valid"
+            }
+        }
+        return tagsList;
+    },
+    checkNumOfSaves(numOfSaves)
+    {
+        if(typeof numOfSaves!= "number" || numOfSaves.trim()==="")
+        {
+            throw "Error: Number of Saves is not a valid number"
+        }
+        return numOfSaves;
     }
 }
