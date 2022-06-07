@@ -20,6 +20,6 @@
   "homepage": "https://github.com/ColleenQue/wikipop#readme",
   "dependencies": {
     "bcrypt": "^5.0.1",
-    "mongodb": "^4.6.0"
+    "mongodb": "^4.7.0"
   }
 }
