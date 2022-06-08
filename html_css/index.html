@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <title>WikiPop</title>
+        <style>
+            *{
+                margin:0;
+                padding:0;
+            }
+            
+            .container{
+                background-image : url("kpop_image.jpg");
+                background-size: cover;
+                background-repeat:no-repeat;
+                height: 100vh;
+                text-align: centre;
+                opacity:(2) ;     
+            }
+            .hover-box{
+                
+                position:relative;
+                float:left;
+            }
+            .hover-box .hover-image{
+                position:absolute;
+                top:10px;
+                left:20px;
+                display:none;
+                
+            }
+           .hover-box .circle{
+                width:160px;
+                height:152px;
+                top: 20px;
+                left:20px;
+               border-radius:90px;
+               font-size:20px;
+               color:#fff;
+               line-height:100px;
+               background: blanchedalmond;
+               position:relative;
+            }
+            .hover-box:hover .circle{
+                filter:opacity(0);
+            }
+            .hover-box:hover .hover-image{
+                display:block;
+            }
+           .logo {
+               position:absolute;
+               font-family:"Times New Roman", Times, serif;
+               top: 30px;
+               left:5px;
+               font-size: 2.6rem; 
+               background: linear-gradient(to right, #ef5350, #f48fb1, #7e57c2, #2196f3, #26c6da, #43a047, #eeff41, #f9a825, #ff5722);
+               -webkit-background-clip: text;
+               -webkit-text-fill-color: transparent;                          
+           }
+           /*code from: https://www.w3schools.com/css/css_comments.asp*/
+           .button{
+             border: none;
+             color: white;
+             padding: 16px 32px;
+              text-align: center;
+              text-decoration: none;
+              display: inline-block;
+               font-size: 16px;
+               margin: 4px 2px;
+                transition-duration: 0.4s;
+                 cursor: pointer;
+                 position:relative;
+           }
+    
+            .button1 {
+           background-color: white;
+         color: black;
+          border: 2px solid #4CAF50;
+           }
+        </style>
+    </head>
+    <body>
+          <div class = "container" >
+              <div class = "hover-box" >
+              <span><div class = "circle"> </span>
+            <div  class= "logo" > WikiPop</div> 
+            </div>
+            <div class = "hover-image" >
+                <img src = "fingerheart.jpg" 
+                style = "float:right; margin:10px 50px 0px 0px; cursor:pointer; cursor:hand; border:0" width="150px" height=" 150px" alt="woman"/>
+            </div>
+               
+                <button class = "button1">Home</button>
+                <button class = "button2">blogs</button>
+                <button class = "button3"> fanfic</button>
+                <button class = "button4">Profile</button>
+           </div>
+      </body>
+</html>
+
+
