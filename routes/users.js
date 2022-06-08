@@ -66,8 +66,8 @@ router.post('/login', async (req, res) => {
   let result;
 
   try {
-    password = validation.checkPassword(req.body.password);
-    username = validation.checkUsername(req.body.username);
+    password = validation.checkPassWord(req.body.password);
+    username = validation.checkUserName(req.body.username);
     result = await user.checkUser(username, password);
     console.logging(new Date().toUTCString(),req.method,req.originalUrl,false);
   }
