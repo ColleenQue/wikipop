@@ -1,12 +1,6 @@
 {
     "mongoConfig": {
       "serverUrl": "mongodb://localhost:27017/",
-<<<<<<< HEAD
-      "database": "Colleen_Que_lab10"
-    }
-  }
-=======
       "database": "Wikipop"
     }
 }
->>>>>>> main

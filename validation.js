@@ -1,7 +1,7 @@
-<<<<<<< HEAD
+const { ObjectId } = require("mongodb");
 
 module.exports = {
-  checkUsername(username) {
+  checkUserName(username) {
     if (!username) throw "must provide username"
     if (typeof username !== "string")
         throw "Error: username should be a string";
@@ -25,7 +25,7 @@ module.exports = {
     return username;
   },
 
-  checkPassword(password) {
+  checkPassWord(password) {
     if (!password) throw "must provide password"
     if (typeof password !== "string")
         throw "Error: password should be a string";
@@ -35,30 +35,7 @@ module.exports = {
     if (password.length < 6)
         throw "Error: password must have at least eight characters";
     return password;
-  }
-};
-=======
-const { ObjectId } = require("mongodb");
-
-module.exports=
-{
-    //Users Validation
-    checkUserName(username)
-    {
-        if(username.length < 4 || !(/^[A-Za-z0-9]*$/.test(username)) || username.indexOf(" ")>-1)
-        {
-            throw 'Error: The Username is not in the correct format'
-        }
-        return username;
-    },
-    checkPassWord(password)
-    {
-        if(password.length<6 || password.indexOf(" ")>-1)
-        {
-           throw "Error: The Password is not in the correct format"
-        }
-        return password;
-    },
+  },
     checkTag(tag)
     {
         if(typeof tag != "string" || tag.indexOf(" ")>-1)
@@ -378,4 +355,3 @@ module.exports=
         return numOfSaves;
     }
 }
->>>>>>> main
