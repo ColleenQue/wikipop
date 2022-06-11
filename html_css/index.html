@@ -25,7 +25,7 @@
             .hover-box .hover-image{
                 position:absolute;
                 top:10px;
-                left:20px;
+                left:10px;
                 display:none;
                 
             }
@@ -57,30 +57,75 @@
                -webkit-background-clip: text;
                -webkit-text-fill-color: transparent;                          
            }
-           /*code from: https://www.w3schools.com/css/css_comments.asp*/
-           .button{
-             border: none;
-             color: white;
-             padding: 16px 32px;
-              text-align: center;
-              text-decoration: none;
-              display: inline-block;
-               font-size: 16px;
-               margin: 4px 2px;
-                transition-duration: 0.4s;
-                 cursor: pointer;
-                 position:relative;
+          /*code from : https://www.youtube.com/watch?v=ueyRcYEmsrI */
+           a{
+               position:relative;
+               display: inline-block;
+               padding: 12px 36px;
+               margin: 10px 0;
+               color: #fff;
+               text-decoration: none;
+               text-transform: uppercase;
+               font-size: 18px;
+               letter-spacing: 2px;
+               border-radius: 40px;
+               background:  linear-gradient(90deg, #755bea, #ff72c0);
+               left: 650px;
+               top: -130px;
+              filter: opacity(0.90);
+
            }
-    
-            .button1 {
-           background-color: white;
-         color: black;
-          border: 2px solid #4CAF50;
+           .button-1:hover{
+               background: linear-gradient(90deg,#7b68ef, #ff72c8 )
+               
+           }
+           .button-2:hover{
+               background: linear-gradient(90deg,#7b68ef, #ff72c8 )
+           }
+           .button-3:hover{
+               background: linear-gradient(90deg,#7b68ef, #ff72c8 )
+           }
+           .second-page {
+               height: 80vh;
+                width: 80%;
+                margin: auto;
+                padding-top: 40px;
+                background-color: 
+           }
+           h1{
+               text-align:center;
+               font-size: 36px;
+               font-weight: 600;
+           } 
+           .firstpic img{
+               width: 300px;
+               height: 300px;
+               border: 10px solid black;
+              filter: opacity(0.95);
+              left : 0;
+              position: relative;
+              left: -60px;
+               
+           }
+           .textbox{
+            flex-basis:31%;
+            width: 300px;
+               height: 300px;
+              left : 330px;
+              position: relative;
+              float:center;
+              top: -322px;
+              background-color: #fff3f3;
+              box-sizing:border-box;
+              padding: 20px 12px;
+              border-radius:10px;
+              margin-bottom: 5%;
            }
         </style>
     </head>
     <body>
-          <div class = "container" >
+        <nav>
+          <section class = "container" >
               <div class = "hover-box" >
               <span><div class = "circle"> </span>
             <div  class= "logo" > WikiPop</div> 
@@ -89,12 +134,20 @@
                 <img src = "fingerheart.jpg" 
                 style = "float:right; margin:10px 50px 0px 0px; cursor:pointer; cursor:hand; border:0" width="150px" height=" 150px" alt="woman"/>
             </div>
-               
-                <button class = "button1">Home</button>
-                <button class = "button2">blogs</button>
-                <button class = "button3"> fanfic</button>
-                <button class = "button4">Profile</button>
-           </div>
+                <a class = "button-1" href = "#" >About</a>
+                <a  class = "button-2" href = "#" > Blog </a>
+                <a  class = "button-3" href = "#" > Reddit </a>                    
+        </section>
+           <section class = "second-page" >
+               <h1>About  
+                   </h1>
+                <div class = "firstpic" > 
+                    <img src = "seulgipicture.png" alt = "seulgi" >
+                </div>
+                  <div class = "textbox">
+                  </div>
+           </section>
+           </nav>      
       </body>
 </html>
 
