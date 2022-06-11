@@ -4,18 +4,19 @@ const validation=require('../validation');
 
 let exportedMethods=
 {
-    async createBlog(name,title,content,numOfLikes)
+    async createBlog(name,title,content)
     {
         name=validation.checkBlogName(name);
         title=validation.checkBlogTitle(title);
         content=validation.checkBlogContent(content);
-        numOfLikes=validation.checkNumOfLikes(numOfLikes);
+        numOfLikes=0;
         const blogCollections=await blogs();
         const findBlog=await blogCollections.find({name: name, title: title, content: content, numOfLikes: numOfLikes}).toArray();
         if(findBlog.length==0)
         {
             let blog=
             {
+                //name would be name of user
                 name: name,
                 title: title,
                 content: content,
@@ -33,6 +34,20 @@ let exportedMethods=
         {
             throw 'Error: Duplicate Blog'
         }
+    },
+    
+    async getAllBlogs() {
+        const blogCollection = await blogs();
+        const blogList = await blogCollection.find({}, { projection: { _id: 1, name: 1,title:1,content:1} }).toArray();
+
+
+        for (let i = 0; i < blogList.length; i++) {
+            blogList[i]._id = blogList[i]._id.toString();
+        }
+
+        console.log(blogList);
+        if (!blogList) throw 'Could not get all bands';
+        return blogList;
     },
     async findBlog(blogID)
     {
