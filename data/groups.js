@@ -65,6 +65,19 @@ let exportedMethods=
             return findGroup;
         }
     },
+    async getAllGroups()
+    {
+        const groupsCollection=await groups();
+        const findAllGroups= await groupsCollection.find().toArray();
+        if(!findAllGroups)
+        {
+            throw "Error: Could not find all groups"
+        }
+        else
+        {
+            return findAllGroups;
+        }
+    },
     async addRelatedBlogPage(name,blogID)
     {
         name=validation.checkGroupName(name);
