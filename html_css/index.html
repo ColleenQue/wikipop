@@ -85,46 +85,108 @@
            .button-3:hover{
                background: linear-gradient(90deg,#7b68ef, #ff72c8 )
            }
+         
            .second-page {
-               height: 80vh;
+               min-height: 80px;
                 width: 80%;
                 margin: auto;
-                padding-top: 40px;
+                padding-top: 20px;
                 background-color: 
            }
            h1{
                text-align:center;
                font-size: 36px;
                font-weight: 600;
-           } 
-           .firstpic img{
-               width: 300px;
-               height: 300px;
-               border: 10px solid black;
-              filter: opacity(0.95);
-              left : 0;
-              position: relative;
-              left: -60px;
-               
-           }
-           .textbox{
-            flex-basis:31%;
-            width: 300px;
-               height: 300px;
-              left : 330px;
-              position: relative;
-              float:center;
-              top: -322px;
-              background-color: #fff3f3;
-              box-sizing:border-box;
-              padding: 20px 12px;
-              border-radius:10px;
-              margin-bottom: 5%;
-           }
+               top: -10px;
+               position:relative;
+           
+         } 
+        .picbox{
+            margin-top: 5%;
+            display:flex;
+            justify-content: space-between;
+        }
+        .box1{
+            flex-basis: 31%;
+            background: transparent;
+            border-radius: 10px;
+            margin-bottom: 5%;
+            padding: 20px 12px;
+            box-sizing: border-box;
+            position:relative;
+            left: -90px;
+        }
+        .box1 img{
+            height: 360px;
+            width: 360px;
+            border: 10px solid black;
+        }
+        .box2{
+            flex-basis: 31%;
+            background: #fff3f3;
+            border-radius: 10px;
+            margin-bottom: 5%;
+            padding: 20px 12px;
+            box-sizing: border-box;
+            position:relative;
+            left: -170x;
+            height: 390px;
+            width: 390px;
+            top: 14px;
+            border: 10px dashed black;
+            transition: 0.5s;
+        }
+        .box2:hover{
+            box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.2);
+        }
+        .box3{
+            flex-basis: 31%;
+            background: transparent;
+            align:right;
+            border-radius: 10px;
+            margin-bottom: 5%;
+            padding: 20px 12px;
+            box-sizing: border-box;
+            position: relative;
+            left: 50px;
+            top: 5px;
+        }
+        .box3 img{
+            width: 360px;
+            height: 360px;
+            border: 10px solid black;
+    
+        }
+        h2{
+            text-align: center;
+            font-weight: 600;
+            margin: 10px 0;
+        }
+        li{
+            padding: 5px 0px;
+        }
+        .footer{
+            height: 90px;
+            width: 100%;
+            margin: auto;
+            padding-top: 20px;
+            background-color:black;  
+        }
+        h4{
+            color:white;
+        }
+        .footer{
+            text-align:center;
+            padding: 30px 0;
+        }
+         .footer h4{
+             margin-bottom: 25px;
+             margin-top: -13px;
+             font-weight: 600;
+         }  
         </style>
     </head>
     <body>
-        <nav>
           <section class = "container" >
               <div class = "hover-box" >
               <span><div class = "circle"> </span>
@@ -136,18 +198,30 @@
             </div>
                 <a class = "button-1" href = "#" >About</a>
                 <a  class = "button-2" href = "#" > Blog </a>
-                <a  class = "button-3" href = "#" > Reddit </a>                    
+                <a  class = "button-3" href = "#" > Reddit </a>    
+                <a class = "button-4"  href = "#" > Groups</a>             
         </section>
            <section class = "second-page" >
                <h1>About  
                    </h1>
-                <div class = "firstpic" > 
-                    <img src = "seulgipicture.png" alt = "seulgi" >
-                </div>
-                  <div class = "textbox">
-                  </div>
+                     <div class = picbox > 
+                         <div class = box1>
+                             <img src = "seulgipicture.png">
+                         </div>
+                         <div class = box2>
+                             <h2>Details</h2>
+                             <li>Summer project created by Suneedhi, Colleen and Cindy</li>
+                             <li> Functions like reddit and kpop profile</li>
+                         </div>
+                         <div class = box3>
+                             <img src = "wonyoung.png">
+                         </div>
+                     </div>
            </section>
-           </nav>      
+            <section class = "footer">
+                <h4>Contact</h4>                   
+            </section>
+    
       </body>
 </html>
 
