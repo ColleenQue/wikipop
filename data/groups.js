@@ -1,11 +1,13 @@
 const mongoCollections=require('../config/mongoCollections');
 const groups=mongoCollections.groups;
 const validation=require('../validation');
+const { ObjectId }=require('mongodb');
 
 let exportedMethods=
 {
-    async createGroup(name,numOfMembers,debutDate,awards,greeting,fandomName,fandomColor,socialMedia,membersLinks,numOfLikes)
+    async createGroup(name,numOfMembers,debutDate,awards,greeting,fandomName,fandomColor,socialMedia,membersLinks)
     {
+        /*
         name=validation.checkGroupName(name);
         numOfMembers=validation.checkNumOfMembers(numOfMembers);
         debutDate=validation.checkDebutDate(debutDate);
@@ -16,13 +18,14 @@ let exportedMethods=
         socialMedia=validation.checkSocialMedia(socialMedia);
         membersLinks=validation.checkMemberLinks(membersLinks);
         numOfLikes=validation.checkNumOfLikes(numOfLikes);
+        */
         const groupsCollection=await groups();
         const findGroup= await groupsCollection.find({"groupInfo.name": name}).toArray();
         if(findGroup.length==0)
         {
             const groupInfo=
             {
-                _id:ObjectId(),
+                _id: ObjectId(),
                 name: name,
                 numOfMembers: numOfMembers,
                 debutDate: debutDate,
@@ -68,7 +71,8 @@ let exportedMethods=
     async getAllGroups()
     {
         const groupsCollection=await groups();
-        const findAllGroups= await groupsCollection.find().toArray();
+        //const findAllGroups= await groupsCollection.find().toArray();
+        const findAllGroups=await groupsCollection.distinct("groupInfo.name");
         if(!findAllGroups)
         {
             throw "Error: Could not find all groups"
