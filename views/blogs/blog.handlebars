@@ -1,0 +1,15 @@
+<p> Welcome to the Blogs Page</p>
+
+<section>
+    
+{{#if blogs.length}}
+<ul>
+    {{#each blogs}}
+    <li>{{name}}: {{title}}: {{content}}
+    </li>
+    {{/each}}
+</ul>
+{{/if}}
+
+</section>
+
