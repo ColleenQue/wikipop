@@ -20,11 +20,11 @@
   "homepage": "https://github.com/ColleenQue/wikipop#readme",
   "dependencies": {
     "bcrypt": "^5.0.1",
-    "mongodb": "^4.7.0",
     "cookie-parser": "^1.4.6",
     "express": "^4.17.3",
     "express-handlebars": "^6.0.4",
-    "express-session": "^1.17.2"
-    
-}
+    "express-session": "^1.17.2",
+    "lib": "^4.3.3",
+    "mongodb": "^4.7.0"
+  }
 }
