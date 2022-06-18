@@ -2,6 +2,20 @@ const express = require('express');
 const router = express.Router();
 const validation = require('../validation');
 const groups = require('../data/groups');
+const multer=require('multer');
+
+var storage=multer.diskStorage({
+    destination: function(req,file,cb)
+    {
+        cb(null,"./uploads");
+    },
+    filename: function(req,file,cb)
+    {
+        cb(null,file.originalname);
+    }
+});
+
+var upload=multer({storage: storage});
 
 router.get('', async(req,res) =>
 {
@@ -14,9 +28,8 @@ router.get('/newGroup', async(req,res) =>
     res.render('posts/newGroup');
 });
 
-router.post('/newGroup', async(req,res)=>
+router.post('/newGroup', upload.single('groupImage'), async(req,res)=>
 {
-    /*
     req.body.name=validation.checkGroupName(req.body.name);
     req.body.numOfMembers=validation.checkNumOfMembers(req.body.numOfMembers);
     req.body.debutDate=validation.checkDebutDate(req.body.debutDate);
@@ -24,9 +37,8 @@ router.post('/newGroup', async(req,res)=>
     req.body.greeting=validation.checkGreeting(req.body.greeting);
     req.body.fandomName=validation.checkFandomName(req.body.fandomName);
     req.body.fandomColor=validation.checkFandomColor(req.body.fandomColor);
-    req.body.socialMedia=validation.checkSocialMedia(req.body.socialMedia);
-    req.body.memberLinks=validation.checkMemberLinks(req.body.memberLinks);
-    */
+    //req.body.socialMedia=validation.checkSocialMedia(req.body.socialMedia);
+    req.body.memberNames=validation.checkMemberNames(req.body.memberNames);
     let name="";
     const memberNamesList=[];
     const memberNames=req.body.memberNames;
@@ -45,29 +57,26 @@ router.post('/newGroup', async(req,res)=>
     }
     memberNamesList.push(name);
     const createGroup=groups.createGroup(req.body.name,req.body.numOfMembers,req.body.debutDate,
-        req.body.awards,req.body.greeting,req.body.fandomName,req.body.fandomColor,req.body.socialMedia,memberNamesList);
+        req.body.awards,req.body.greeting,req.body.fandomName,req.body.fandomColor,req.body.socialMedia,memberNamesList,req.file.path);
     return res.redirect('/groups');
 
 });
 
 router.get('/:id', async(req,res) =>
 {
-    /*
     try
     {
         const group=validation.checkGroupName(req.params.id);
-        const findGroup=groups.findGroup(group);
-        res.render('/posts/groups',{name: findGroup.name, numOfMembers: findGroup.numOfMembers, 
-        debutDate: findGroup.debutDate, awards: findGroup.awards, greeting: findGroup.greeting, 
-        fandomName: findGroup.fandomName, fandomColor: findGroup.fandomColor, socialMedia: findGroup.socialMedia,
-        memberLinks: findGroup.memberLinks});
+        const findGroup=await groups.findGroup(group);
+        const theGroup=findGroup[0].groupInfo;
+        res.render('posts/groups',{name: theGroup.name, numOfMembers: theGroup.numOfMembers, 
+        debutDate: theGroup.debutDate, awards: theGroup.awards, greeting: theGroup.greeting, 
+        fandomName: theGroup.fandomName, fandomColor: theGroup.fandomColor, socialMedia: theGroup.socialMedia, memberLinks: theGroup.membersLinks, groupImage: theGroup.groupImage});
     }
     catch(e)
     {
         res.status(400).render('posts/groups',{error: e});
     }
-    */
-   res.render('posts/groups');
 });
 
 module.exports=router;

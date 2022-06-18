@@ -5,9 +5,8 @@ const { ObjectId }=require('mongodb');
 
 let exportedMethods=
 {
-    async createGroup(name,numOfMembers,debutDate,awards,greeting,fandomName,fandomColor,socialMedia,membersLinks)
+    async createGroup(name,numOfMembers,debutDate,awards,greeting,fandomName,fandomColor,socialMedia,membersLinks,groupImage)
     {
-        /*
         name=validation.checkGroupName(name);
         numOfMembers=validation.checkNumOfMembers(numOfMembers);
         debutDate=validation.checkDebutDate(debutDate);
@@ -15,10 +14,8 @@ let exportedMethods=
         greeting=validation.checkGreeting(greeting);
         fandomName=validation.checkFandomName(fandomName);
         fandomColor=validation.checkFandomColor(fandomColor);
-        socialMedia=validation.checkSocialMedia(socialMedia);
+        //socialMedia=validation.checkSocialMedia(socialMedia);
         membersLinks=validation.checkMemberLinks(membersLinks);
-        numOfLikes=validation.checkNumOfLikes(numOfLikes);
-        */
         const groupsCollection=await groups();
         const findGroup= await groupsCollection.find({"groupInfo.name": name}).toArray();
         if(findGroup.length==0)
@@ -35,12 +32,14 @@ let exportedMethods=
                 fandomColor: fandomColor,
                 socialMedia: socialMedia,
                 membersLinks: membersLinks,
+                groupImage: groupImage,
             }
             const groupPage=
             {
                 groupInfo: groupInfo,
                 relatedBlogPages: [],
-                comments: []
+                comments: [],
+                numOfLikes: 0,
             }
             const newGroup=await groupsCollection.insertOne(groupPage);
             if(!newGroup.acknowledged || !newGroup.insertedId)
@@ -79,7 +78,10 @@ let exportedMethods=
         }
         else
         {
-            return findAllGroups;
+            //console.log(findAllGroups.sort());
+            return findAllGroups.sort(function (a,b) {
+                return a.toLowerCase().localeCompare(b.toLowerCase());
+            });
         }
     },
     async addRelatedBlogPage(name,blogID)

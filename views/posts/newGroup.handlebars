@@ -1,6 +1,6 @@
 <h2>Create New Group</h2>
 <div>
-<form method="POST" action="/groups/newGroup" id="newGroup-form">
+<form method="POST" action="/groups/newGroup" enctype="multipart/form-data" id="newGroup-form">
     <label for = "name">Group Name</label> <br>
     <input name = "name" type="text" id="name" placeholder="Group Name">
     <br>
@@ -45,6 +45,10 @@
     <label for="memberNames">Write Out Members Names Seperated by a Comma</label>
     <br>
     <input name="memberNames" type="text" id="memberNames" placeholder="name,name,...">
+    <br>
+    <label for="groupImage">Upload Group Image Here</label>
+    <br>
+    <input name="groupImage" type="file" id="groupImage" accept="image/png,image/jpeg,image/jpg">
     <br><br>
      <button type = "submit"> Submit </button>
 </form>
