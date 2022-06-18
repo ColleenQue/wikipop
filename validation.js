@@ -160,10 +160,16 @@ module.exports = {
             {
                 throw "Error: Social Media Accounts is not valid"
             }
+            /*
             if(!socialMedia[i].hasOwnProperty('type') || !socialMedia[i].hasOwnProperty('handle'))
             {
                 throw "Error: Social Media Accounts is not valid"
             }
+            */
+           if(!("type" in socialMedia[i]) || !("handle" in socialMedia[i]))
+           {
+            throw "Error: Social Media Accounts is not valid"
+           }
             if(typeof socialMedia[i].type !="string" || typeof socialMedia[i].handle != "string")
             {
                 throw "Error: Social Media Accounts is not valid"
