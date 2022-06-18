@@ -1,15 +1,50 @@
 <p> Welcome to the Blogs Page</p>
 
 <section>
+
+    {{#if blogs.length}}
+    <h2>Trending Blogs</h2>
     
-{{#if blogs.length}}
-<ul>
-    {{#each blogs}}
-    <li>{{name}}: {{title}}: {{content}}
-    </li>
-    {{/each}}
-</ul>
-{{/if}}
+        {{#each blogs}}
+         <p >_____________</p>
+        <h3>{{title}}</h3>
+        <p class ="text-info">by {{name}}</p>
+        
+        {{/each}}
+    
+    {{/if}}
+
 
 </section>
+<hr>
+<h2>Search for Blog</h2>
 
+<form id="searchTag" method="POST" action="/blogs/tag">
+   
+    <label for = "tag">Search for topic/idol/group</label> <br>
+    <input name = "tag" type="text" id="tag" placeholder="topic/idol/group" >
+   
+    <button type="submit">Submit</button>
+
+
+</form>
+<hr>
+<h2>Add your blog to the community</h2>
+
+<form id="addBlog" method="POST" action="/blogs">
+    {{#if error1}}
+       <p> Please enter title correctly</p>
+    {{/if}}
+    {{#if error2}}
+       <p> Please enter content correctly</p>
+    {{/if}}
+    <label for = "title">Title</label> <br>
+    <input name = "title" type="text" id="title" placeholder="title" >
+    <br>
+    <label for = "content"> Content</label><br>
+    <textarea id="content" name="content" rows="4" cols="50" placeholder="Enter blog"> </textarea>
+
+    <button type="submit">Submit</button>
+<hr>
+
+</form>
