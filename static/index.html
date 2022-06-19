@@ -4,13 +4,20 @@
     <head>
         <title>WikiPop</title>
         <style>
+          body{
+            width:100%;
+            min-height:100vh;
+            margin: 0;
+            overflow-x:hidden;
+           
+          }
             *{
                 margin:0;
                 padding:0;
             }
             
             .container{
-                background-image : url("../public/img/kpop_image.jpg");
+                background-image : url("/img/kpop_image.jpg");
                 background-size: cover;
                 background-repeat:no-repeat;
                 height: 100vh;
@@ -165,24 +172,155 @@
             padding: 5px 0px;
         }
         .footer{
-            height: 90px;
+            margin:0;
+            min-height: 100%;
             width: 100%;
-            margin: auto;
-            padding-top: 20px;
-            background-color:black;  
+            display:inline-block;
+            background-color:black;
+
         }
         h4{
             color:white;
+            position:relative;
+            top: -10px;
+            left: -19px;
         }
         .footer{
             text-align:center;
             padding: 30px 0;
+            width: 100%;
+            height: 70px;
+            overflow:hidden;
         }
          .footer h4{
              margin-bottom: 25px;
              margin-top: -13px;
              font-weight: 600;
-         }  
+         }
+         .vertical{
+            border-left: 6px dashed white;
+            height: 130px;
+            position: relative;
+            left: 350px;
+            top: -300px;
+
+        }
+         .suneedhi h5{
+            color:white;
+            position:relative;
+            left: -587px;
+            top:-39px;
+         }
+         .picbox2{
+            margin-top: 5%;
+            display:flex;
+            justify-content: space-between;
+         }
+         .logo1{
+            flex-basis: 31%;
+            background: transparent;
+            margin-bottom: 5%;
+            padding: 20px 12px;
+            box-sizing: border-box;
+            position:relative;
+            height: 50px;
+            width: 20px;
+            top: -90px;
+            left: -190px;
+         }
+         .logo1 img{
+            height:100px;
+            width:100px;
+            position:relative;
+            top: -90px;
+            left: 120px;
+         }
+         .logo2{
+            flex-basis: 31%;
+            background: transparent;
+            margin-bottom: 5%;
+            padding: 20px 12px;
+            box-sizing: border-box;
+            position:relative;
+            height: 50px;
+            width: 20px;
+            top: -90px;
+            left: -6px;
+         }
+         .logo2 .github2{
+            height: 100px;
+            width:100px;
+            position:relative;
+            top: -90px;
+            left: -300px;
+         }
+         .logo2 .github3{
+            height:100px;
+            width:100px;
+            position:relative;
+            left: -150px;
+            top:-90px;
+         }
+        .logo3{
+            flex-basis: 31%;
+            background: transparent;
+            margin-bottom: 5%;
+            padding: 20px 12px;
+            box-sizing: border-box;
+            position:relative;
+            height: 50px;
+            width: 200px;
+            top: -90px;
+            left: -50px;
+        }
+        .logo3 .github4{
+            height:100px;
+            width: 100px;
+            position:relative;
+            top: -90px;
+            left: -210px;
+
+        }
+        .logo3 .github5{
+            height:100px;
+            width: 100px;
+            position:relative;
+            top:-90px;
+            left: -70px;
+        }
+        .logo3 .github6{
+            height: 100px;
+            width: 100px;
+            position:relative;
+            top: -90px;
+            
+
+        }
+        .colleen{
+            color:white;
+            position:relative;
+            top: -53px;
+            left: -220px;
+          
+        }
+        .cindy{
+            color:white;
+            position:relative;
+            top: -69.9px;
+            left: 230px;
+        }
+        .vertical2{
+            border-left: 6px dashed white;
+            height: 130px;
+            position: relative;
+            top: -429px;
+            left: 820px;
+        }
+     
+
+       
+
+        
         </style>
 
     </head>
@@ -193,7 +331,7 @@
             <div  class= "logo" > WikiPop</div> 
             </div>
             <div class = "hover-image" >
-                <img src = "../../wikipop/public/img/fingerheart.jpg" 
+                <img src = "/img/fingerheart.jpg" 
                 style = "float:right; margin:10px 50px 0px 0px; cursor:pointer; cursor:hand; border:0" width="150px" height=" 150px" alt="woman"/>
             </div>
                 <a class = "button-1" href = "#" >About</a>
@@ -206,7 +344,7 @@
                    </h1>
                      <div class = picbox > 
                          <div class = box1>
-                             <img src = "../../wikipop/public/img/seulgipicture.png">
+                             <img src = "/img/seulgipicture.png">
                          </div>
                          <div class = box2>
                              <h2>Details</h2>
@@ -214,12 +352,41 @@
                              <li> Functions like reddit and kpop profile</li>
                          </div>
                          <div class = box3>
-                             <img src = "../../wikipop/public/img/wonyoung.png">
+                             <img src = "/img/wonyoung.png">
                          </div>
                      </div>
            </section>
             <section class = "footer">
-                <h4>Contact</h4>                   
+                <h4>Contact</h4> 
+                <header class = "suneedhi">
+                    <h5>Suneedhi</h5>
+                </header>
+                <header class = "colleen" >
+                <h5 id = "colleen" > Colleen:</h5>
+                </header>
+                <header class = "cindy">
+                <h5 id = "cindy" > Cindy: </h5>
+            </header>
+                <h7> Cindy</h7>
+                <div class = picbox2>
+                <div  class = logo1>
+                    <img src = "/img/github.png">
+                 </div>
+                    <div class = logo2>
+                        <img src = "/img/linkedin.png" class = "github2">
+                        <img src = "/img/github.png" class = "github3">
+                    </div>
+                    <div class = logo3>
+                         <img src = "/img/linkedin.png" class = "github4">
+                         <img src = "/img/github.png" class = "github5">
+                         <img src = "/img/linkedin.png" class = "github6">
+
+                    </div>
+                    </div>
+                    <div class = "vertical">
+                </div>
+                <div class = "vertical2">
+                </div>               
             </section>
     
       </body>
