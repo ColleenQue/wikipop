@@ -1,0 +1,36 @@
+<article>
+    <h2>{{name}}</h2>
+    <img src="uploads\asepa.jpg" alt="{{name}}" />
+    <dl>
+        <dt>Number of Members</dt>
+        <dd>{{numOfMembers}}</dd>
+        <dt>Debut Date</dt>
+        <dd>{{debutDate}}</dd>
+        <dt>Awards</dt>
+        <dd>{{awards}}</dd>
+        <dt>Greeting</dt>
+        <dd>{{greeting}}</dd>
+        <dt>Fandom Name</dt>
+        <dd>{{fandomName}}</dd>
+        <dt>Fandom Color</dt>
+        <dd>{{fandomColor}}</dd>
+        <dt>Social Media Accounts</dt>
+        <dd>
+            {{#each socialMedia}}
+            <dl>
+                <dt>{{this.type}}</dt>
+                <dd>{{this.handle}}</dd>
+            </dl>
+            {{/each}}
+        </dd>
+        <dt>Group Members</dt>
+        <dd>
+            {{#each memberLinks}}
+            <ul>
+                <li><a href="/idol/{{this}}">{{this}}</a></li>
+            </ul>
+            {{/each}}
+        </dd>
+    </dl>
+<a href="/groups">Go Back To All Groups!</a>
+</article>

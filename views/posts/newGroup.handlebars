@@ -1,0 +1,62 @@
+<h2>Create New Group</h2>
+<div>
+<form method="POST" action="/groups/newGroup" enctype="multipart/form-data" id="newGroup-form">
+    <label for = "name">Group Name</label> <br>
+    <input name = "name" type="text" id="name" placeholder="Group Name">
+    <br>
+    <label for = "numOfMembers">Number of Members</label>
+    <br>
+    <input name = "numOfMembers" type = "number" id = "numOfMembers" placeholder="number"> 
+    <br>
+    <label for="debutDate">Debut Date</label>
+    <br>
+    <input name = "debutDate" type = "date" id = "debutDate" placeholder="date"> 
+    <br>
+    <label for="awards">Number of Awards Won</label>
+    <br>
+    <input name="awards" type="number" id="awards" placeholder="number">
+    <br>
+    <label for="greeting">Group Greeting</label>
+    <br>
+    <input name="greeting" type="text" id="greeting" placeholder="greeting">
+    <br>
+    <label for="fandomColor">Fandom Color</label>
+    <br>
+    <input name="fandomColor" type="text" id="fandomColor" placeholder="color">
+    <br>
+    <label for="fandomName">Fandom Name</label>
+    <br>
+    <input name="fandomName" type="text" id="fandomName" placeholder="Fandom Name">
+    <br>
+    <label for="socialMedia">Social Media Accounts</label>
+    <br>
+    <input type="text" name="socialMedia[0][type]" placeholder="Instagram">
+    <input type="text" name="socialMedia[0][handle]" placeholder="Social Media Handle">
+    <br>
+    <input type="text" name="socialMedia[1][type]" placeholder="Twitter">
+    <input type="text" name="socialMedia[1][handle]" placeholder="Social Media Handle">
+    <br>
+    <input type="text" name="socialMedia[2][type]" placeholder="Youtube">
+    <input type="text" name="socialMedia[2][handle]" placeholder="Social Media Handle">
+    <br>
+    <input type="text" name="socialMedia[3][type]" placeholder="TikTok">
+    <input type="text" name="socialMedia[3][handle]" placeholder="Social Media Handle">
+    <br>
+    <label for="memberNames">Write Out Members Names Seperated by a Comma</label>
+    <br>
+    <input name="memberNames" type="text" id="memberNames" placeholder="name,name,...">
+    <br>
+    <label for="groupImage">Upload Group Image Here</label>
+    <br>
+    <input name="groupImage" type="file" id="groupImage" accept="image/png,image/jpeg,image/jpg">
+    <br><br>
+     <button type = "submit"> Submit </button>
+</form>
+
+{{#if err}}
+<p class="error"> {{message}}</p>
+{{/if}}
+
+<a href="">Go back to all groups</a>
+
+</div>

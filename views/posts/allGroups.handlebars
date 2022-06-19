@@ -1,0 +1,15 @@
+<h2>List of All Groups</h2>
+<div>
+<ul class="groupList"></ul>
+{{#each groups}}
+	<li><a href="/groups/{{this}}">{{this}}</li>
+{{/each}}
+</ul>
+
+{{#if err}}
+<p class="error"> {{message}}</p>
+{{/if}}
+
+<a href="/groups/newGroup">Can't find a group. Create it here!</a>
+
+</div>

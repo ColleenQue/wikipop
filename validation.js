@@ -1,3 +1,4 @@
+const moment = require("moment");
 const { ObjectId } = require("mongodb");
 
 module.exports = {
@@ -79,7 +80,8 @@ module.exports = {
     },
     checkNumOfMembers(numOfMembers)
     {
-        if(typeof numOfMembers!= "number" || numOfMembers.trim()==="")
+        numOfMembers=parseInt(numOfMembers,10);
+        if(typeof numOfMembers!= "number")
         {
             throw "Error: Number of Members is not a valid number"
         }
@@ -87,17 +89,26 @@ module.exports = {
     },
     checkDebutDate(debutDate)
     {
-        //check if date is in right format: format is MM/DD/YYYY
-        const date = /^\d{2}\/\d{2}\/\d{4}$/;
+        //check if date is in right format: format is YYYY-MM-DD
+        /*
+        const date = /^\d{4}\/\d{4}\/\d{2}$/;
+        console.log(date);
         if(!debutDate.match(date))
         {
             throw "Error: Debut Date is not in the right format"
         }
         return debutDate;
+        */
+       if(!moment(debutDate,"YYYY-MM-DD",true).isValid())
+       {
+           throw "Error: Debut Date is not in the right format"
+       }
+       return debutDate;
     },
     checkAwards(awards)
     {
-        if(typeof awards!= "number" || awards.trim()==="")
+        awards=parseInt(awards);
+        if(typeof awards!= "number")
         {
             throw "Error: Number of Awards is not a valid number"
         }
@@ -105,6 +116,10 @@ module.exports = {
     },
     checkGreeting(greeting)
     {
+        if(greeting=="")
+        {
+            return greeting;
+        }
         if(typeof greeting!="string" || greeting.trim()==="")
         {
             throw "Error: Greeting is not valid"
@@ -113,6 +128,10 @@ module.exports = {
     },
     checkFandomName(fandomName)
     {
+        if(fandomName=="")
+        {
+            return fandomName;
+        }
         if(typeof fandomName!="string" || fandomName.trim()==="")
         {
             throw "Error: Fandom Name is not valid"
@@ -137,16 +156,34 @@ module.exports = {
         //checking if array is array of tuples as in [[Social Media Type, Social Media Link]]
         for(let i=0;i<socialMedia.length;i++)
         {
-            if(!Array.isArray(socialMedia[i]) || socialMedia[i].length!=2)
+            if(typeof socialMedia[i] != "object")
             {
                 throw "Error: Social Media Accounts is not valid"
             }
-            if(typeof socialMedia[i][0]!="string")
+            /*
+            if(!socialMedia[i].hasOwnProperty('type') || !socialMedia[i].hasOwnProperty('handle'))
+            {
+                throw "Error: Social Media Accounts is not valid"
+            }
+            */
+           if(!("type" in socialMedia[i]) || !("handle" in socialMedia[i]))
+           {
+            throw "Error: Social Media Accounts is not valid"
+           }
+            if(typeof socialMedia[i].type !="string" || typeof socialMedia[i].handle != "string")
             {
                 throw "Error: Social Media Accounts is not valid"
             }
         }
         return socialMedia;
+    },
+    checkMemberNames(memberNames)
+    {
+        if(typeof memberNames!="string" || memberNames.trim()=="")
+        {
+            throw "Error: Member Names are not valid"
+        }
+        return memberNames;
     },
     checkMemberLinks(membersLinks)
     {

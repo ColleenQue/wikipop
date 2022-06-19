@@ -5,7 +5,7 @@ const user = require('../data/users');
 const console = require('../helper');
 
 
-router.get('/', async (req, res) => {
+router.get('/login', async (req, res) => {
 
   if (req.session.user) {
     console.logging(new Date().toUTCString(),req.method,req.originalUrl,true);
@@ -79,7 +79,7 @@ router.post('/login', async (req, res) => {
 
   if (result.authenticated === true) {
     req.session.user = username;
-    res.redirect('/private');
+    res.redirect('/');
 
   }
   else {

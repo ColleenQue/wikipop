@@ -1,10 +1,11 @@
 const mongoCollections=require('../config/mongoCollections');
 const groups=mongoCollections.groups;
 const validation=require('../validation');
+const { ObjectId }=require('mongodb');
 
 let exportedMethods=
 {
-    async createGroup(name,numOfMembers,debutDate,awards,greeting,fandomName,fandomColor,socialMedia,membersLinks,numOfLikes)
+    async createGroup(name,numOfMembers,debutDate,awards,greeting,fandomName,fandomColor,socialMedia,membersLinks,groupImage)
     {
         name=validation.checkGroupName(name);
         numOfMembers=validation.checkNumOfMembers(numOfMembers);
@@ -15,14 +16,13 @@ let exportedMethods=
         fandomColor=validation.checkFandomColor(fandomColor);
         socialMedia=validation.checkSocialMedia(socialMedia);
         membersLinks=validation.checkMemberLinks(membersLinks);
-        numOfLikes=validation.checkNumOfLikes(numOfLikes);
         const groupsCollection=await groups();
         const findGroup= await groupsCollection.find({"groupInfo.name": name}).toArray();
         if(findGroup.length==0)
         {
             const groupInfo=
             {
-                _id:ObjectId(),
+                _id: ObjectId(),
                 name: name,
                 numOfMembers: numOfMembers,
                 debutDate: debutDate,
@@ -32,12 +32,14 @@ let exportedMethods=
                 fandomColor: fandomColor,
                 socialMedia: socialMedia,
                 membersLinks: membersLinks,
+                groupImage: groupImage,
             }
             const groupPage=
             {
                 groupInfo: groupInfo,
                 relatedBlogPages: [],
-                comments: []
+                comments: [],
+                numOfLikes: 0,
             }
             const newGroup=await groupsCollection.insertOne(groupPage);
             if(!newGroup.acknowledged || !newGroup.insertedId)
@@ -63,6 +65,23 @@ let exportedMethods=
         else
         {
             return findGroup;
+        }
+    },
+    async getAllGroups()
+    {
+        const groupsCollection=await groups();
+        //const findAllGroups= await groupsCollection.find().toArray();
+        const findAllGroups=await groupsCollection.distinct("groupInfo.name");
+        if(!findAllGroups)
+        {
+            throw "Error: Could not find all groups"
+        }
+        else
+        {
+            //console.log(findAllGroups.sort());
+            return findAllGroups.sort(function (a,b) {
+                return a.toLowerCase().localeCompare(b.toLowerCase());
+            });
         }
     },
     async addRelatedBlogPage(name,blogID)
