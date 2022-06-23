@@ -7,7 +7,7 @@ const multer=require('multer');
 var storage=multer.diskStorage({
     destination: function(req,file,cb)
     {
-        cb(null,"./uploads");
+        cb(null,"./public/img");
     },
     filename: function(req,file,cb)
     {
@@ -56,8 +56,10 @@ router.post('/newGroup', upload.single('groupImage'), async(req,res)=>
         }
     }
     memberNamesList.push(name);
+    let imagePath=req.file.path.replaceAll("\\","/");
+    imagePath=imagePath.replace("public","");
     const createGroup=groups.createGroup(req.body.name,req.body.numOfMembers,req.body.debutDate,
-        req.body.awards,req.body.greeting,req.body.fandomName,req.body.fandomColor,req.body.socialMedia,memberNamesList,req.file.path);
+        req.body.awards,req.body.greeting,req.body.fandomName,req.body.fandomColor,req.body.socialMedia,memberNamesList,imagePath);
     return res.redirect('/groups');
 
 });
