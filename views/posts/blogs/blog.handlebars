@@ -1,0 +1,65 @@
+<h1> Blogs</h1>
+
+<section>
+
+    {{#if blogs.length}}
+    <h2>Trending Blogs</h2>
+
+    {{#each blogs}}
+    <hr>
+
+    <h3>{{title}}</h3>
+    <a class="purple" href="/blogs/details/{{_id}}">details</a>
+
+    {{/each}}
+
+    {{/if}}
+
+</section>
+
+<br>
+<hr>
+{{#if prev}}
+<a class="purple" href="/blogs/{{prev}}">Prev</a>
+
+{{/if}}
+
+<p>{{page}}</p>
+
+{{#if next}}
+<a class="purple" href="/blogs/{{next}}">Next</a>
+
+{{/if}}
+<br>
+<hr>
+<h2>Search for Blog</h2>
+
+<form id="searchTag" method="POST" action="/blogs/tag">
+
+    <label for="tag">Search for topic/idol/group</label> <br>
+    <input name="tag" type="text" id="tag" placeholder="topic/idol/group">
+
+    <button type="submit">Submit</button>
+
+
+</form>
+<hr>
+<h2>Add your blog to the community</h2>
+
+<form id="addBlog" method="POST" action="/blogs">
+    {{#if error1}}
+    <p> Please enter title correctly</p>
+    {{/if}}
+    {{#if error2}}
+    <p> Please enter content correctly</p>
+    {{/if}}
+    <label for="title">Title</label> <br>
+    <input name="title" type="text" id="title" placeholder="title">
+    <br>
+    <label for="content"> Content</label><br>
+    <textarea id="content" name="content" rows="4" cols="50" placeholder="Enter blog"> </textarea>
+
+    <button type="submit">Submit</button>
+    <hr>
+
+</form>

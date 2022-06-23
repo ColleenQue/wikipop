@@ -12,6 +12,7 @@ const constructorMethod = (app) => {
   app.use('/groups',groupRoutes);
   app.get('/',(req,res)=>{
     res.sendFile(path.resolve('static/index.html'));
+    
   });
 
   app.use('*', (req, res) => {
