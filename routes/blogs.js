@@ -4,6 +4,7 @@ const validation = require('../validation');
 const blogs = require('../data/blogs');
 const con = require('../helper');
 const { checkBlogContent } = require('../validation');
+const comments = require('../data/comments')
 
 //get itself/main page
 router.use("/", (req, res, next) => {
@@ -58,6 +59,7 @@ router.get("/:page", async (req, res, next) => {
 
 router.post("/", async (req, res, next) => {
   //error check
+  //add blog
 
   let title, content, temp;
 
@@ -120,13 +122,51 @@ router.post("/", async (req, res, next) => {
 
 router.get("/details/:id", async (req, res, next) => {
 
-  let temp = await blogs.findBlog(req.params.id);
-  return res.render("posts/blogs/blog2", {
-    blog: temp,
-    title: "Blogs",
-    stylesheet: "/public/styles/main.css"
-  });
+  try{
 
+    let temp = await blogs.findBlog(req.params.id);
+    return res.render("posts/blogs/blog2", {
+      blog: temp,
+      title: "Blogs",
+      stylesheet: "/public/styles/main.css"
+    });
+
+
+  }
+  catch(e){
+    
+    return res.sendStatus(500);
+  }
+
+})
+
+
+router.post("/details/:id", async (req, res, next) => {
+  try{
+    //add comment
+    let commenter = req.session.user;
+    let content = req.body.content;
+   
+    //await blogs.addComment(req.params.id,commenter,content)
+
+    //TODO switch to ajax request
+    let temp = await blogs.findBlog(req.params.id);
+
+    return res.render("posts/blogs/blog2", {
+      blog: temp,
+      title: "Blogs",
+      stylesheet: "/public/styles/main.css"
+    });
+
+  }
+  catch(e){
+    
+    return res.sendStatus(500);
+  }
+  
+  
+  
+  
 })
 
 module.exports = router;

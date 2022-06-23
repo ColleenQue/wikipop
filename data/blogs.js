@@ -1,6 +1,7 @@
 const mongoCollections = require('../config/mongoCollections');
 const blogs = mongoCollections.blogs;
 const validation = require('../validation');
+const comments = require('../data/comments');
 const { ObjectId } = require('mongodb');
 
 
@@ -85,18 +86,29 @@ let exportedMethods =
         return list;
 
     },
-    async addComment(blogID, commentID) {
+    async addComment(blogID,commenter,content) {
         blogID = validation.checkBlogID(blogID);
-        commentID = validation.checkCommentID(commentID);
+        //commenter = validation.checkComments(content);
+        commenter=validation.checkUserName(commenter);
+        
+
+        //add comment to comment collection
+        const blogCollections = await blogs();
+        const comment = await comments.createComment(commenter,content);
+
+        const commentID = comment._id;
+
         const theBlog = await this.findBlog(blogID);
+
         let theComments = theBlog[0].comments;
         theComments.push(commentID);
-        const blogCollections = await blogs();
+
         const updateBlog = blogCollections.updateOne({ _id: theBlog[0]._id }, { $set: { comments: theComments } });
         if (!updateBlog.matchedCount && !updateBlog.modifiedCount) {
             throw "Error: Update failed";
         }
-        return commentID;
+
+        return comment;
     }
 };
 
