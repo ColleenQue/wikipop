@@ -1,0 +1,48 @@
+<article>
+    <h2>{{name}}</h2>
+    <img src={{idolImage}} alt="{{name}}" width="500px" height="500px"/>
+    <dl>
+        <dt>Role</dt>
+        <dd>{{role}}</dd>
+        <dt>Group</dt>
+        <dd>{{group}}</dd>
+        <dt>Age</dt>
+        <dd>{{age}}</dd>
+        <dt>Date Of Birth</dt>
+        <dd>{{dob}}</dd>
+        <dt>Height</dt>
+        <dd>{{height}}</dd>
+        <dt>Weight</dt>
+        <dd>{{weight}}</dd>
+        <dt>Fandom Name</dt>
+        <dd>{{fandomName}}</dd>
+        <dt>Fandom Color</dt>
+        <dd>{{fandomColor}}</dd>
+        <dt>Fun Facts</dt>
+        <dd>
+            {{#each funFacts}}
+            <ul>{{this}}</ul>
+            {{/each}}
+        </dd>
+        <dt>Social Media Accounts</dt>
+        <dd>
+            {{#each socialMedia}}
+            <dl>
+                <dt>{{this.type}}</dt>
+                <dd>{{this.handle}}</dd>
+            </dl>
+            {{/each}}
+        </dd>
+    </dl>
+{{#if error}}
+<p class="error"> {{error}}</p>
+{{/if}}
+
+{{#if create}}
+<a href="/idols/newIdol">{{create}}</a>
+{{/if}}
+
+<br>
+
+<a href="/idols">Get list of all idols</a>
+</article>

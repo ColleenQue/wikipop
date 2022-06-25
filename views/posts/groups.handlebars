@@ -1,6 +1,6 @@
 <article>
     <h2>{{name}}</h2>
-    <img src="uploads\asepa.jpg" alt="{{name}}" />
+    <img src={{groupImage}} alt="{{name}}" width="500px" height="300px"/>
     <dl>
         <dt>Number of Members</dt>
         <dd>{{numOfMembers}}</dd>
@@ -27,10 +27,13 @@
         <dd>
             {{#each memberLinks}}
             <ul>
-                <li><a href="/idol/{{this}}">{{this}}</a></li>
+                <li><a href="/idols/{{../name}}-{{this}}">{{this}}</a></li>
             </ul>
             {{/each}}
         </dd>
     </dl>
+{{#if error}}
+<p class="error"> {{error}}</p>
+{{/if}}
 <a href="/groups">Go Back To All Groups!</a>
 </article>
