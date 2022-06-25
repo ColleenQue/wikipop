@@ -19,8 +19,14 @@ var upload=multer({storage: storage});
 
 router.get('', async(req,res) =>
 {
-    const allGroups=await groups.getAllGroups();
-    res.render('posts/allGroups', {groups: allGroups});
+    try{
+        const allGroups=await groups.getAllGroups();
+        res.render('posts/allGroups',{groups: allGroups});
+
+    }catch(e)
+    {
+        res.render('posts/allGroups');
+    }
 });
 
 router.get('/newGroup', async(req,res) =>

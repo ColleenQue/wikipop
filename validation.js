@@ -220,7 +220,8 @@ module.exports = {
     },
     checkAge(age)
     {
-        if(typeof age!="number" || age.trim()==="")
+        age=parseInt(age);
+        if(typeof age!="number")
         {
             throw "Error: Idol Age is not valid"
         }
@@ -228,17 +229,16 @@ module.exports = {
     },
     checkDOB(dob)
     {
-        //check if dob is in right format: format is MM/DD/YYYY
-        const birth = /^\d{2}\/\d{2}\/\d{4}$/;
-        if(!dob.match(birth))
+        //check if dob is in right format: format is YYYY-MM-DD
+        if(!moment(dob,"YYYY-MM-DD",true).isValid())
         {
-            throw "Error: Date of Birth is not in the right format"
+            throw "Error: Debut Date is not in the right format"
         }
         return dob;
     },
     checkHeight(height)
     {
-        if(typeof height!="number" || height.trim()==="")
+        if(typeof height!="string" || height.trim()==="")
         {
             throw "Error: Idol Height is not valid"
         }
@@ -246,9 +246,10 @@ module.exports = {
     },
     checkWeight(weight)
     {
-        if(typeof weight!="number" || weight.trim()==="")
+        weight=parseInt(weight);
+        if(typeof weight!="number")
         {
-            throw "Error: Idol Weight is not valid"
+            throw "Error: Idol Age is not valid"
         }
         return weight;
     },

@@ -3,6 +3,7 @@ const privateRoutes = require('./private');
 const groupRoutes=require('./groups');
 const path = require('path');
 const blogRoutes = require('./blogs')
+const idolRoutes=require('./idols');
 
 
 const constructorMethod = (app) => {
@@ -10,6 +11,7 @@ const constructorMethod = (app) => {
   app.use('/blogs',blogRoutes);
   app.use('/private', privateRoutes);
   app.use('/groups',groupRoutes);
+  app.use('/idols',idolRoutes);
   app.get('/',(req,res)=>{
     res.sendFile(path.resolve('static/index.html'));
   });
