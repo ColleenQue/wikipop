@@ -1,0 +1,74 @@
+<h2>Create New Idol</h2>
+<div>
+<form method="POST" action="/idols/newIdol" enctype="multipart/form-data" id="newIdol-form">
+    <label for = "idolName">Idol Name</label> <br>
+    <input name = "idolName" type="text" id="idolName" placeholder="Idol Name">
+    <br>
+    <label for="role">Idol Role</label>
+    <br>
+    <input name="role" type="text" id="role" placeholder="Idol Role">
+    <br>
+    <label for = "groupName">Group Name (put solo if idol is a soloist)</label>
+    <br>
+    <input name = "groupName" type = "text" id = "groupName" placeholder="Group Name"> 
+    <br>
+    <label for="age">Idol Age</label>
+    <br>
+    <input name="age" type="number" id="age" placeholder="number">
+    <br>
+    <label for="dob">Date Of Birth</label>
+    <br>
+    <input name = "dob" type = "date" id = "dob" placeholder="date"> 
+    <br>
+    <label for="height">Idol Height</label>
+    <br>
+    <input name="height" type="text" id="height" placeholder="ft'in''">
+    <br>
+    <label for="weight">Idol Weight</label>
+    <br>
+    <input name="weight" type="number" id="weight" placeholder="lbs">
+    <br>
+    <label for="fandomName">Fandom Name</label>
+    <br>
+    <input name="fandomName" type="text" id="fandomName" placeholder="Fandom Name">
+    <br>
+    <label for="fandomColor">Fandom Color</label>
+    <br>
+    <input name="fandomColor" type="text" id="fandomColor" placeholder="color">
+    <br>
+    <label for="funFacts">FunFacts</label>
+    <br>
+    <input type="text" name="funFacts[0]" placeholder="funfact1">
+    <br>
+    <input type="text" name="funFacts[1]" placeholder="funfact2">
+    <br>
+    <input type="text" name="funFacts[2]" placeholder="funfact3">
+    <br>
+    <label for="socialMedia">Social Media Accounts</label>
+    <br>
+    <input type="text" name="socialMedia[0][type]" placeholder="Instagram">
+    <input type="text" name="socialMedia[0][handle]" placeholder="Social Media Handle">
+    <br>
+    <input type="text" name="socialMedia[1][type]" placeholder="Twitter">
+    <input type="text" name="socialMedia[1][handle]" placeholder="Social Media Handle">
+    <br>
+    <input type="text" name="socialMedia[2][type]" placeholder="Youtube">
+    <input type="text" name="socialMedia[2][handle]" placeholder="Social Media Handle">
+    <br>
+    <input type="text" name="socialMedia[3][type]" placeholder="TikTok">
+    <input type="text" name="socialMedia[3][handle]" placeholder="Social Media Handle">
+    <br>
+    <label for="idolImage">Upload Idol Image Here</label>
+    <br>
+    <input name="idolImage" type="file" id="idolImage" accept="image/png,image/jpeg,image/jpg">
+    <br><br>
+     <button type = "submit"> Submit </button>
+</form>
+
+{{#if error}}
+<p class="error"> {{error}}</p>
+{{/if}}
+
+<a href="/groups/{{groupName}}">Go back to the group main page</a>
+
+</div>

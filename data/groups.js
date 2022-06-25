@@ -72,7 +72,7 @@ let exportedMethods=
         const groupsCollection=await groups();
         //const findAllGroups= await groupsCollection.find().toArray();
         const findAllGroups=await groupsCollection.distinct("groupInfo.name");
-        if(!findAllGroups)
+        if(!findAllGroups || findAllGroups.length==0)
         {
             throw "Error: Could not find all groups"
         }
