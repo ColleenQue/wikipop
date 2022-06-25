@@ -9,15 +9,9 @@
 
     <h2>Comments</h2>
 
+    <p id="no_comments">No comments yet! Be the first one to comment.</p>
 
-    {{#if comments}}
-        {{#each comments}}
-            <p>comment</p>
-        {{/each}}
-    {{else}}
-        <p id="no_comments">No comments yet! Be the first one to comment.</p>
-    {{/if}}
-
+    <ul id="comments"></ul>
 
     {{#if error}}
     <p class="error">{{error}}</p>
@@ -34,5 +28,3 @@
 
 
 </section>
-
-

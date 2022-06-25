@@ -28,7 +28,7 @@ let exportedMethods =
         return comment;
 
     }
-,
+    ,
     async getAllComments() {
         const commentCollection = await comments();
         const commentList = await commentCollection.find({}, { projection: { _id: 1, name: 1, title: 1, content: 1 } }).toArray();
@@ -37,21 +37,25 @@ let exportedMethods =
         for (let i = 0; i < commentList.length; i++) {
             commentList[i]._id = commentList[i]._id.toString();
         }
-        if (!commentList) throw 'Could not get all bands';
+        if (!commentList) throw 'Could not get all comments';
         return commentList;
     },
-        async findcomment(commentID) {
-    commentID = validation.checkComments(commentID);
-    const commentCollections = await comments();
-    const findcomment = await commentCollections.findOne({ _id: ObjectId(commentID) });
+    async findcomment(commentID) {
+        commentID = validation.checkComments(commentID);
+        const commentCollections = await comments();
+        const findcomment = await commentCollections.findOne({ _id: ObjectId(commentID) });
 
-    if (!findcomment) {
-        throw "Error: Could not find comment"
+        if (!findcomment) {
+            throw "Error: Could not find comment"
+        }
+
+        return findcomment;
+
+    },
+
+    async deleteComment(commentId) {
+     
     }
-
-    return findcomment;
-
-}
 };
 
 module.exports = exportedMethods;
