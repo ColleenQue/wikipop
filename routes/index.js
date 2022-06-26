@@ -14,6 +14,7 @@ const constructorMethod = (app) => {
   app.use('/idols',idolRoutes);
   app.get('/',(req,res)=>{
     res.sendFile(path.resolve('static/index.html'));
+    
   });
 
   app.use('*', (req, res) => {

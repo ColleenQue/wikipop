@@ -4,6 +4,7 @@
   "description": "website with all the information about kpop",
   "main": "app.js",
   "scripts": {
+    "sass": "node-sass -w scss/ -o css/ --recursive",
     "start": "node app.js",
     "seed": "node seed.js",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -20,6 +21,7 @@
   "homepage": "https://github.com/ColleenQue/wikipop#readme",
   "dependencies": {
     "bcrypt": "^5.0.1",
+    "bootstrap": "^5.1.3",
     "cookie-parser": "^1.4.6",
     "debug": "^4.3.4",
     "express": "^4.17.3",
@@ -30,6 +32,7 @@
     "lib": "^4.3.3",
     "moment": "^2.29.3",
     "mongodb": "^4.7.0",
-    "multer": "^1.4.5-lts.1"
+    "multer": "^1.4.5-lts.1",
+    "node-sass": "^7.0.1"
   }
 }
