@@ -27,10 +27,13 @@
         <dd>
             {{#each memberLinks}}
             <ul>
-                <li><a href="/idol/{{this}}">{{this}}</a></li>
+                <li><a href="/idols/{{../name}}-{{this}}">{{this}}</a></li>
             </ul>
             {{/each}}
         </dd>
     </dl>
+{{#if error}}
+<p class="error"> {{error}}</p>
+{{/if}}
 <a href="/groups">Go Back To All Groups!</a>
 </article>

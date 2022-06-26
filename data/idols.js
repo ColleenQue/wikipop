@@ -4,27 +4,27 @@ const validation=require('../validation');
 
 let exportedMethods=
 {
-    async createIdol(name,role,age,dob,height,weight,fandomName,fandomColor,funFacts,socialMedia,blogPage,numOfLikes)
+    async createIdol(name,role,group,age,dob,height,weight,fandomName,fandomColor,funFacts,socialMedia,idolImage)
     {
         name=validation.checkIdolName(name);
         role=validation.checkRole(role);
+        group=validation.checkGroupName(group);
         age=validation.checkAge(age);
         dob=validation.checkDOB(dob);
         height=validation.checkHeight(height);
         weight=validation.checkWeight(weight);
         fandomName=validation.checkFandomName(fandomName);
         fandomColor=validation.checkFandomColor(fandomColor);
-        funFacts=validation.funfacts(funFacts);
-        socialMedia=validation.socialMedia(socialMedia);
-        blogPage=validation.checkBlogPageLink(blogPage);
-        numOfLikes=validation.numOfLikes(numOfLikes);
+        funFacts=validation.checkfunFacts(funFacts);
+        socialMedia=validation.checkSocialMedia(socialMedia);
         const idolCollections=await idols();
-        const findIdol=await idolCollections.find({name: name, blogPage: blogPage}).toArray();
+        const findIdol=await idolCollections.find({name: name, group: group}).toArray();
         if(findIdol.length==0)
         {
             let idol=
             {
                 name: name,
+                group: group,
                 role: role,
                 age: age,
                 dob: dob,
@@ -34,8 +34,9 @@ let exportedMethods=
                 fandomColor: fandomColor,
                 funfacts: funFacts,
                 socialMedia: socialMedia,
-                blogPage: blogPage,
-                numOfLikes: numOfLikes,
+                idolImage: idolImage,
+                blogPages: [],
+                numOfLikes: 0,
                 comments: [],
             }
             const newIdol=await idolCollections.insertOne(idol);
@@ -62,6 +63,59 @@ let exportedMethods=
         else
         {
             return findIdol;
+        }
+    },
+    async findIdolBasedOnName(idolName,groupName)
+    {
+        idolName=validation.checkIdolName(idolName);
+        const idolCollections=await idols();
+        const findIdol=await idolCollections.find({name: idolName}).toArray();
+        if(!findIdol)
+        {
+            throw "Error: Could not find Idol"
+        }
+        if(findIdol.length==0)
+        {
+            throw "Error: Could not find Idol"
+        }
+        if(findIdol.length>1)
+        {
+            for(let i=0;i<findIdol.length;i++)
+            {
+                if(findIdol[i].groupName===groupName)
+                {
+                    return findIdol[i];
+                }
+            }
+            throw "Error: could not find Idol"
+        }
+        else
+        {
+            return findIdol[0];
+        }
+    },
+    async getAllIdols()
+    {
+        let idolList=[];
+        const idolCollections=await idols();
+        const allIdols=await idolCollections.find().toArray();
+        for(let i=0;i<allIdols.length;i++)
+        {
+            let theIdol={
+                name: allIdols[i].name,
+                group: allIdols[i].group,
+            }
+            idolList.push(theIdol);
+        }
+        if(!idolList || idolList.length==0)
+        {
+            throw "Error: Could not find all idols"
+        }
+        else
+        {
+            return idolList.sort(function (a,b) {
+                return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
+            });
         }
     },
     async addComment(idolID,commentID)
