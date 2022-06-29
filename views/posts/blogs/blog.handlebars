@@ -1,3 +1,4 @@
+<div class = "left">
 <h1> Blogs</h1>
 
 <section>
@@ -10,9 +11,12 @@
     {{#each blogs}}
     <hr>
 
-    <h3>{{title}}</h3>
-    <a class="purple" href="/blogs/details/{{_id}}">details</a>
-
+    {{!-- <h3>{{title}}</h3> --}}
+    <a class="blog-title" href="/blogs/details/{{_id}}">{{title}}</a>
+    <br>
+    <a class="blog-owner" href = "#">By {{name}}</a>
+    <br>
+    
     {{/each}}
 
     {{/if}}
@@ -34,6 +38,9 @@
 {{/if}}
 <br>
 <hr>
+</div>
+
+<div class = "right">
 <h2>Search for Blog</h2>
 
 <form id="searchTag" method="POST" action="/blogs/tag">
@@ -65,3 +72,5 @@
     <hr>
 
 </form>
+
+</div>
