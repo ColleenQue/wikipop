@@ -92,7 +92,7 @@ let exportedMethods =
         commenter=validation.checkUserName(commenter);
         
 
-        //add comment to comment collection
+        //add comment as subdocument
         const blogCollections = await blogs();
         const comment = await comments.createComment(commenter,content);
 
@@ -100,6 +100,18 @@ let exportedMethods =
 
         const theBlog = await this.findBlog(blogID);
 
+        //declare new comment
+        let newComment =
+        {
+            //name would be name of user
+            _id: ObjectId().toString(),
+            commenter: username,
+            content: content,
+            numOfLikes: 0,
+            comments: []
+        }
+
+        console.log(theBlog[0]);
         let theComments = theBlog[0].comments;
         theComments.push(commentID);
 
@@ -108,7 +120,7 @@ let exportedMethods =
             throw "Error: Update failed";
         }
 
-        return comment;
+        return newComment;
     }
 };
 
