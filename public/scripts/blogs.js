@@ -8,9 +8,15 @@
     noComment = $("#no_comments"),
     commentForm = $("#commentForm"),
     commentInput = $("#comment_term"),
-    errorDiv = $("#error")
+    errorDiv = $("#error");
 
-
+  function checkString(string) {
+    if (!string) throw "must provide text input";
+    if (typeof string !== "string") throw "invalid string input";
+    if (string.trim().length === 0)
+      throw "string cannot be an empty string or just spaces";
+    return string;
+  }
 
 
   //get all comments
@@ -28,7 +34,9 @@
 
     //list of all comments
     let comments = responseMessage.comments;
-    let commenter = responseMessage.user;
+
+    //session user
+    let user = responseMessage.user;
 
     if (comments.length == 0) {
       commentList.hide();
@@ -38,7 +46,7 @@
       for (let i = 0; i < comments.length; i++) {
         //add each comment to the list
         let l = $("<p></p>");
-        let s = comments[i].commenter + ": " + comments[i].text;
+        let s = comments[i].commenter + ": " + comments[i].content+"<br>";
         //add attribute to each li tag = <li id = "comments.id">
         l.attr("id", comments[i]._id);
         l.append(s); //content
@@ -46,7 +54,7 @@
         //https://www.w3schools.com/jquery/jquery_dom_add.asp
 
 
-        if (commenter == comments.commenter) {
+        if (user == comments.commenter) {
           //deleteBtn = $("<button><i class=material-icons>delete</i></button>");
           deleteBtn = $("<i></i>");
           deleteBtn.attr("class", "fa-solid fa-circle-xmark");
@@ -85,6 +93,7 @@
   //add comment
   commentForm.submit(function (event) {
     event.preventDefault();
+    console.log("submitted");
 
     var comment = commentInput.val();
 
@@ -115,20 +124,20 @@
       //add comment successful
       if (responseMessage.success) {
 
-    
+
         let commenter = responseMessage.user;
         //return singular new comment
         let newComment = responseMessage.comment;
 
         let l = $("<p></p>");
 
-        let s = newComment.commenter + ": " + newComment.text;
+        let s = newComment.commenter + ": " + newComment.content;
         l.attr("id", newComment._id);
         l.append(s);
 
         //https://www.w3schools.com/jquery/jquery_dom_add.asp
 
-        
+
 
         if (commenter == newComment.commenter) {
           //deleteBtn = $("<button><i class=material-icons>delete</i></button>");
@@ -150,5 +159,6 @@
         return;
       }
     });
-  });
+  })
+
 })(window.jQuery);

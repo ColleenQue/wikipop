@@ -46,7 +46,7 @@ router.get("/:page", async (req, res, next) => {
       blogs: temp,
       page: page,
       prev: page - 1,
-      next: page + 1,
+      next: parseInt(page) + 1,
       title: "Blogs",
       stylesheet: "/public/styles/main.css"
     });
@@ -60,6 +60,7 @@ router.get("/:page", async (req, res, next) => {
 router.post("/", async (req, res, next) => {
   //error check
   //add blog
+  let page = 1;
 
   let title, content, temp;
 
@@ -114,7 +115,6 @@ router.post("/", async (req, res, next) => {
 
   //console.log(req.session.user); gives username
   try {
-    let page = req.params.page;
     let last = await blogs.LastPage();
     let temp = await blogs.getBlogsPerPage(page);
 
@@ -143,7 +143,7 @@ router.post("/", async (req, res, next) => {
       blogs: temp,
       page: page,
       prev: page - 1,
-      next: page + 1,
+      next: parseInt(page) + 1,
       title: "Blogs",
       stylesheet: "/public/styles/main.css"
     });
@@ -217,10 +217,16 @@ router.get("/details/:id/comments", async (req, res, next) => {
     //gives data from blog object
     comments = blog.comments;
     user = req.session.user;
+    console.log(comments);
+
+    //note that this user is not the commenter
+    console.log(user);
     return res.json({success:true,comments:comments,user:user});
   }
   catch(e){
     //returns a json 
+    
+    console.log("here1");
     return res.status(500).json({ error: e });
   }
 })
@@ -232,13 +238,17 @@ router.post("/details/:id/comments", async (req, res, next) => {
     //add comment
     
     //TODO switch to ajax request
-    let comment = await blogs.addComment(req.params.id,user,req.body.comment);
+
+    console.log(req.params.id);
     let user = req.session.user;
+    console.log(req.body.comment)
+    let comment = await blogs.addComment(req.params.id,user,req.body.comment);
+    
     return res.json({success:true,comment:comment,user:user});
 
   }
   catch(e){
-    
+    console.log(e);
     return res.sendStatus(500);
   }
   
