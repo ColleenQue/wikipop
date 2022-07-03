@@ -232,7 +232,7 @@ module.exports = {
         //check if dob is in right format: format is YYYY-MM-DD
         if(!moment(dob,"YYYY-MM-DD",true).isValid())
         {
-            throw "Error: Debut Date is not in the right format"
+            throw "Error: Date of Birth is not in the right format"
         }
         return dob;
     },

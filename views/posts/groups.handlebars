@@ -1,5 +1,5 @@
 <article>
-    <h2>{{name}}</h2>
+    <h2 id="groupName">{{name}}</h2>
     <img src={{groupImage}} alt="{{name}}" width="500px" height="300px"/>
     <dl>
         <dt>Number of Members</dt>
@@ -32,8 +32,12 @@
             {{/each}}
         </dd>
     </dl>
+<img src="/img/heart-no-fill.png" alt="heart-no-fill" width="50px" height="50px" id="heart-no-fill"/>
+<img src="/img/heart-fill.png" alt="heart-fill" width="50px" height="50px" id="heart-fill" hidden/>
+<p id="note">Click on heart to like the group!</p>
+<br>
 {{#if error}}
-<p class="error"> {{error}}</p>
+<p class="error" id="error"> {{error}}</p>
 {{/if}}
 <a href="/groups">Go Back To All Groups!</a>
 </article>
