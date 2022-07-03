@@ -5,7 +5,18 @@
   //corresponds to id
 
   var commentList = $("#comments"),
-    noComment = $("#no_comments")
+    noComment = $("#no_comments"),
+    commentForm = $("#commentForm"),
+    commentInput = $("#comment_term"),
+    errorDiv = $("#error");
+
+  function checkString(string) {
+    if (!string) throw "must provide text input";
+    if (typeof string !== "string") throw "invalid string input";
+    if (string.trim().length === 0)
+      throw "string cannot be an empty string or just spaces";
+    return string;
+  }
 
 
   //get all comments
@@ -24,58 +35,65 @@
     //list of all comments
     let comments = responseMessage.comments;
 
+    //session user
+    let user = responseMessage.user;
+
     if (comments.length == 0) {
       commentList.hide();
-      //   let p = $("<p></p>");
-      //   let s = "no comments yet. be the first one to comment!";
-      //   p.append(s);
-      //   //show the no comment
-      //   noComment.append(p);
       noComment.show();
     } else {
       noComment.hide();
       for (let i = 0; i < comments.length; i++) {
         //add each comment to the list
-        let l = $("<li></li>");
-        let s = comments[i].commenter + ": " + comments[i].text;
+        let l = $("<p></p>");
+        let s = comments[i].commenter + ": " + comments[i].content+"<br>";
         //add attribute to each li tag = <li id = "comments.id">
         l.attr("id", comments[i]._id);
-        l.append(s);
-        // if (responseMessage.admin) {
-        //deleteBtn = $("<button><i class=material-icons>delete</i></button>");
-        deleteBtn = $("<button>delete</button>");
-        // deleteBtn.attr("class", "delete-comment-btn");
-        deleteBtn.on("click", function (event) {
-          var requestConfig = {
-            method: "DELETE",
-            url: window.location.href + "/comment",
-            data: { commentId: comments[i]._id },
-          };
-          $.ajax(requestConfig).then(function (responseMessage) {
-            if (responseMessage.success) {
-              errorDiv.text("Comment has been successfully deleted");
-              $("#" + comments[i]._id).remove();
-            } else if (responseMessage.error) {
-              errorDiv.text(responseMessage.error);
-            } else {
-              errorDiv.text("Error: comment deletion failed");
-            }
-            errorDiv.show();
-          });
-        });
-        l.append(deleteBtn);
-        // }
+        l.append(s); //content
+
+        //https://www.w3schools.com/jquery/jquery_dom_add.asp
+
+
+        if (user == comments.commenter) {
+          //deleteBtn = $("<button><i class=material-icons>delete</i></button>");
+          deleteBtn = $("<i></i>");
+          deleteBtn.attr("class", "fa-solid fa-circle-xmark");
+
+          // deleteBtn.attr("class", "delete-comment-btn");
+          // deleteBtn.on("click", function (event) {
+          //   var requestConfig = {
+          //     method: "DELETE",
+          //     url: window.location.href + "/comment",
+          //     data: { commentId: comments[i]._id },
+          //   };
+          //   $.ajax(requestConfig).then(function (responseMessage) {
+          //     if (responseMessage.success) {
+          //       errorDiv.text("Comment has been successfully deleted");
+          //       $("#" + comments[i]._id).remove();
+          //     } else if (responseMessage.error) {
+          //       errorDiv.text(responseMessage.error);
+          //     } else {
+          //       errorDiv.text("Error: comment deletion failed");
+          //     }
+          //     errorDiv.show();
+          //   });
+          // });
+          l.append(deleteBtn);
+        }
 
         //need to empty
         commentList.append(l);
         commentList.show();
+
       }
     }
+
   });
 
   //add comment
   commentForm.submit(function (event) {
     event.preventDefault();
+    console.log("submitted");
 
     var comment = commentInput.val();
 
@@ -97,7 +115,7 @@
     var requestConfig = {
       method: "POST",
       //https://stackoverflow.com/questions/1696429/get-the-current-url-but-without-the-http-part-bookmarklet
-      url: window.location.pathname + "/comment",
+      url: window.location.pathname + "/comments",
       data: { comment: comment },
       //request.body.comment
     };
@@ -105,42 +123,34 @@
     $.ajax(requestConfig).then(function (responseMessage) {
       //add comment successful
       if (responseMessage.success) {
+
+
+        let commenter = responseMessage.user;
         //return singular new comment
         let newComment = responseMessage.comment;
 
-        let l = $("<li></li>");
-        let s = newComment.commenter + ": " + newComment.text;
+        let l = $("<p></p>");
+
+        let s = newComment.commenter + ": " + newComment.content;
         l.attr("id", newComment._id);
         l.append(s);
-        if (responseMessage.admin) {
-          deleteBtn = $("<button><i class=material-icons>delete</i></button>");
-          deleteBtn.attr("class", "delete-comment-btn");
-          deleteBtn.on("click", function (event) {
-            var requestConfig = {
-              method: "DELETE",
-              url: window.location.href + "/comment",
-              data: { commentId: newComment._id },
-            };
-            $.ajax(requestConfig).then(function (responseMessage) {
-              if (responseMessage.success) {
-                errorDiv.text("Comment has been successfully deleted");
-                $("#" + newComment._id).remove();
-              } else if (responseMessage.error) {
-                errorDiv.text(responseMessage.error);
-              } else {
-                errorDiv.text("Error: comment deletion failed");
-              }
-              errorDiv.show();
-            });
-          });
-          l.append(deleteBtn);
+
+        //https://www.w3schools.com/jquery/jquery_dom_add.asp
+
+
+
+        if (commenter == newComment.commenter) {
+          //deleteBtn = $("<button><i class=material-icons>delete</i></button>");
+          deleteBtn = $("<i></i>");
+          deleteBtn.attr("class", "fa-solid fa-circle-xmark");
+          //need to empty
+          commentList.append(l);
+          commentList.show();
+          noComment.hide();
+          errorDiv.hide();
         }
-        //need to empty
-        commentList.append(l);
-        commentList.show();
-        noComment.hide();
-        errorDiv.hide();
-      } else {
+      }
+      else {
         //TODO test
         let e = responseMessage.error;
         errorDiv.empty();
@@ -149,5 +159,6 @@
         return;
       }
     });
-  });
+  })
+
 })(window.jQuery);
