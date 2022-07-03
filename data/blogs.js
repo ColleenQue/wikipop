@@ -47,6 +47,7 @@ let exportedMethods =
         return blogList;
     },
     async findBlog(blogID) {
+
         blogID = validation.checkBlogID(blogID);
         const blogCollections = await blogs();
         const findBlog = await blogCollections.findOne({ _id: ObjectId(blogID) });
@@ -87,28 +88,39 @@ let exportedMethods =
 
     },
     async addComment(blogID,commenter,content) {
+      
         blogID = validation.checkBlogID(blogID);
         //commenter = validation.checkComments(content);
         commenter=validation.checkUserName(commenter);
-        
-
-        //add comment to comment collection
+    
+        //add comment as subdocument
         const blogCollections = await blogs();
-        const comment = await comments.createComment(commenter,content);
-
-        const commentID = comment._id;
 
         const theBlog = await this.findBlog(blogID);
 
-        let theComments = theBlog[0].comments;
-        theComments.push(commentID);
+        //declare new comment
+        let newComment =
+        {
+            //name would be name of user
+            _id: ObjectId().toString(),
+            commenter: commenter,
+            content: content,
+            numOfLikes: 0,
+            comments: []
+        }
 
-        const updateBlog = blogCollections.updateOne({ _id: theBlog[0]._id }, { $set: { comments: theComments } });
-        if (!updateBlog.matchedCount && !updateBlog.modifiedCount) {
+
+        console.log(theBlog);
+        let theComments = theBlog.comments;
+        theComments.push(newComment);
+
+
+        const updateBlog = blogCollections.updateOne({ _id: theBlog._id }, { $set: { comments: theComments } });
+        if (!updateBlog ||updateBlog.modifiedCount === 0 ) {
             throw "Error: Update failed";
         }
 
-        return comment;
+        return newComment;
     }
 };
 

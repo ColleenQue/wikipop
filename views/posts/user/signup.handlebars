@@ -1,0 +1,21 @@
+<div class="center">
+    <h1>{{title}}</h1>
+<form method="POST" action="/signup" id="signup-form">
+        <label for = "username">Username</label> <br>
+    <input name = "username" type="text" id="username" placeholder="username" value = "{{username}}" >
+    <br>
+    <label for = "password"> Password</label>
+    <br>
+    <input name = "password" type = "password" id = "password" placeholder="password" value = "{{password}}"> 
+    <br><br>
+
+     <button type = "submit"> Submit </button>
+</form>
+
+{{#if err}}
+<p class="error"> {{message}}</p>
+{{/if}}
+
+<a href="/user/login">Already have an account? Click here to log-in</a>
+
+</div>

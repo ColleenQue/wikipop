@@ -15,7 +15,7 @@ router.get('/login', async (req, res) => {
   else
   {
     console.logging(new Date().toUTCString(),req.method,req.originalUrl,false);
-    res.render('posts/login', { title: "Log in" });
+    res.render('posts/user/login', { title: "Log in" });
   }
    
 });
@@ -27,7 +27,7 @@ router.get('/signup', async (req, res) => {
   }
   else{
     console.logging(new Date().toUTCString(),req.method,req.originalUrl,false);
-    res.render('posts/signup', { title: "Sign Up" });
+    res.render('posts/user/signup', { title: "Sign Up" });
 
   }
 });
@@ -53,7 +53,7 @@ router.post('/signup', async (req, res) => {
   catch (e) {
     //render the sign-up screen once again
     //along with an HTTP 400 status code) explaining what they had entered incorrectly.
-    res.status(400).render('posts/signup', { err: true, message: e ,title: "Sign up"});
+    res.status(400).render('posts/user/signup', { err: true, message: e ,title: "Sign up"});
     return;
   }
 
@@ -72,7 +72,7 @@ router.post('/login', async (req, res) => {
     console.logging(new Date().toUTCString(),req.method,req.originalUrl,false);
   }
   catch (e) {
-    res.status(400).render('posts/login', { err: true, message: e ,title:"Log in"});
+    res.status(400).render('posts/user/login', { err: true, message: e ,title:"Log in"});
     return;
   }
 
@@ -90,7 +90,7 @@ router.post('/login', async (req, res) => {
 
 router.get('/logout', async (req, res) => {
   req.session.destroy();
-  res.render('posts/logout');
+  res.render('posts/user/logout');
   console.logging(new Date().toUTCString(),req.method,req.originalUrl,false);
 });
 
