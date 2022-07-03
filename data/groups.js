@@ -104,7 +104,7 @@ let exportedMethods=
         name=validation.checkGroupName(name);
         commentID=validation.checkCommentID(commentID);
         const theGroup=await this.findGroup(name);
-        let theComments=theGroup.comments;
+        let theComments=theGroup[0].comments;
         theComments.push(commentID);
         const groupsCollection=await groups();
         const updateGroup=groupsCollection.updateOne({_id:theGroup[0]._id},{$set:{comments: theComments}});
@@ -113,6 +113,34 @@ let exportedMethods=
             throw "Error: Update failed";
         }
         return commentID;
+    },
+    async likeGroup(name)
+    {
+        name=validation.checkGroupName(name);
+        const theGroup=await this.findGroup(name);
+        let numOfLikes=theGroup[0].numOfLikes;
+        numOfLikes++;
+        const groupsCollection=await groups();
+        const updateGroup=await groupsCollection.updateOne({_id:theGroup[0]._id},{$set:{numOfLikes: numOfLikes}});
+        if(!updateGroup.matchedCount && !updateGroup.modifiedCount)
+        {
+            throw "Error: Update failed";
+        }
+        return name;
+    },
+    async unlikeGroup(name)
+    {
+        name=validation.checkGroupName(name);
+        const theGroup=await this.findGroup(name);
+        let numOfLikes=theGroup[0].numOfLikes;
+        numOfLikes=numOfLikes-1;
+        const groupsCollection=await groups();
+        const updateGroup=await groupsCollection.updateOne({_id:theGroup[0]._id},{$set:{numOfLikes: numOfLikes}});
+        if(!updateGroup.matchedCount && !updateGroup.modifiedCount)
+        {
+            throw "Error: Update failed";
+        }
+        return name;
     }
 };
 

@@ -34,6 +34,7 @@ router.get('/newGroup', async(req,res) =>
     res.render('posts/newGroup');
 });
 
+
 router.post('/newGroup', upload.single('groupImage'), async(req,res)=>
 {
     req.body.name=validation.checkGroupName(req.body.name);
@@ -64,10 +65,22 @@ router.post('/newGroup', upload.single('groupImage'), async(req,res)=>
     memberNamesList.push(name);
     let imagePath=req.file.path.replaceAll("\\","/");
     imagePath=imagePath.replace("public","");
-    const createGroup=groups.createGroup(req.body.name,req.body.numOfMembers,req.body.debutDate,
+    const createGroup= await groups.createGroup(req.body.name,req.body.numOfMembers,req.body.debutDate,
         req.body.awards,req.body.greeting,req.body.fandomName,req.body.fandomColor,req.body.socialMedia,memberNamesList,imagePath);
     return res.redirect('/groups');
 
+});
+
+router.get('/:id/like', async(req,res) =>
+{
+    const likeGroup=await groups.likeGroup(req.params.id);
+    res.redirect('/groups/:id');
+});
+
+router.get('/:id/unlike', async(req,res) =>
+{
+    const unlikeGroup=await groups.unlikeGroup(req.params.id);
+    res.redirect('/groups/:id');
 });
 
 router.get('/:id', async(req,res) =>
