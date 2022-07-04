@@ -64,7 +64,6 @@ router.post('/newGroup', upload.single('groupImage'), async(req,res)=>
     }
     memberNamesList.push(name);
     let imagePath=req.file.path.replaceAll("\\","/");
-    imagePath=imagePath.replace("public","");
     const createGroup= await groups.createGroup(req.body.name,req.body.numOfMembers,req.body.debutDate,
         req.body.awards,req.body.greeting,req.body.fandomName,req.body.fandomColor,req.body.socialMedia,memberNamesList,imagePath);
     return res.redirect('/groups');

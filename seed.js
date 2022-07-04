@@ -45,7 +45,7 @@ async function main()
         let socialMedia=[{type: "instagram", handle: "@aespa_official"},{type: "twitter", handle: "@Aespa_Official"},
     {type: "youtube", handle: "asepa"},{type:"tiktok",handle:"@aespa_official"}];
         let membersLinks=["Karina","Giselle","Winter","NingNing"];
-        let groupImage="/img/asepa.jpg";
+        let groupImage="/public/img/asepa.jpg";
         await groups.createGroup(name,numOfMembers,debutDate,awards,greeting,fandomName,fandomColor,socialMedia,membersLinks,groupImage);
     }catch(e)
     {
@@ -66,7 +66,7 @@ async function main()
         let funFacts=["She was born in Paldal-gu, Gyeonggi-do, South Korea.","She’s the tallest member.","She has a black belt in taekwando."];
         let socialMedia=[{type: "instagram", handle: "@aespa_official"},{type: "twitter", handle: "@Aespa_Official"},
         {type: "youtube", handle: "asepa"},{type:"tiktok",handle:"@aespa_official"}];
-        let idolImage="/img/karina.jpeg";
+        let idolImage="/public/img/karina.jpeg";
         await idols.createIdol(name,role,group,age,dob,height,weight,fandomName,fandomColor,funFacts,socialMedia,idolImage);
     }catch(e)
     {
