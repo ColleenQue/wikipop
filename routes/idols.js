@@ -43,7 +43,6 @@ router.post('/newIdol', upload.single('idolImage'), async(req,res)=>
         req.body.funFacts=validation.checkfunFacts(req.body.funFacts);
         req.body.socialMedia=validation.checkSocialMedia(req.body.socialMedia);
         let imagePath=req.file.path.replaceAll("\\","/");
-        imagePath=imagePath.replace("public","");
         const createIdol=idols.createIdol(req.body.idolName,req.body.role,req.body.groupName,req.body.age,req.body.dob,req.body.height,
             req.body.weight,req.body.fandomName,req.body.fandomColor,req.body.funFacts,req.body.socialMedia,imagePath);
         if(req.body.groupName==="solo")
