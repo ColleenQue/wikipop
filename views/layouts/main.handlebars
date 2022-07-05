@@ -6,16 +6,47 @@
     <meta charset="utf-8">
 
     <link rel="stylesheet" href="/public/css/main.css" crossorigin="anonymous">
+    {{#if stylesheet}}
+    <link rel="stylesheet" href="{{stylesheet}}">
+    {{/if}}
+
     <script src="https://kit.fontawesome.com/98fc5c884d.js" crossorigin="anonymous"></script>
+
     <title>{{title}}</title>
 
 </head>
 
 <body>
+    <section class="container">
+        <div class="hover-box">
+            <span>
+                <div class="circle">
+            </span>
+            <div class="logo"> WikiPop</div>
+        </div>
+        <div class="hover-image">
+            <img src="/public/img/fingerheart.jpg"
+                style="float:right; margin:10px 50px 0px 0px; cursor:pointer; cursor:hand; border:0" width="150px"
+                height=" 150px" alt="woman" />
+        </div>
+        
+        <a class="button" href="#">About</a>
+        <a class="button" href="blogs/1"> Blog </a>
+        <a class="button" href="#"> Reddit </a>
+        <a class="button" href="groups"> Groups</a>
 
+        {{#if not_logged_in}}
+        <a class="button" href="user/login"> Login</a>
+        <a class="button" href="user/signup"> Sign Up</a>
+        {{else}}
+        <a class="button" href="user/logout"> Sign Out</a>
+        {{/if}}
+
+    </section>
 
     <div>
         <main>
+
             {{{body}}}
         </main>
     </div>
@@ -37,8 +68,8 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script> --}}
     {{!-- {{/if}} --}}
-        <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
-    crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"
+        integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
     <script src="/public/scripts/ajax.js"></script>
     {{#if script}}
     <script src="https://code.jquery.com/jquery-2.2.4.min.js"

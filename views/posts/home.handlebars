@@ -1,0 +1,82 @@
+<section class="container">
+    <div class="hover-box">
+        <span>
+            <div class="circle">
+        </span>
+        <div class="logo"> WikiPop</div>
+    </div>
+    <div class="hover-image">
+        <img src="/public/img/fingerheart.jpg"
+            style="float:right; margin:10px 50px 0px 0px; cursor:pointer; cursor:hand; border:0" width="150px"
+            height=" 150px" alt="woman" />
+    </div>
+    <a class="button-1" href="#">About</a>
+    <a class="button-2" href="blogs/1"> Blog </a>
+    <a class="button-3" href="#"> Reddit </a>
+    <a class="button-4" href="groups"> Groups</a>
+
+    {{#if not_logged_in}}
+    <a class="button-5" href="user/login"> Login</a>
+    <a class="button-6" href="user/signup"> Sign Up</a>
+    {{else}}
+    <a class="button-5" href="user/logout"> Sign Out</a>
+    {{/if}}
+
+</section>
+<section class="second-page">
+    <h1>About
+    </h1>
+    <div class=picbox>
+        <div class=box1>
+            <img src="/public/img/seulgipicture.png">
+        </div>
+        <div class=box2>
+            <h2>Details</h2>
+            <li>Summer project created by Suneedhi, Colleen and Cindy</li>
+            <li> Functions like reddit and kpop profile</li>
+        </div>
+        <div class=box3>
+            <img src="/public/img/wonyoung.png">
+        </div>
+    </div>
+</section>
+<section class="footer">
+    <h4>Contact</h4>
+    <header class="suneedhi">
+        <h5>Suneedhi</h5>
+    </header>
+    <header class="colleen">
+        <h5 id="colleen"> Colleen:</h5>
+    </header>
+    <header class="cindy">
+        <h5 id="cindy"> Cindy: </h5>
+    </header>
+    <h7> Cindy</h7>
+    <div class=picbox2>
+        <div class=logo1>
+            <a href="https://github.com/laddhasuneedhi">
+                <img src="/public/img/github.png">
+            </a>
+        </div>
+        <div class=logo2>
+            <a href="https://www.linkedin.com/in/suneedhi-laddha-44a423199/">
+                <img src="/public/img/linkedin.png" class="github2">
+            </a>
+            <a href="https://github.com/ColleenQue">
+                <img src="/public/img/github.png" class="github3">
+            </a>
+        </div>
+        <div class=logo3>
+            <img src="/public/img/linkedin.png" class="github4">
+            <a href="https://github.com/cindytran211/">
+                <img src="/public/img/github.png" class="github5">
+            </a>
+            <img src="/public/img/linkedin.png" class="github6">
+
+        </div>
+    </div>
+    <div class="vertical">
+    </div>
+    <div class="vertical2">
+    </div>
+</section>
