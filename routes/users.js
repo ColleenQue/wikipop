@@ -44,7 +44,7 @@ router.post('/signup', async (req, res) => {
     result = await user.createUser(username, password);
     console.logging(new Date().toUTCString(),req.method,req.originalUrl,false);
     if (result.userInserted) {
-      res.redirect('/');
+      res.redirect('/user/login');
     }
     else {
       res.status(500).json({ error: "Internal Server Error" });
