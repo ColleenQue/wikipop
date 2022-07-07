@@ -1,10 +1,14 @@
-
+<br><br><br><br><br><br>
 
 <div class="left">
     <h1> Blogs</h1>
 
     <section>
+    
+        {{#if newBlog}}
+        <h4 class = "pink">New Blog Added Successfully!</h4>
 
+        {{/if}}
 
 
         {{#if blogs.length}}
@@ -59,17 +63,18 @@
 
     <form id="addBlog" method="POST" action="/blogs">
         {{#if error1}}
-        <p> Please enter title correctly</p>
+        <p class="error"> Please enter title correctly</p>
+        <br>
         {{/if}}
         {{#if error2}}
-        <p> Please enter content correctly</p>
+        <p class="error"> Please enter content correctly</p>
+        <br>
         {{/if}}
         <label for="title">Title</label> <br>
         <input name="title" type="text" id="title" placeholder="title">
         <br>
         <label for="content"> Content</label><br>
-        <textarea id="content" name="content" rows="15" cols="50" placeholder="Enter blog"> </textarea>
-
+        <textarea style="width: 100%;" id="myNiceEditor" name="content" rows="15" cols="50" placeholder="Enter blog"> </textarea>
         <button type="submit">Submit</button>
         <hr>
 

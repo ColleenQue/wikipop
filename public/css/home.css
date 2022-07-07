@@ -66,6 +66,10 @@ body {
     -webkit-text-fill-color: transparent;
 }
 
+input, textarea {
+    background-color: #d1d1d1;
+  }
+
 /*code from : https://www.youtube.com/watch?v=ueyRcYEmsrI */
 .container a {
     position: relative;

@@ -6,63 +6,54 @@ const con = require('../helper');
 const { checkBlogContent } = require('../validation');
 const comments = require('../data/comments')
 
-//get itself/main page
-// router.use("/", (req, res, next) => {
-//   //if session not logged in
-//   if (!req.session.user) {
-//     return res.redirect("/user/login");
-//   }
-//   next();
-// });
+router.use("/", (req, res, next) => {
+  //if session not logged in
+  if (!req.session.user) {
+    return res.redirect("/user/login");
+  }
+  next();
+});
 
 router.get("/:page", async (req, res, next) => {
   try {
     let page = req.params.page;
     let last = await blogs.LastPage();
     let temp = await blogs.getBlogsPerPage(page);
+    let next, prev = null;
 
-    if (page == 1) {
-      return res.render("posts/blogs/blog", {
-        blogs: temp,
-        page: page,
-        next: parseInt(page) + 1,
-        title: "Blogs",
-        stylesheet: "/public/styles/main.css", not_logged_in: true
-      });
+    //not first page
+    if (page > 1) {
+      prev = parseInt(page) - 1;
     }
 
-    if(page >= last){
-      return res.render("posts/blogs/blog", {
-        blogs: temp,
-        page: page,
-        prev: page - 1,
-        title: "Blogs",
-        stylesheet: "/public/styles/main.css", not_logged_in: true
-      });
-
+    //not last page
+    if (page < last) {
+      next = parseInt(page) + 1;
     }
 
     return res.render("posts/blogs/blog", {
       blogs: temp,
       page: page,
-      prev: page - 1,
-      next: parseInt(page) + 1,
+      prev: prev,
+      next: next,
       title: "Blogs",
       stylesheet: "/public/styles/main.css", not_logged_in: true
     });
+
+
+
   } catch (e) {
     return res.sendStatus(500);
   }
 
 })
 
-
+//post blog
 router.post("/", async (req, res, next) => {
   //error check
   //add blog
-  let page = 1;
 
-  let title, content, temp;
+  let newBlog, temp;
 
   try {
     temp = await blogs.getAllBlogs();
@@ -103,7 +94,7 @@ router.post("/", async (req, res, next) => {
 
   try {
     //purpose is to add new blog
-    await blogs.createBlog(req.session.user, req.body.title, req.body.content);
+    newBlog = await blogs.createBlog(req.session.user, req.body.title, req.body.content);
   } catch (e) {
     return res.render("posts/blogs/blog", {
       blogs: temp,
@@ -113,37 +104,35 @@ router.post("/", async (req, res, next) => {
     });
   }
 
+  let page = await blogs.LastPage();
+  page=Math.ceil(page);
+  console.log(page);
+
+
   //console.log(req.session.user); gives username
   try {
     let last = await blogs.LastPage();
     let temp = await blogs.getBlogsPerPage(page);
 
-    if (page == 1) {
-      return res.render("posts/blogs/blog", {
-        blogs: temp,
-        page: page,
-        next: parseInt(page) + 1,
-        title: "Blogs",
-        stylesheet: "/public/styles/main.css", not_logged_in: true
-      });
+    let next, prev = null;
+
+    //not first page
+    if (page > 1) {
+      prev = parseInt(page) - 1;
     }
 
-    if(page >= last){
-      return res.render("posts/blogs/blog", {
-        blogs: temp,
-        page: page,
-        prev: page - 1,
-        title: "Blogs",
-        stylesheet: "/public/styles/main.css", not_logged_in: true
-      });
-
+    //not last page
+    if (page < last) {
+      next = parseInt(page) + 1;
     }
+
 
     return res.render("posts/blogs/blog", {
+      newBlog:newBlog,
       blogs: temp,
       page: page,
-      prev: page - 1,
-      next: parseInt(page) + 1,
+      prev: prev,
+      next: next,
       title: "Blogs",
       stylesheet: "/public/styles/main.css", not_logged_in: true
     });
@@ -157,7 +146,7 @@ router.post("/", async (req, res, next) => {
 
 router.get("/details/:id", async (req, res, next) => {
 
-  try{
+  try {
 
     let temp = await blogs.findBlog(req.params.id);
     return res.render("posts/blogs/blog2", {
@@ -168,8 +157,8 @@ router.get("/details/:id", async (req, res, next) => {
 
 
   }
-  catch(e){
-    
+  catch (e) {
+
     return res.sendStatus(500);
   }
 
@@ -177,11 +166,11 @@ router.get("/details/:id", async (req, res, next) => {
 
 
 router.post("/details/:id", async (req, res, next) => {
-  try{
+  try {
     //add comment
     let commenter = req.session.user;
     let content = req.body.content;
-   
+
     //await blogs.addComment(req.params.id,commenter,content)
 
     //TODO switch to ajax request
@@ -194,26 +183,26 @@ router.post("/details/:id", async (req, res, next) => {
     });
 
   }
-  catch(e){
-    
+  catch (e) {
+
     return res.sendStatus(500);
   }
-  
+
 })
 
 
 router.get("/details/:id/comments", async (req, res, next) => {
   //gets all comments for current blog id
-  let blog,comments,user;
-  try{
+  let blog, comments, user;
+  try {
     //returns blog on success
     blog = await blogs.findBlog(req.params.id);
   }
-  catch(e){
+  catch (e) {
     return res.status(404).json({ error: e });
   }
 
-  try{
+  try {
     //gives data from blog object
     comments = blog.comments;
     user = req.session.user;
@@ -221,11 +210,11 @@ router.get("/details/:id/comments", async (req, res, next) => {
 
     //note that this user is not the commenter
     console.log(user);
-    return res.json({success:true,comments:comments,user:user});
+    return res.json({ success: true, comments: comments, user: user });
   }
-  catch(e){
+  catch (e) {
     //returns a json 
-    
+
     console.log("here1");
     return res.status(500).json({ error: e });
   }
@@ -234,24 +223,24 @@ router.get("/details/:id/comments", async (req, res, next) => {
 
 
 router.post("/details/:id/comments", async (req, res, next) => {
-  try{
+  try {
     //add comment
-    
+
     //TODO switch to ajax request
 
     console.log(req.params.id);
     let user = req.session.user;
     console.log(req.body.comment)
-    let comment = await blogs.addComment(req.params.id,user,req.body.comment);
-    
-    return res.json({success:true,comment:comment,user:user});
+    let comment = await blogs.addComment(req.params.id, user, req.body.comment);
+
+    return res.json({ success: true, comment: comment, user: user });
 
   }
-  catch(e){
+  catch (e) {
     console.log(e);
     return res.sendStatus(500);
   }
-  
+
 })
 
 

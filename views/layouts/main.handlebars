@@ -12,6 +12,23 @@
 
     <script src="https://kit.fontawesome.com/98fc5c884d.js" crossorigin="anonymous"></script>
 
+ <script type="text/javascript" src="//js.nicedit.com/nicEdit-latest.js"></script> 
+  <script type="text/javascript">
+ 
+        bkLib.onDomLoaded(function() { nicEditors.allTextAreas() });
+  </script>
+    <script type="text/javascript" src="core/rte.js"></script>
+    <script type="text/javascript">
+        //<![CDATA[
+        bkLib.onDomLoaded(function () {
+            nicEditors.editors.push(
+                new nicEditor().panelInstance(
+                    document.getElementById('myNicEditor')
+                )
+            );
+        });
+//]]>
+    </script>
     <title>{{title}}</title>
 
 </head>
@@ -29,7 +46,7 @@
                 style="float:right; margin:10px 50px 0px 0px; cursor:pointer; cursor:hand; border:0" width="150px"
                 height=" 150px" alt="woman" />
         </div>
-        
+
         <a class="button" href="/">Home</a>
         <a class="button" href="/blogs/1"> Blog </a>
         <a class="button" href="/groups"> Groups</a>
@@ -43,10 +60,9 @@
 
     </section>
 
-    <div>
-        <main>
-            {{{body}}}
-        </main>
+    <div class="posts">
+        {{{body}}}
+
     </div>
     {{!--
 
