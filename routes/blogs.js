@@ -6,15 +6,22 @@ const con = require('../helper');
 const { checkBlogContent } = require('../validation');
 const comments = require('../data/comments')
 
-router.use("/", (req, res, next) => {
-  //if session not logged in
-  if (!req.session.user) {
-    return res.redirect("/user/login");
-  }
-  next();
-});
+// router.use("/", (req, res, next) => {
+//   //if session not logged in
+//   if (!req.session.user) {
+//     return res.redirect("/user/login");
+//   }
+//   next();
+// });
 
 router.get("/:page", async (req, res, next) => {
+
+  let not_logged= false;
+
+  if (!req.session.user) {
+    not_logged=true;
+  }
+
   try {
     let page = req.params.page;
     let last = await blogs.LastPage();
@@ -37,7 +44,7 @@ router.get("/:page", async (req, res, next) => {
       prev: prev,
       next: next,
       title: "Blogs",
-      stylesheet: "/public/styles/main.css", not_logged_in: true
+      stylesheet: "/public/styles/main.css", not_logged_in: not_logged
     });
 
 
@@ -52,6 +59,11 @@ router.get("/:page", async (req, res, next) => {
 router.post("/", async (req, res, next) => {
   //error check
   //add blog
+  let not_logged= false;
+
+  if (!req.session.user) {
+    not_logged=true;
+  }
 
   let newBlog, temp;
 
@@ -62,7 +74,7 @@ router.post("/", async (req, res, next) => {
     return res.render("posts/blogs/blog", {
       blogs: "sorry no blogs were found",
       title: "Blogs",
-      stylesheet: "/public/styles/main.css", not_logged_in: true
+      stylesheet: "/public/styles/main.css", not_logged_in: not_logged
     });
   }
 
@@ -88,7 +100,7 @@ router.post("/", async (req, res, next) => {
       blogs: temp,
       title: "Blogs",
       error2: true,
-      stylesheet: "/public/styles/main.css", not_logged_in: true
+      stylesheet: "/public/styles/main.css",  not_logged_in: not_logged
     });
   }
 
@@ -100,12 +112,12 @@ router.post("/", async (req, res, next) => {
       blogs: temp,
       title: "Blogs",
       error2: true,
-      stylesheet: "/public/styles/main.css", not_logged_in: true
+      stylesheet: "/public/styles/main.css",  not_logged_in: not_logged
     });
   }
 
   let page = await blogs.LastPage();
-  page=Math.ceil(page);
+  page = Math.ceil(page);
   console.log(page);
 
 
@@ -128,13 +140,13 @@ router.post("/", async (req, res, next) => {
 
 
     return res.render("posts/blogs/blog", {
-      newBlog:newBlog,
+      newBlog: newBlog,
       blogs: temp,
       page: page,
       prev: prev,
       next: next,
       title: "Blogs",
-      stylesheet: "/public/styles/main.css", not_logged_in: true
+      stylesheet: "/public/styles/main.css",not_logged_in: not_logged
     });
   } catch (e) {
     return res.sendStatus(500);
@@ -146,13 +158,19 @@ router.post("/", async (req, res, next) => {
 
 router.get("/details/:id", async (req, res, next) => {
 
+  let not_logged= false;
+
+  if (!req.session.user) {
+    not_logged=true;
+  }
+
   try {
 
     let temp = await blogs.findBlog(req.params.id);
     return res.render("posts/blogs/blog2", {
       blog: temp,
       title: "Blogs",
-      script: "/public/scripts/blogs.js", not_logged_in: true
+      script: "/public/scripts/blogs.js", not_logged_in: not_logged
     });
 
 
@@ -166,6 +184,13 @@ router.get("/details/:id", async (req, res, next) => {
 
 
 router.post("/details/:id", async (req, res, next) => {
+
+  let not_logged= false;
+
+  if (!req.session.user) {
+    not_logged=true;
+  }
+
   try {
     //add comment
     let commenter = req.session.user;
@@ -179,7 +204,7 @@ router.post("/details/:id", async (req, res, next) => {
     return res.render("posts/blogs/blog2", {
       blog: temp,
       title: "Blogs",
-      script: "/public/scripts/blogs.js", not_logged_in: true
+      script: "/public/scripts/blogs.js", not_logged_in: not_logged
     });
 
   }
@@ -192,6 +217,13 @@ router.post("/details/:id", async (req, res, next) => {
 
 
 router.get("/details/:id/comments", async (req, res, next) => {
+
+  let not_logged= false;
+
+  if (!req.session.user) {
+    not_logged=true;
+  }
+
   //gets all comments for current blog id
   let blog, comments, user;
   try {
@@ -223,6 +255,13 @@ router.get("/details/:id/comments", async (req, res, next) => {
 
 
 router.post("/details/:id/comments", async (req, res, next) => {
+
+  let not_logged= false;
+
+  if (!req.session.user) {
+    not_logged=true;
+  }
+  
   try {
     //add comment
 
