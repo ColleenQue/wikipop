@@ -3,6 +3,7 @@ const blogs = mongoCollections.blogs;
 const validation = require('../validation');
 const comments = require('../data/comments');
 const { ObjectId } = require('mongodb');
+const { search } = require('../routes/blogs');
 
 
 let exportedMethods =
@@ -57,7 +58,6 @@ let exportedMethods =
         }
 
         return findBlog;
-
     },
 
     async LastPage(){
@@ -121,7 +121,47 @@ let exportedMethods =
         }
 
         return newComment;
+    },
+    //for searching
+    async searchBlogs(searchTerm) {
+
+        //check error
+        if(!searchTerm){
+          throw "search term must exist";
+        }
+
+        if (typeof searchTerm !== 'string') throw "search term must be a string";
+        //find array 
+        if (searchTerm.trim().length === 0) throw "Error: search term must not be all empty spaces"
+    
+
+        const blogCollections = await blogs();
+        //find array
+        const blogs2 = await blogCollections.find ({ $or: [ { title: searchTerm }, { name:searchTerm },{content:searchTerm}] }).toArray();
+ 
+        console.log(blogs2);
+        return blogs2;
     }
+    //   },    
+    //   async BlogsPerPageList(pageNumber,list){
+    //     //gets 5 blogs per page
+
+    //     //sort by number of likes
+        
+    //     const index = (pageNumber-1) * 5;
+    //     const end = index+5;
+    //     for (let i=index;i<end;i++){
+    //         if(i >= blogList.length) {return list;} 
+    //         list.push(blogList[i]);
+    //     }
+    //     return list;
+    // },
+    // async LastPageList(list){
+    //     const blogList = list;
+    //     let lastPage = (blogList.length/5);
+    //     //returns 5.5 or something
+    //     return lastPage;
+    // }
 };
 
 module.exports = exportedMethods;

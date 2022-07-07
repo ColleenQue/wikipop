@@ -4,15 +4,24 @@
     <h1> Blogs</h1>
 
     <section>
-    
-        {{#if newBlog}}
-        <h4 class = "pink">New Blog Added Successfully!</h4>
 
+        {{#if search}}
+        <a class="purple" href="/blogs/1">Return to all blogs</a>
+        {{/if}}
+
+        {{#if newBlog}}
+        <h4 class="pink">New Blog Added Successfully!</h4>
         {{/if}}
 
 
         {{#if blogs.length}}
+
+        {{#if search}}
+        <h2>Search Result Blogs</h2>
+        {{else}}
         <h2>Trending Blogs</h2>
+        {{/if}}
+
 
         {{#each blogs}}
         <hr>
@@ -24,32 +33,56 @@
 
         {{/each}}
 
+
+        {{else}}
+
+        <h2>Sorry, no blogs found.</h2>
+
         {{/if}}
+
+
 
     </section>
 
     <hr>
     <div class="pages">
-        {{#if prev}}
-        <a class="purple" href="/blogs/{{prev}}">Prev Page</a>
 
+        {{#if prev}}
+        {{#if search}}
+        <a class="purple" href="/blogs/{{prev}}/search">Prev Page</a>
+        {{else}}
+        <a class="purple" href="/blogs/{{prev}}">Prev Page</a>
+        {{/if}}
         {{/if}}
 
         <p>Page {{page}}</p>
 
-        {{#if next}}
-        <a class="purple" href="/blogs/{{next}}">Next Page</a>
 
+        {{#if next}}
+        {{#if search}}
+        <a class="purple" href="/blogs/{{next}}/search">Next Page</a>
+        {{else}}
+        <a class="purple" href="/blogs/{{next}}">Next Page</a>
+        {{/if}}
         {{/if}}
     </div>
 
     <br>
 </div>
 
+{{!-- search for blog --}}
 <div class="right">
     <h2>Search for Blog</h2>
 
-    <form id="searchTag" method="POST" action="/blogs/tag">
+
+
+    <form id="searchTag" method="POST" action="/blogs/{{page}}/search">
+
+        {{#if error0}}
+        <p class="error">{{error0}}</p>
+        <br>
+        {{/if}}
+
 
         <label for="tag">Search for topic/idol/group</label> <br>
         <input name="tag" type="text" id="tag" placeholder="topic/idol/group">
@@ -74,7 +107,8 @@
         <input name="title" type="text" id="title" placeholder="title">
         <br>
         <label for="content"> Content</label><br>
-        <textarea style="width: 100%;" id="myNiceEditor" name="content" rows="15" cols="50" placeholder="Enter blog"> </textarea>
+        <textarea style="width: 100%;" id="myNiceEditor" name="content" rows="15" cols="50"
+            placeholder="Enter blog"> </textarea>
         <button type="submit">Submit</button>
         <hr>
 

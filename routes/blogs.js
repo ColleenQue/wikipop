@@ -16,10 +16,10 @@ const comments = require('../data/comments')
 
 router.get("/:page", async (req, res, next) => {
 
-  let not_logged= false;
+  let not_logged = false;
 
   if (!req.session.user) {
-    not_logged=true;
+    not_logged = true;
   }
 
   try {
@@ -59,16 +59,16 @@ router.get("/:page", async (req, res, next) => {
 router.post("/", async (req, res, next) => {
   //error check
   //add blog
-  let not_logged= false;
+  let not_logged = false;
 
   if (!req.session.user) {
-    not_logged=true;
+    not_logged = true;
   }
 
   let newBlog, temp;
 
   try {
-    temp = await blogs.getAllBlogs();
+    let temp = await blogs.getBlogsPerPage(page);
   }
   catch (e) {
     return res.render("posts/blogs/blog", {
@@ -100,7 +100,7 @@ router.post("/", async (req, res, next) => {
       blogs: temp,
       title: "Blogs",
       error2: true,
-      stylesheet: "/public/styles/main.css",  not_logged_in: not_logged
+      stylesheet: "/public/styles/main.css", not_logged_in: not_logged
     });
   }
 
@@ -112,7 +112,7 @@ router.post("/", async (req, res, next) => {
       blogs: temp,
       title: "Blogs",
       error2: true,
-      stylesheet: "/public/styles/main.css",  not_logged_in: not_logged
+      stylesheet: "/public/styles/main.css", not_logged_in: not_logged
     });
   }
 
@@ -146,7 +146,7 @@ router.post("/", async (req, res, next) => {
       prev: prev,
       next: next,
       title: "Blogs",
-      stylesheet: "/public/styles/main.css",not_logged_in: not_logged
+      stylesheet: "/public/styles/main.css", not_logged_in: not_logged
     });
   } catch (e) {
     return res.sendStatus(500);
@@ -158,10 +158,10 @@ router.post("/", async (req, res, next) => {
 
 router.get("/details/:id", async (req, res, next) => {
 
-  let not_logged= false;
+  let not_logged = false;
 
   if (!req.session.user) {
-    not_logged=true;
+    not_logged = true;
   }
 
   try {
@@ -185,10 +185,10 @@ router.get("/details/:id", async (req, res, next) => {
 
 router.post("/details/:id", async (req, res, next) => {
 
-  let not_logged= false;
+  let not_logged = false;
 
   if (!req.session.user) {
-    not_logged=true;
+    not_logged = true;
   }
 
   try {
@@ -218,10 +218,10 @@ router.post("/details/:id", async (req, res, next) => {
 
 router.get("/details/:id/comments", async (req, res, next) => {
 
-  let not_logged= false;
+  let not_logged = false;
 
   if (!req.session.user) {
-    not_logged=true;
+    not_logged = true;
   }
 
   //gets all comments for current blog id
@@ -256,17 +256,16 @@ router.get("/details/:id/comments", async (req, res, next) => {
 
 router.post("/details/:id/comments", async (req, res, next) => {
 
-  let not_logged= false;
+  let not_logged = false;
 
   if (!req.session.user) {
-    not_logged=true;
+    not_logged = true;
   }
-  
+
   try {
     //add comment
 
     //TODO switch to ajax request
-
     console.log(req.params.id);
     let user = req.session.user;
     console.log(req.body.comment)
@@ -281,6 +280,7 @@ router.post("/details/:id/comments", async (req, res, next) => {
   }
 
 })
+
 
 
 router.delete("details/:id/comment", async (req, res) => {
@@ -313,6 +313,103 @@ router.delete("details/:id/comment", async (req, res) => {
 });
 
 
+router.post("/:page/search", async (req, res) => {
+  //get 
+  let searchTerm,resultList,temp,last;
+  let next, prev = null;
+  let page = req.params.page;
+
+
+  //for user login and signout 
+  let not_logged = false;
+
+  if (!req.session.user) {
+    not_logged = true;
+  }
+
+  //code for search
+  try {
+    temp = await blogs.getBlogsPerPage(page);
+    last = await blogs.LastPage();
+
+    if (!req.body.tag) {
+      throw "Please enter search Term";
+    }
+    searchTerm = req.body.tag;
+
+    if (typeof searchTerm !== 'string') throw "search term must be a string";
+    //find array 
+    if (searchTerm.trim().length === 0) throw "Error: search term must not be all empty spaces"
+
+
+  }
+
+  catch (e) {
+    //not first page
+    if (page > 1) {
+      prev = parseInt(page) - 1;
+    }
+
+    //not last page
+    if (page < last) {
+      next = parseInt(page) + 1;
+    }
+
+
+    //user input issue 
+    return res.render("posts/blogs/blog", {
+      blogs: temp,
+      page: page,
+      prev: prev,
+      next: next,
+      error0:e,
+      title: "Blogs",
+      stylesheet: "/public/styles/main.css", not_logged_in: not_logged
+    });
+  }
+
+  //done with error checking
+  try{
+    resultList = await blogs.searchBlogs(searchTerm);
+  }
+  catch(e){
+    //internal server issue
+    return res.render("posts/blogs/blog", {
+      blogs: temp,
+      page: page,
+      prev: prev,
+      next: next,
+      error0:e,
+      title: "Blogs",
+      stylesheet: "/public/styles/main.css", not_logged_in: not_logged
+    });
+  }
+
+  //display results instead of all blogs
+
+
+  try{
+    //redo the pages 
+    //show only search results 
+    console.log("here");
+
+ 
+    return res.render("posts/blogs/blog", {
+      //changed blog to search results only
+      blogs: resultList,
+      search: true,
+      title: "Blogs",
+      stylesheet: "/public/styles/main.css", not_logged_in: not_logged
+    });
+  }
+  catch(e){
+    //internal server issue
+    return res.sendStatus(500);
+  }
+
+
+
+});
 
 
 module.exports = router;
