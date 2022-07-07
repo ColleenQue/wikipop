@@ -30,23 +30,21 @@
                 height=" 150px" alt="woman" />
         </div>
         
-        <a class="button" href="#">About</a>
-        <a class="button" href="blogs/1"> Blog </a>
-        <a class="button" href="#"> Reddit </a>
-        <a class="button" href="groups"> Groups</a>
+        <a class="button" href="/">Home</a>
+        <a class="button" href="/blogs/1"> Blog </a>
+        <a class="button" href="/groups"> Groups</a>
 
         {{#if not_logged_in}}
-        <a class="button" href="user/login"> Login</a>
-        <a class="button" href="user/signup"> Sign Up</a>
+        <a class="button" href="/user/login"> Login</a>
+        <a class="button" href="/user/signup"> Sign Up</a>
         {{else}}
-        <a class="button" href="user/logout"> Sign Out</a>
+        <a class="button" href="/user/logout"> Sign Out</a>
         {{/if}}
 
     </section>
 
     <div>
         <main>
-
             {{{body}}}
         </main>
     </div>

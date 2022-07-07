@@ -72,7 +72,7 @@ router.post('/login', async (req, res) => {
     console.logging(new Date().toUTCString(),req.method,req.originalUrl,false);
   }
   catch (e) {
-    res.status(400).render('posts/user/login', { err: true, message: e ,title:"Log in", not_logged_in: true,});
+    res.status(400).render('posts/user/login', { err: true, message: e ,title:"Log in", not_logged_in: true});
     return;
   }
 

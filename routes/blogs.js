@@ -7,13 +7,13 @@ const { checkBlogContent } = require('../validation');
 const comments = require('../data/comments')
 
 //get itself/main page
-router.use("/", (req, res, next) => {
-  //if session not logged in
-  if (!req.session.user) {
-    return res.redirect("/user/login");
-  }
-  next();
-});
+// router.use("/", (req, res, next) => {
+//   //if session not logged in
+//   if (!req.session.user) {
+//     return res.redirect("/user/login");
+//   }
+//   next();
+// });
 
 router.get("/:page", async (req, res, next) => {
   try {
@@ -27,7 +27,7 @@ router.get("/:page", async (req, res, next) => {
         page: page,
         next: parseInt(page) + 1,
         title: "Blogs",
-        stylesheet: "/public/styles/main.css"
+        stylesheet: "/public/styles/main.css", not_logged_in: true
       });
     }
 
@@ -37,7 +37,7 @@ router.get("/:page", async (req, res, next) => {
         page: page,
         prev: page - 1,
         title: "Blogs",
-        stylesheet: "/public/styles/main.css"
+        stylesheet: "/public/styles/main.css", not_logged_in: true
       });
 
     }
@@ -48,7 +48,7 @@ router.get("/:page", async (req, res, next) => {
       prev: page - 1,
       next: parseInt(page) + 1,
       title: "Blogs",
-      stylesheet: "/public/styles/main.css"
+      stylesheet: "/public/styles/main.css", not_logged_in: true
     });
   } catch (e) {
     return res.sendStatus(500);
@@ -71,7 +71,7 @@ router.post("/", async (req, res, next) => {
     return res.render("posts/blogs/blog", {
       blogs: "sorry no blogs were found",
       title: "Blogs",
-      stylesheet: "/public/styles/main.css"
+      stylesheet: "/public/styles/main.css", not_logged_in: true
     });
   }
 
@@ -84,7 +84,7 @@ router.post("/", async (req, res, next) => {
       blogs: temp,
       title: "Blogs",
       stylesheet: "/public/styles/main.css",
-      error1: true
+      error1: true, not_logged_in: true
     });
   }
 
@@ -97,7 +97,7 @@ router.post("/", async (req, res, next) => {
       blogs: temp,
       title: "Blogs",
       error2: true,
-      stylesheet: "/public/styles/main.css"
+      stylesheet: "/public/styles/main.css", not_logged_in: true
     });
   }
 
@@ -109,7 +109,7 @@ router.post("/", async (req, res, next) => {
       blogs: temp,
       title: "Blogs",
       error2: true,
-      stylesheet: "/public/styles/main.css"
+      stylesheet: "/public/styles/main.css", not_logged_in: true
     });
   }
 
@@ -124,7 +124,7 @@ router.post("/", async (req, res, next) => {
         page: page,
         next: parseInt(page) + 1,
         title: "Blogs",
-        stylesheet: "/public/styles/main.css"
+        stylesheet: "/public/styles/main.css", not_logged_in: true
       });
     }
 
@@ -134,7 +134,7 @@ router.post("/", async (req, res, next) => {
         page: page,
         prev: page - 1,
         title: "Blogs",
-        stylesheet: "/public/styles/main.css"
+        stylesheet: "/public/styles/main.css", not_logged_in: true
       });
 
     }
@@ -145,7 +145,7 @@ router.post("/", async (req, res, next) => {
       prev: page - 1,
       next: parseInt(page) + 1,
       title: "Blogs",
-      stylesheet: "/public/styles/main.css"
+      stylesheet: "/public/styles/main.css", not_logged_in: true
     });
   } catch (e) {
     return res.sendStatus(500);
@@ -163,7 +163,7 @@ router.get("/details/:id", async (req, res, next) => {
     return res.render("posts/blogs/blog2", {
       blog: temp,
       title: "Blogs",
-      script: "/public/scripts/blogs.js"
+      script: "/public/scripts/blogs.js", not_logged_in: true
     });
 
 
@@ -190,7 +190,7 @@ router.post("/details/:id", async (req, res, next) => {
     return res.render("posts/blogs/blog2", {
       blog: temp,
       title: "Blogs",
-      script: "/public/scripts/blogs.js"
+      script: "/public/scripts/blogs.js", not_logged_in: true
     });
 
   }
