@@ -66,9 +66,6 @@ body {
     -webkit-text-fill-color: transparent;
 }
 
-input, textarea {
-    background-color: #d1d1d1;
-  }
 
 /*code from : https://www.youtube.com/watch?v=ueyRcYEmsrI */
 .container a {
@@ -350,7 +347,3 @@ h4 {
 
 }
 
-.submit-button:hover {
-    background: linear-gradient(90deg, #7b68ef, #ff72c8);
-    cursor: pointer;
-}

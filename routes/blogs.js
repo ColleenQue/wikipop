@@ -56,19 +56,26 @@ router.get("/:page", async (req, res, next) => {
 })
 
 //post blog
-router.post("/", async (req, res, next) => {
+router.post("/:page", async (req, res) => {
   //error check
   //add blog
+
   let not_logged = false;
 
+  let page = req.params.page;
+
+  let last, temp;
+  let next, prev = null;
+
+  
   if (!req.session.user) {
     not_logged = true;
   }
 
-  let newBlog, temp;
 
+  //for all: get page
   try {
-    let temp = await blogs.getBlogsPerPage(page);
+    temp = await blogs.getBlogsPerPage(page);
   }
   catch (e) {
     return res.render("posts/blogs/blog", {
@@ -78,21 +85,51 @@ router.post("/", async (req, res, next) => {
     });
   }
 
-
   try {
-    title = validation.checkBlogTitle(req.body.title)
-  }
+    last = await blogs.LastPage();
+    temp = await blogs.getBlogsPerPage(page);
+
+    //not first page
+    if (page > 1) {
+      prev = parseInt(page) - 1;
+    }
+
+    //not last page
+    if (page < last) {
+      next = parseInt(page) + 1;
+    }
+  } 
   catch (e) {
-    return res.render("posts/blogs/blog", {
-      blogs: temp,
-      title: "Blogs",
-      stylesheet: "/public/styles/main.css",
-      error1: true, not_logged_in: true
-    });
+    return res.sendStatus(500);
   }
 
 
+
+  if (not_logged) {
+    try {
+      return res.render("posts/blogs/blog", {
+        blogs: temp,
+        page: page,
+        prev: prev,
+        next: next,
+        error3:"please log in",
+        title: "Blogs",
+        stylesheet: "/public/styles/main.css", not_logged_in: not_logged
+      });
+    }
+    catch (e) {
+      return res.sendStatus(500);
+    }
+  }
+
+
+  //log in check success
+  let newBlog;
+
+
+  //check inputs
   try {
+    validation.checkBlogTitle(req.body.title);
     content = validation.checkBlogContent(req.body.content)
   }
   catch (e) {
@@ -100,6 +137,9 @@ router.post("/", async (req, res, next) => {
       blogs: temp,
       title: "Blogs",
       error2: true,
+      page: page,
+      prev: prev,
+      next: next,
       stylesheet: "/public/styles/main.css", not_logged_in: not_logged
     });
   }
@@ -112,21 +152,24 @@ router.post("/", async (req, res, next) => {
       blogs: temp,
       title: "Blogs",
       error2: true,
+      page: page,
+      prev: prev,
+      next: next,
       stylesheet: "/public/styles/main.css", not_logged_in: not_logged
     });
   }
 
-  let page = await blogs.LastPage();
-  page = Math.ceil(page);
-  console.log(page);
 
+  //everything has changed
+  page = await blogs.LastPage();
+  page = Math.ceil(page);
 
   //console.log(req.session.user); gives username
   try {
-    let last = await blogs.LastPage();
-    let temp = await blogs.getBlogsPerPage(page);
+    last = await blogs.LastPage();
+    temp = await blogs.getBlogsPerPage(page);
 
-    let next, prev = null;
+    next, prev = null;
 
     //not first page
     if (page > 1) {
@@ -315,7 +358,7 @@ router.delete("details/:id/comment", async (req, res) => {
 
 router.post("/:page/search", async (req, res) => {
   //get 
-  let searchTerm,resultList,temp,last;
+  let searchTerm, resultList, temp, last;
   let next, prev = null;
   let page = req.params.page;
 
@@ -362,24 +405,24 @@ router.post("/:page/search", async (req, res) => {
       page: page,
       prev: prev,
       next: next,
-      error0:e,
+      error0: e,
       title: "Blogs",
       stylesheet: "/public/styles/main.css", not_logged_in: not_logged
     });
   }
 
   //done with error checking
-  try{
+  try {
     resultList = await blogs.searchBlogs(searchTerm);
   }
-  catch(e){
+  catch (e) {
     //internal server issue
     return res.render("posts/blogs/blog", {
       blogs: temp,
       page: page,
       prev: prev,
       next: next,
-      error0:e,
+      error0: e,
       title: "Blogs",
       stylesheet: "/public/styles/main.css", not_logged_in: not_logged
     });
@@ -388,12 +431,12 @@ router.post("/:page/search", async (req, res) => {
   //display results instead of all blogs
 
 
-  try{
+  try {
     //redo the pages 
     //show only search results 
     console.log("here");
 
- 
+
     return res.render("posts/blogs/blog", {
       //changed blog to search results only
       blogs: resultList,
@@ -402,7 +445,7 @@ router.post("/:page/search", async (req, res) => {
       stylesheet: "/public/styles/main.css", not_logged_in: not_logged
     });
   }
-  catch(e){
+  catch (e) {
     //internal server issue
     return res.sendStatus(500);
   }

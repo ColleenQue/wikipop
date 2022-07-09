@@ -1,4 +1,5 @@
-<br><br><br><br><br><br>
+<br>
+<br><br><br><br><br>
 
 <div class="left">
     <h1> Blogs</h1>
@@ -37,7 +38,8 @@
         {{else}}
 
         <h2>Sorry, no blogs found.</h2>
-
+        <p>Check out the box to the right to post the first blog!</p>
+        <br>
         {{/if}}
 
 
@@ -86,15 +88,21 @@
 
         <label for="tag">Search for topic/idol/group</label> <br>
         <input name="tag" type="text" id="tag" placeholder="topic/idol/group">
-
-        <button type="submit">Submit</button>
+        <br>
+        <button type="submit" class="submit-button">Submit</button>
 
 
     </form>
     <hr>
     <h2>Add your blog to the community</h2>
 
-    <form id="addBlog" method="POST" action="/blogs">
+    <form id="addBlog" method="POST" action="/blogs/{{page}}">
+
+        {{#if error3}}
+        <p class="error"> {{error3}}</p>
+        <br>
+        {{/if}}
+
         {{#if error1}}
         <p class="error"> Please enter title correctly</p>
         <br>
@@ -109,7 +117,7 @@
         <label for="content"> Content</label><br>
         <textarea style="width: 100%;" id="myNiceEditor" name="content" rows="15" cols="50"
             placeholder="Enter blog"> </textarea>
-        <button type="submit">Submit</button>
+        <button type="submit" class="submit-button">Submit</button>
         <hr>
 
     </form>
