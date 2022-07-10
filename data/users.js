@@ -30,7 +30,7 @@ let exportedMethods =
         let newUser =             {
             username: username,
             password: hash,
-            followingTags: [],
+            groupsLiked: [],
             blogsPosted: [],
             commentsPosted: [],
             pagesCreated: [],
@@ -130,7 +130,45 @@ let exportedMethods =
             throw "Error: Update failed";
         }
         return pageID;
+    },
+    async addNewGroup(username,groupName)
+    {
+        username=validation.checkUserName(username);
+        groupName=validation.checkGroupName(groupName);
+        const oldUser= await this.findUser(username);
+        let groupsLiked=oldUser[0].groupsLiked;
+        groupsLiked.push(groupName);
+        const userCollection=await users();
+        const updateInfo = await userCollection.updateOne({ _id: oldUser[0]._id }, { $set: { groupsLiked: groupsLiked } });
+        if (!updateInfo.matchedCount && !updateInfo.modifiedCount) {
+            throw "Error: Update failed";
+        }
+        return groupName;
+    },
+    async removeGroup(username,groupName)
+    {
+        username=validation.checkUserName(username);
+        groupName=validation.checkGroupName(groupName);
+        const oldUser= await this.findUser(username);
+        let groupsLiked=oldUser[0].groupsLiked;
+        let index=0;
+        for(let i=0;i<groupsLiked.length;i++)
+        {
+            if(groupsLiked[i]===groupName)
+            {
+                index=i;
+                break;
+            }
+        }
+        groupsLiked.splice(index,1);
+        const userCollection=await users();
+        const updateInfo = await userCollection.updateOne({ _id: oldUser[0]._id }, { $set: { groupsLiked: groupsLiked } });
+        if (!updateInfo.matchedCount && !updateInfo.modifiedCount) {
+            throw "Error: Update failed";
+        }
+        return groupName;
     }
+
 };
 
 module.exports = exportedMethods;
