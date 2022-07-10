@@ -3,6 +3,7 @@ const router = express.Router();
 const validation = require('../validation');
 const groups = require('../data/groups');
 const multer=require('multer');
+const users=require('../data/users');
 
 var storage=multer.diskStorage({
     destination: function(req,file,cb)
@@ -72,14 +73,32 @@ router.post('/newGroup', upload.single('groupImage'), async(req,res)=>
 
 router.get('/:id/like', async(req,res) =>
 {
-    const likeGroup=await groups.likeGroup(req.params.id);
-    res.redirect('/groups/:id');
+    if(req.session.user)
+    {
+        //req.session.like=true;
+        const addNewGroup=await users.addNewGroup(req.session.user,req.params.id);
+        const likeGroup=await groups.likeGroup(req.params.id);
+        res.redirect('/groups/'+req.params.id);
+    }
+    else
+    {
+        res.sendStatus(400);
+    }
 });
 
 router.get('/:id/unlike', async(req,res) =>
 {
-    const unlikeGroup=await groups.unlikeGroup(req.params.id);
-    res.redirect('/groups/:id');
+    if(req.session.user)
+    {
+        //req.session.like=false;
+        const removeGroup=await users.removeGroup(req.session.user,req.params.id);
+        const unlikeGroup=await groups.unlikeGroup(req.params.id);
+        res.redirect('/groups/'+req.params.id);
+    }
+    else
+    {
+        res.sendStatus(400);
+    }
 });
 
 router.get('/:id', async(req,res) =>
@@ -89,9 +108,20 @@ router.get('/:id', async(req,res) =>
         const group=validation.checkGroupName(req.params.id);
         const findGroup=await groups.findGroup(group);
         const theGroup=findGroup[0].groupInfo;
-        res.render('posts/groups',{name: theGroup.name, numOfMembers: theGroup.numOfMembers, 
-        debutDate: theGroup.debutDate, awards: theGroup.awards, greeting: theGroup.greeting, 
-        fandomName: theGroup.fandomName, fandomColor: theGroup.fandomColor, socialMedia: theGroup.socialMedia, memberLinks: theGroup.membersLinks, groupImage: theGroup.groupImage});
+        if(req.session.user)
+        {
+            const theUser=await users.findUser(req.session.user);
+            const groupsLiked=theUser[0].groupsLiked;
+            res.render('posts/groups',{name: theGroup.name, numOfMembers: theGroup.numOfMembers, 
+            debutDate: theGroup.debutDate, awards: theGroup.awards, greeting: theGroup.greeting, 
+            fandomName: theGroup.fandomName, fandomColor: theGroup.fandomColor, socialMedia: theGroup.socialMedia, memberLinks: theGroup.membersLinks, groupImage: theGroup.groupImage, like: groupsLiked.includes(req.params.id)});
+        }
+        else
+        {
+            res.render('posts/groups',{name: theGroup.name, numOfMembers: theGroup.numOfMembers, 
+                debutDate: theGroup.debutDate, awards: theGroup.awards, greeting: theGroup.greeting, 
+                fandomName: theGroup.fandomName, fandomColor: theGroup.fandomColor, socialMedia: theGroup.socialMedia, memberLinks: theGroup.membersLinks, groupImage: theGroup.groupImage, like: false});
+        }
     }
     catch(e)
     {

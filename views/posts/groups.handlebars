@@ -32,8 +32,13 @@
             {{/each}}
         </dd>
     </dl>
-    <span id="heart-no-fill"><i class="fa-regular fa-heart"></i></span>
-    <span id="heart-fill" hidden><i class="fa-solid fa-heart"></i></span>
+    <span id="heart-fill-2" hidden><i class="fa-solid fa-heart"></i></span>
+    <span id="heart-no-fill-2" hidden><i class="fa-regular fa-heart"></i></span>
+    {{#if like}}
+    <span id="heart-fill"><i class="fa-solid fa-heart"></i></span>
+    {{else}}
+        <span id="heart-no-fill"><i class="fa-regular fa-heart"></i></span>
+    {{/if}}
     <!--
 <img src="/img/heart-no-fill.png" alt="heart-no-fill" width="50px" height="50px" id="heart-no-fill"/>
 <img src="/img/heart-fill.png" alt="heart-fill" width="50px" height="50px" id="heart-fill" hidden/>
