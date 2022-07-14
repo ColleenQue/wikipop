@@ -32,32 +32,39 @@
     //responses with list of comment objects
     // commentList = []; //empty out
 
+
     //list of all comments
     let comments = responseMessage.comments;
 
     //session user
     let user = responseMessage.user;
 
+
     if (comments.length == 0) {
       commentList.hide();
       noComment.show();
+
     } else {
       noComment.hide();
       for (let i = 0; i < comments.length; i++) {
         //add each comment to the list
         let l = $("<p></p>");
-        let s = comments[i].commenter + ": " + comments[i].content+"<br>";
+        let s = comments[i].commenter + ": " + comments[i].content;
         //add attribute to each li tag = <li id = "comments.id">
         l.attr("id", comments[i]._id);
         l.append(s); //content
+        l.append("&nbsp;&nbsp;&nbsp;");//for buttons
 
         //https://www.w3schools.com/jquery/jquery_dom_add.asp
 
+        if (user && user === comments[i].commenter) {
 
-        if (user == comments.commenter) {
-          //deleteBtn = $("<button><i class=material-icons>delete</i></button>");
-          deleteBtn = $("<i></i>");
-          deleteBtn.attr("class", "fa-solid fa-circle-xmark");
+          let del = $("<i></i>");
+          del.attr("class", "fa-regular fa-trash-can");
+
+          let edit = $("<i></i>");
+          edit.attr("class", "fa-regular fa-pen-to-square");
+
 
           // deleteBtn.attr("class", "delete-comment-btn");
           // deleteBtn.on("click", function (event) {
@@ -78,10 +85,22 @@
           //     errorDiv.show();
           //   });
           // });
-          l.append(deleteBtn);
+
+          l.append(del);
+          l.append(" ");
+          l.append(edit);
         }
 
+
+
+        let comment = $("<i></i>");
+        comment.attr("class", "fa-regular fa-comment-dots");
+        l.append(" ");
+        l.append(comment);
+
         //need to empty
+
+        l.append("<br>");
         commentList.append(l);
         commentList.show();
 
@@ -92,18 +111,21 @@
 
   //add comment
   commentForm.submit(function (event) {
+
+
     event.preventDefault();
-    console.log("submitted");
 
     var comment = commentInput.val();
-
+    console.log(commentInput.val());
     //https://stackoverflow.com/questions/10633605/clear-form-values-after-submission-ajax
     commentForm[0].reset();
 
     //error check comment input
     try {
       comment = checkString(comment);
+      console.log(comment);
     } catch (e) {
+      console.log("peppa pig");
       errorDiv.empty();
       errorDiv.show();
       errorDiv.text(e);
@@ -124,8 +146,6 @@
       //add comment successful
       if (responseMessage.success) {
 
-
-        let commenter = responseMessage.user;
         //return singular new comment
         let newComment = responseMessage.comment;
 
@@ -137,18 +157,34 @@
 
         //https://www.w3schools.com/jquery/jquery_dom_add.asp
 
+        //no need to check whoever commented the new comment bc that is YOU! 
+
+        l.append("&nbsp;&nbsp;&nbsp;");//for buttons
+
+        let del = $("<i></i>");
+        del.attr("class", "fa-regular fa-trash-can");
+
+        let edit = $("<i></i>");
+        edit.attr("class", "fa-regular fa-pen-to-square");
+
+        let comment = $("<i></i>");
+        comment.attr("class", "fa-regular fa-comment-dots");
+
+        l.append(del);
+        l.append(" ");
+        l.append(edit);
+        l.append(" ");
+        l.append(comment);
+        l.append("<br>");
 
 
-        if (commenter == newComment.commenter) {
-          //deleteBtn = $("<button><i class=material-icons>delete</i></button>");
-          deleteBtn = $("<i></i>");
-          deleteBtn.attr("class", "fa-solid fa-circle-xmark");
-          //need to empty
-          commentList.append(l);
-          commentList.show();
-          noComment.hide();
-          errorDiv.hide();
-        }
+
+        //need to empty
+        commentList.append(l);
+        commentList.show();
+        noComment.hide();
+        errorDiv.hide();
+
       }
       else {
         //TODO test

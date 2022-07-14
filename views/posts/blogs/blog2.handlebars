@@ -1,25 +1,33 @@
 <br><br><br><br><br><br>
 
-<section class ="left">
+<section class="left">
 
-<h1>{{blog.title}}</h1>
-<p>By {{blog.name}}</p>
-<br>
-<hr>
-<p>{{{blog.content}}}</p>
-<br>
+    <h1>{{blog.title}}</h1>
+    <p>By {{blog.name}}</p>
+    <br>
+    <hr>
+    <p>{{{blog.content}}}</p>
+    <br> <br>
 </section>
 
-<section class = "right">
+<section class="right">
 
     <h2>Comments</h2>
 
-    <p id="no_comments">No comments yet! Be the first one to comment.</p>
 
-    <div id = "comments" ></div>
+    {{#if not_logged_in}}
+    <p id="no_comments">No comments yet! Log in and be the first one to comment.</p>
+    {{else}}
+    <p id="no_comments">No comments yet! Be the first one to comment.</p>
+    {{/if}}
+
+    <div id="comments"></div>
     <br>
     {{!-- <i class="fa-solid fa-circle-xmark"></i> --}}
 
+    {{#if not_logged_in}}
+    <p>Log in to comment!</p>
+    {{else}}
     {{#if error}}
     <p class="error">{{error}}</p>
     {{/if}}
@@ -31,7 +39,9 @@
         <textarea id="comment_term" name="comment" rows="4" cols="50" placeholder="Enter comment"> </textarea>
         <button type="submit" class="btn">Submit</button>
     </form>
-<br>
+    {{/if}}
+    <br>
+     <br>
 
 
 </section>
