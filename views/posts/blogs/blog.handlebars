@@ -1,6 +1,24 @@
 <br>
 <br><br><br><br><br>
 
+<script type="text/javascript" src="//js.nicedit.com/nicEdit-latest.js"></script>
+<script type="text/javascript">
+
+    bkLib.onDomLoaded(function () { nicEditors.allTextAreas() });
+</script>
+<script type="text/javascript" src="core/rte.js"></script>
+<script type="text/javascript">
+    //<![CDATA[
+    bkLib.onDomLoaded(function () {
+        nicEditors.editors.push(
+            new nicEditor().panelInstance(
+                document.getElementById('myNicEditor')
+            )
+        );
+    });
+//]]>
+</script>
+
 <div class="left">
     <h1> Blogs</h1>
 
@@ -93,6 +111,10 @@
 
 
     </form>
+
+    {{#if not_logged_in}}
+    <h2>Log in to add your blog to the community</h2>
+    {{else}}
     <hr>
     <h2>Add your blog to the community</h2>
 
@@ -121,6 +143,7 @@
         <hr>
 
     </form>
+    {{/if}}
 
 </div>
 

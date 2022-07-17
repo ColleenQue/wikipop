@@ -90,7 +90,7 @@ router.post('/login', async (req, res) => {
 
 router.get('/logout', async (req, res) => {
   req.session.destroy();
-  res.render('posts/user/logout');
+  res.render('posts/user/logout',{not_logged_in:true});
   console.logging(new Date().toUTCString(),req.method,req.originalUrl,false);
 });
 
