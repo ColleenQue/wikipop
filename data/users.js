@@ -6,6 +6,7 @@ const { ObjectId } = require('mongodb');
 const bcrypt = require('bcrypt');
 const saltRounds = 12;
 const validation = require('../validation');
+const { valHooks } = require('jquery');
 
 
 
@@ -31,6 +32,7 @@ let exportedMethods =
             username: username,
             password: hash,
             groupsLiked: [],
+            idolsLiked: [],
             blogsPosted: [],
             commentsPosted: [],
             pagesCreated: [],
@@ -167,6 +169,46 @@ let exportedMethods =
             throw "Error: Update failed";
         }
         return groupName;
+    },
+    async addNewIdol(username,groupName,idolName)
+    {
+        username=validation.checkUserName(username);
+        groupName=validation.checkGroupName(groupName);
+        idolName=validation.checkIdolName(idolName);
+        const oldUser= await this.findUser(username);
+        let idolsLiked=oldUser[0].idolsLiked;
+        let params={groupName,idolName};
+        idolsLiked.push(params);
+        const userCollection=await users();
+        const updateInfo = await userCollection.updateOne({ _id: oldUser[0]._id }, { $set: { idolsLiked: idolsLiked} });
+        if (!updateInfo.matchedCount && !updateInfo.modifiedCount) {
+            throw "Error: Update failed";
+        }
+        return idolName;
+    },
+    async removeIdol(username,groupName,idolName)
+    {
+        username=validation.checkUserName(username);
+        groupName=validation.checkGroupName(groupName);
+        idolName=validation.checkIdolName(idolName);
+        const oldUser= await this.findUser(username);
+        let idolsLiked=oldUser[0].idolsLiked;
+        let index=0;
+        for(let i=0;i<idolsLiked.length;i++)
+        {
+            if(idolsLiked[i].groupName===groupName && idolsLiked[i].idolName===idolName)
+            {
+                index=i;
+                break;
+            }
+        }
+        idolsLiked.splice(index,1);
+        const userCollection=await users();
+        const updateInfo = await userCollection.updateOne({ _id: oldUser[0]._id }, { $set: { idolsLiked: idolsLiked } });
+        if (!updateInfo.matchedCount && !updateInfo.modifiedCount) {
+            throw "Error: Update failed";
+        }
+        return idolName;
     }
 
 };

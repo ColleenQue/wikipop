@@ -1,11 +1,11 @@
 <article>
-    <h2>{{name}}</h2>
+    <h2 id="name">{{name}}</h2>
     <img src={{idolImage}} alt="{{name}}" width="500px" height="500px"/>
     <dl>
         <dt>Role</dt>
         <dd>{{role}}</dd>
         <dt>Group</dt>
-        <dd>{{group}}</dd>
+        <dd id="group">{{group}}</dd>
         <dt>Age</dt>
         <dd>{{age}}</dd>
         <dt>Date Of Birth</dt>
@@ -34,6 +34,15 @@
             {{/each}}
         </dd>
     </dl>
+    <span id="heart-fill-2" hidden><i class="fa-solid fa-heart"></i></span>
+    <span id="heart-no-fill-2" hidden><i class="fa-regular fa-heart"></i></span>
+    {{#if like}}
+    <span id="heart-fill"><i class="fa-solid fa-heart"></i></span>
+    {{else}}
+        <span id="heart-no-fill"><i class="fa-regular fa-heart"></i></span>
+    {{/if}}
+<p id="note">Click on heart to like the group!</p>
+<br>
 {{#if error}}
 <p class="error"> {{error}}</p>
 {{/if}}

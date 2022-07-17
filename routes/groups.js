@@ -26,7 +26,7 @@ router.get('', async(req,res) =>
 
     }catch(e)
     {
-        res.render('posts/allGroups');
+        res.status(400).render('posts/allGroups',{error: e});
     }
 });
 
@@ -38,6 +38,8 @@ router.get('/newGroup', async(req,res) =>
 
 router.post('/newGroup', upload.single('groupImage'), async(req,res)=>
 {
+    try
+    {
     req.body.name=validation.checkGroupName(req.body.name);
     req.body.numOfMembers=validation.checkNumOfMembers(req.body.numOfMembers);
     req.body.debutDate=validation.checkDebutDate(req.body.debutDate);
@@ -68,7 +70,10 @@ router.post('/newGroup', upload.single('groupImage'), async(req,res)=>
     const createGroup= await groups.createGroup(req.body.name,req.body.numOfMembers,req.body.debutDate,
         req.body.awards,req.body.greeting,req.body.fandomName,req.body.fandomColor,req.body.socialMedia,memberNamesList,imagePath);
     return res.redirect('/groups');
-
+    }catch(e)
+    {
+        res.status(400).render('posts/newGroup',{error: e});
+    }
 });
 
 router.get('/:id/like', async(req,res) =>

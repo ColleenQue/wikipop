@@ -132,6 +132,36 @@ let exportedMethods=
             throw "Error: Update failed";
         }
         return commentID;
+    },
+    async likeIdol(name,group)
+    {
+        name=validation.checkIdolName(name);
+        group=validation.checkGroupName(group);
+        const theIdol=await this.findIdolBasedOnName(name,group);
+        let numOfLikes=theIdol.numOfLikes;
+        numOfLikes++;
+        const idolCollections=await idols();
+        const updateIdol=await idolCollections.updateOne({_id:theIdol._id},{$set:{numOfLikes: numOfLikes}});
+        if(!updateIdol.matchedCount && !updateIdol.modifiedCount)
+        {
+            throw "Error: Update failed";
+        }
+        return name;
+    },
+    async unlikeIdol(name,group)
+    {
+        name=validation.checkIdolName(name);
+        group=validation.checkGroupName(group);
+        const theIdol=await this.findIdolBasedOnName(name,group);
+        let numOfLikes=theIdol.numOfLikes;
+        numOfLikes=numOfLikes-1;
+        const idolCollections=await idols();
+        const updateIdol=await idolCollections.updateOne({_id:theIdol._id},{$set:{numOfLikes: numOfLikes}});
+        if(!updateIdol.matchedCount && !updateIdol.modifiedCount)
+        {
+            throw "Error: Update failed";
+        }
+        return name;
     }
 };
 
