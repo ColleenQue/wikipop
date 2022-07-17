@@ -86,7 +86,12 @@ let exportedMethods =
 
         return list;
 
+
     },
+
+    //comment
+
+    
     async addComment(blogID,commenter,content) {
       
         blogID = validation.checkBlogID(blogID);
@@ -141,6 +146,19 @@ let exportedMethods =
  
         console.log(blogs2);
         return blogs2;
+    },
+    async findComment(commentId) {
+
+        commentId = validation.checkCommentID(commentId);
+
+        const commentCollections = await comments();
+        const findComment = await commentCollections.findOne({ _id: ObjectId(commentId) });
+       
+        if (!findComment) {
+            throw "Error: Could not find comment"
+        }
+
+        return findComment;
     }
     //   },    
     //   async BlogsPerPageList(pageNumber,list){

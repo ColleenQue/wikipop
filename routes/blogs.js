@@ -14,6 +14,7 @@ const comments = require('../data/comments')
 //   next();
 // });
 
+
 router.get("/:page", async (req, res, next) => {
 
   let not_logged = false;
@@ -309,9 +310,7 @@ router.post("/details/:id/comments", async (req, res, next) => {
     //add comment
 
     //TODO switch to ajax request
-    console.log(req.params.id);
     let user = req.session.user;
-    console.log(req.body.comment)
     let comment = await blogs.addComment(req.params.id, user, req.body.comment);
 
     return res.json({ success: true, comment: comment, user: user });
@@ -324,6 +323,32 @@ router.post("/details/:id/comments", async (req, res, next) => {
 
 })
 
+router.get("details/:id/comment/:commentId", async (req, res) => {
+
+  //get all first layer comments id's 
+
+  try{
+    let commentId = req.params.commentId;
+    let user = req.session.user;
+
+    let comment = await blogs.findComment(commentId);
+
+    console.log(comment);
+    let subComments = comment.comments;
+    return res.json({success:true,subComments:subComments});
+  }
+  catch(e){
+    console.log(e);
+    return res.sendStatus(500);
+  }
+
+
+  //get all commenter and content
+
+
+
+
+});
 
 
 router.delete("details/:id/comment", async (req, res) => {

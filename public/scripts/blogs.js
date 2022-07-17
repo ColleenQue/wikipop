@@ -36,6 +36,8 @@
     //list of all comments
     let comments = responseMessage.comments;
 
+    //use comments[i] for individual comments 
+
     //session user
     let user = responseMessage.user;
 
@@ -92,11 +94,56 @@
         }
 
 
+        //comments here
 
         let comment = $("<i></i>");
         comment.attr("class", "fa-regular fa-comment-dots");
+
         l.append(" ");
         l.append(comment);
+        comment.on("click", function (event) {
+          let form = $("<form></form>");
+          form.attr("id","commentForm2" );
+
+          let text = $("<textarea></textarea>");
+
+ 
+          //     <form id="commentForm" method="POST" action="{{blog._id}}">
+          //     <label for="comment_term">Comment</label> <br />
+          //     <textarea id="comment_term" name="comment" rows="4" cols="50" placeholder="Enter comment"> </textarea>
+          //     <button type="submit" class="btn">Submit</button>
+          // </form>
+
+          l.append(text);
+          l.append("&nbsp;&nbsp;&nbsp;add subcomments here<br>");
+
+
+          // var requestConfig = {
+          //   method: "GET",
+          //   url: window.location.href + "/comment/" + comment[i]._id ,
+          //   data: { commentId: comments[i]._id },
+          // };
+
+          // $.ajax(requestConfig).then(function (responseMessage) {
+          //   if (responseMessage.success) {
+          //     errorDiv.text("Comment has been successfully deleted");
+          //     $("#" + comments[i]._id).remove();
+          //   } else if (responseMessage.error) {
+          //     errorDiv.text(responseMessage.error);
+          //   } else {
+          //     errorDiv.text("Error: comment deletion failed");
+          //   }
+          //   errorDiv.show();
+
+          // });
+        });
+
+
+
+
+
+
+
 
         //need to empty
 
