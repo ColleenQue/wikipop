@@ -14,6 +14,12 @@ body {
 
 }
 
+
+/*https://stackoverflow.com/questions/16767037/how-to-change-nicedit-default-color*/
+.nicEdit-main{
+    background-color: white;
+}
+
 a:hover {
     color: hotpink;
 }
@@ -22,7 +28,7 @@ a:hover {
 .center {
     text-align: center;
     zoom: 200%;
-    padding: 70px 0;
+    padding: 50px 0;
 
 }
 
@@ -31,6 +37,9 @@ a:hover {
     zoom: 120%;
 }
 
+.posts{
+    padding-top:100px;
+}
 .right {
     float: right;
     right: 30px;
@@ -43,7 +52,12 @@ a:hover {
 }
 
 
+
+.pink{
+    color:#592244;
+}
 .left {
+    position: absolute;
     float: left;
     left: 30px;
     zoom: 150%;
