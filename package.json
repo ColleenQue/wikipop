@@ -30,7 +30,7 @@
     "handlebars": "^4.7.7",
     "jquery": "^3.6.0",
     "lib": "^4.3.3",
-    "moment": "^2.29.3",
+    "moment": "^2.29.4",
     "mongodb": "^4.7.0",
     "multer": "^1.4.5-lts.1",
     "node-sass": "^7.0.1"
