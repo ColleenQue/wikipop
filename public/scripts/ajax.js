@@ -2,11 +2,32 @@
 {
     $("#heart-no-fill").click(function()
     {
-        let groupName=document.getElementById("groupName").innerHTML;
+        let parameter=document.getElementById("groupName");
+        let theURL;
+        if(typeof parameter==="undefined" || parameter===null)
+        {
+            let parameter=document.getElementById("group");
+            if(typeof parameter==="undefined" || parameter===null)
+            {
+
+            }
+            else
+            {
+                let parameter2=document.getElementById("name").innerHTML;
+                parameter=parameter.innerHTML;
+                parameter=parameter+'-'+parameter2;
+                theURL="/idols/"+parameter+"/like";
+            }
+        }
+        else
+        {
+            parameter=parameter.innerHTML;
+            theURL="/groups/"+parameter+"/like";
+        }
         var requestConfig=
         {
             method:"GET",
-            url:"/groups/"+groupName+"/like",
+            url: theURL,
         }
         $.ajax(requestConfig).then(function(responseMessage){
             $("#heart-no-fill-2").hide();
@@ -21,14 +42,35 @@
         });
 
     });
-    
+
     $("#heart-no-fill-2").click(function()
     {
-        let groupName=document.getElementById("groupName").innerHTML;
+        let parameter=document.getElementById("groupName");
+        let theURL;
+        if(typeof parameter==="undefined" || parameter===null)
+        {
+            let parameter=document.getElementById("group");
+            if(typeof parameter==="undefined" || parameter===null)
+            {
+
+            }
+            else
+            {
+                let parameter2=document.getElementById("name").innerHTML;
+                parameter=parameter.innerHTML;
+                parameter=parameter+'-'+parameter2;
+                theURL="/idols/"+parameter+"/like";
+            }
+        }
+        else
+        {
+            parameter=parameter.innerHTML;
+            theURL="/groups/"+parameter+"/like";
+        }
         var requestConfig=
         {
             method:"GET",
-            url:"/groups/"+groupName+"/like",
+            url: theURL,
         }
         $.ajax(requestConfig).then(function(responseMessage){
             $("#heart-no-fill-2").hide();
@@ -46,11 +88,32 @@
 
     $("#heart-fill").click(function()
     {
-        let groupName=document.getElementById("groupName").innerHTML;
+        let parameter=document.getElementById("groupName");
+        let theURL;
+        if(typeof parameter==="undefined" || parameter===null)
+        {
+            let parameter=document.getElementById("group");
+            if(typeof parameter==="undefined" || parameter===null)
+            {
+
+            }
+            else
+            {
+                let parameter2=document.getElementById("name").innerHTML;
+                parameter=parameter.innerHTML;
+                parameter=parameter+'-'+parameter2;
+                theURL="/idols/"+parameter+"/unlike";
+            }
+        }
+        else
+        {
+            parameter=parameter.innerHTML;
+            theURL="/groups/"+parameter+"/unlike";
+        }
         var requestConfig=
         {
             method:"GET",
-            url:"/groups/"+groupName+"/unlike",
+            url: theURL,
         }
         $.ajax(requestConfig).then(function(responseMessage){
             $("#heart-fill-2").hide();
@@ -67,11 +130,32 @@
 
     $("#heart-fill-2").click(function()
     {
-        let groupName=document.getElementById("groupName").innerHTML;
+        let parameter=document.getElementById("groupName");
+        let theURL;
+        if(typeof parameter==="undefined" || parameter===null)
+        {
+            let parameter=document.getElementById("group");
+            if(typeof parameter==="undefined" || parameter===null)
+            {
+
+            }
+            else
+            {
+                let parameter2=document.getElementById("name").innerHTML;
+                parameter=parameter.innerHTML;
+                parameter=parameter+'-'+parameter2;
+                theURL="/idols/"+parameter+"/unlike";
+            }
+        }
+        else
+        {
+            parameter=parameter.innerHTML;
+            theURL="/groups/"+parameter+"/unlike";
+        }
         var requestConfig=
         {
             method:"GET",
-            url:"/groups/"+groupName+"/unlike",
+            url: theURL,
         }
         $.ajax(requestConfig).then(function(responseMessage){
             $("#heart-fill-2").hide();
