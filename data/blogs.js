@@ -159,7 +159,34 @@ let exportedMethods =
         }
 
         return findComment;
-    }
+    },
+    
+    async deleteComment(commentId, blogId) {
+        blogId = validation.checkBlogID(blogId);
+        commentId = validation.checkId(commentId);
+        const blogCollection = await blogs();
+        const commentCollection = await comments();
+    
+        let deletionInfo = await blogCollection.updateOne(
+          { _id: ObjectId(outfitId) },
+          { $pull: { comments: { _id: ObjectId(commentId) } } }
+        );
+        
+    
+        if (!deletionInfo) throw "Could not delete comment";
+    
+
+        const deletionInfo2 = await commentCollection.deleteOne({
+            username: { _id:commentId },
+        });
+
+        if (!deletionInfo2) throw "Could not delete comment";
+
+
+        return { deleted: true };
+      },
+
+
     //   },    
     //   async BlogsPerPageList(pageNumber,list){
     //     //gets 5 blogs per page
