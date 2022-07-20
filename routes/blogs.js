@@ -352,25 +352,26 @@ router.get("details/:id/comment/:commentId", async (req, res) => {
 });
 
 
-router.delete("details/:id/comment", async (req, res) => {
+router.delete("details/:id", async (req, res) => {
   //check parameters
   let blogId, commentId;
+  return res.json({success:true});
 
-  try{
-    blogId = validation.checkBlogID(req.params.id);
-    commentId  = validation.checkCommentID(req.body.commentId);
-  }
-  catch (e) {
-    return res.status(500).json({ error: e });
-  }
+  // try{
+  //   blogId = validation.checkBlogID(req.params.id);
+  //   commentId  = validation.checkCommentID(req.body.commentId);
+  // }
+  // catch (e) {
+  //   return res.status(500).json({ error: e });
+  // }
 
-  try {
-    let deletionInfo = await data.deleteComment(xss(blogId), xss(commentId));
-    if (!deletionInfo.deleted) throw "Error: could not delete comment";
-    return res.status(200).json({ success: true });
-  } catch (e) {
-    return res.status(500).json({ error: e });
-  }
+  // try {
+  //   let deletionInfo = await data.deleteComment(xss(blogId), xss(commentId));
+  //   if (!deletionInfo.deleted) throw "Error: could not delete comment";
+  //   return res.status(200).json({ success: true });
+  // } catch (e) {
+  //   return res.status(500).json({ error: e });
+  // }
 });
 
 

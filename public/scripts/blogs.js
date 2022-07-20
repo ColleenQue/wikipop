@@ -68,25 +68,32 @@
           edit.attr("class", "fa-regular fa-pen-to-square");
 
 
-          // deleteBtn.attr("class", "delete-comment-btn");
-          // deleteBtn.on("click", function (event) {
-          //   var requestConfig = {
-          //     method: "DELETE",
-          //     url: window.location.href + "/comment",
-          //     data: { commentId: comments[i]._id },
-          //   };
-          //   $.ajax(requestConfig).then(function (responseMessage) {
-          //     if (responseMessage.success) {
-          //       errorDiv.text("Comment has been successfully deleted");
-          //       $("#" + comments[i]._id).remove();
-          //     } else if (responseMessage.error) {
-          //       errorDiv.text(responseMessage.error);
-          //     } else {
-          //       errorDiv.text("Error: comment deletion failed");
-          //     }
-          //     errorDiv.show();
-          //   });
-          // });
+          del.on("click", function (event) {
+            console.log("sad");
+            console.log(window.location.href+"/comments");
+
+            var rc = {
+              method: "DELETE",
+              url: window.location.href + "/comments",
+              data: { commentId: comments[i]._id },
+            };
+
+            $.ajax(rc).then(function (responseMessage) {
+
+              console.log("rc");
+              if (responseMessage.success) {
+                console.log("hi");
+                errorDiv.text("Comment has been successfully deleted");
+
+                $("#" + comments[i]._id).remove();
+              } else if (responseMessage.error) {
+                errorDiv.text(responseMessage.error);
+              } else {
+                errorDiv.text("Error: comment deletion failed");
+              }
+              errorDiv.show();
+            });
+          });
 
           l.append(del);
           l.append(" ");
