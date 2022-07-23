@@ -1,150 +1,156 @@
 <br>
-<br><br><br><br><br>
-
-<script type="text/javascript" src="//js.nicedit.com/nicEdit-latest.js"></script>
-<script type="text/javascript">
-
-    bkLib.onDomLoaded(function () { nicEditors.allTextAreas() });
-</script>
-<script type="text/javascript" src="core/rte.js"></script>
-<script type="text/javascript">
-    //<![CDATA[
-    bkLib.onDomLoaded(function () {
-        nicEditors.editors.push(
-            new nicEditor().panelInstance(
-                document.getElementById('myNicEditor')
-            )
-        );
-    });
-//]]>
-</script>
-
-<div class="left">
-    <h1> Blogs</h1>
-
-    <section>
-
-        {{#if search}}
-        <a class="purple" href="/blogs/1">Return to all blogs</a>
-        {{/if}}
-
-        {{#if newBlog}}
-        <h4 class="pink">New Blog Added Successfully!</h4>
-        {{/if}}
-
-
-        {{#if blogs.length}}
-
-        {{#if search}}
-        <h2>Search Result Blogs</h2>
-        {{else}}
-        <h2>Trending Blogs</h2>
-        {{/if}}
-
-
-        {{#each blogs}}
-        <hr>
-        {{!-- <h3>{{title}}</h3> --}}
-        <a class="blog-title" href="/blogs/details/{{_id}}">{{title}}</a>
-        <br>
-        <a class="blog-owner" href="#">By {{name}}</a>
-        <br>
-
-        {{/each}}
-
-
-        {{else}}
-
-        <h2>Sorry, no blogs found.</h2>
-        <p>Check out the box to the right to post the first blog!</p>
-        <br>
-        {{/if}}
-
-
-
-    </section>
-
-    <hr>
-    <div class="pages">
-
-        {{#if prev}}
-        {{#if search}}
-        <a class="purple" href="/blogs/{{prev}}/search">Prev Page</a>
-        {{else}}
-        <a class="purple" href="/blogs/{{prev}}">Prev Page</a>
-        {{/if}}
-        {{/if}}
-
-        <p>Page {{page}}</p>
-
-
-        {{#if next}}
-        {{#if search}}
-        <a class="purple" href="/blogs/{{next}}/search">Next Page</a>
-        {{else}}
-        <a class="purple" href="/blogs/{{next}}">Next Page</a>
-        {{/if}}
-        {{/if}}
-    </div>
-
-    <br>
-</div>
-
-{{!-- search for blog --}}
-<div class="right">
-    <h2>Search for Blog</h2>
-
-
-
-    <form id="searchTag" method="POST" action="/blogs/{{page}}/search">
-
-        {{#if error0}}
-        <p class="error">{{error0}}</p>
-        <br>
-        {{/if}}
-
-
-        <label for="tag">Search for topic/idol/group</label> <br>
-        <input name="tag" type="text" id="tag" placeholder="topic/idol/group">
-        <br>
-        <button type="submit" class="submit-button">Submit</button>
-
-
-    </form>
-
-    {{#if not_logged_in}}
-    <h2>Log in to add your blog to the community</h2>
-    {{else}}
-    <hr>
-    <h2>Add your blog to the community</h2>
-
-    <form id="addBlog" method="POST" action="/blogs/{{page}}">
-
-        {{#if error3}}
-        <p class="error"> {{error3}}</p>
-        <br>
-        {{/if}}
-
-        {{#if error1}}
-        <p class="error"> Please enter title correctly</p>
-        <br>
-        {{/if}}
-        {{#if error2}}
-        <p class="error"> Please enter content correctly</p>
-        <br>
-        {{/if}}
-        <label for="title">Title</label> <br>
-        <input name="title" type="text" id="title" placeholder="title">
-        <br>
-        <label for="content"> Content</label><br>
-        <textarea style="width: 100%;" id="myNiceEditor" name="content" rows="15" cols="50"
-            placeholder="Enter blog"> </textarea>
-        <button type="submit" class="submit-button">Submit</button>
-        <hr>
-
-    </form>
-    {{/if}}
-
-</div>
-
 <br>
+<br>
+<br>
+<br>
+<br>
+
+<div class="container2">
+    <script type="text/javascript" src="//js.nicedit.com/nicEdit-latest.js"></script>
+    <script type="text/javascript">
+
+        bkLib.onDomLoaded(function () { nicEditors.allTextAreas() });
+    </script>
+    <script type="text/javascript" src="core/rte.js"></script>
+    <script type="text/javascript">
+        bkLib.onDomLoaded(function () {
+            nicEditors.editors.push(
+                new nicEditor().panelInstance(
+                    document.getElementById('myNicEditor')
+                )
+            );
+        });
+
+    </script>
+
+    <div class="box left">
+        <h1> Blogs</h1>
+
+        <section>
+
+            {{#if search}}
+            <a class="purple" href="/blogs/1">Return to all blogs</a>
+            {{/if}}
+
+            {{#if newBlog}}
+            <h4 class="pink">New Blog Added Successfully!</h4>
+            {{/if}}
+
+
+            {{#if blogs.length}}
+
+            {{#if search}}
+            <h2>Search Result Blogs</h2>
+            {{else}}
+            <h2>Trending Blogs</h2>
+            {{/if}}
+
+
+            {{#each blogs}}
+            <hr>
+            {{!-- <h3>{{title}}</h3> --}}
+            <a class="blog-title" href="/blogs/details/{{_id}}">{{title}}</a>
+            <br>
+            <a class="blog-owner" href="#">By {{name}}</a>
+            <br>
+
+            {{/each}}
+
+
+            {{else}}
+
+            <h2>Sorry, no blogs found.</h2>
+            <p>Check out the box to the right to post the first blog!</p>
+            <br>
+            {{/if}}
+
+
+
+        </section>
+
+        <hr>
+        <div class="pages">
+
+            {{#if prev}}
+            {{#if search}}
+            <a class="purple" href="/blogs/{{prev}}/search">Prev Page</a>
+            {{else}}
+            <a class="purple" href="/blogs/{{prev}}">Prev Page</a>
+            {{/if}}
+            {{/if}}
+
+            <p>Page {{page}}</p>
+
+
+            {{#if next}}
+            {{#if search}}
+            <a class="purple" href="/blogs/{{next}}/search">Next Page</a>
+            {{else}}
+            <a class="purple" href="/blogs/{{next}}">Next Page</a>
+            {{/if}}
+            {{/if}}
+        </div>
+
+        <br>
+    </div>
+    <p class="box"> &nbsp;&nbsp;</p>
+
+    {{!-- search for blog --}}
+    <div class="box right">
+        <h2>Search for Blog</h2>
+
+
+
+        <form id="searchTag" method="POST" action="/blogs/{{page}}/search">
+
+            {{#if error0}}
+            <p class="error">{{error0}}</p>
+            <br>
+            {{/if}}
+
+
+            <label for="tag">Search for topic/idol/group</label> <br>
+            <input name="tag" type="text" id="tag" placeholder="topic/idol/group">
+            <br>
+            <button type="submit" class="submit-button">Submit</button>
+
+
+        </form>
+
+        {{#if not_logged_in}}
+        <h2 class = "alert">Log in to add your blog to the community</h2>
+        {{else}}
+        <hr>
+        <h2>Add your blog to the community</h2>
+
+        <form id="addBlog" method="POST" action="/blogs/{{page}}">
+
+            {{#if error3}}
+            <p class="error"> {{error3}}</p>
+            <br>
+            {{/if}}
+
+            {{#if error1}}
+            <p class="error"> Please enter title correctly</p>
+            <br>
+            {{/if}}
+            {{#if error2}}
+            <p class="error"> Please enter content correctly</p>
+            <br>
+            {{/if}}
+            <label for="title">Title</label> <br>
+            <input name="title" type="text" id="title" placeholder="title">
+            <br>
+            <label for="content"> Content</label><br>
+            <textarea style="width: 100%;" id="myNiceEditor" name="content" rows="10" cols="50"
+                placeholder="Enter blog"> </textarea>
+            <button type="submit" class="submit-button">Submit</button>
+            <hr>
+
+        </form>
+        {{/if}}
+
+    </div>
+    <br>
+     <br>
+</div>

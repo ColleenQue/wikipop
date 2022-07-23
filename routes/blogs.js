@@ -4,7 +4,8 @@ const validation = require('../validation');
 const blogs = require('../data/blogs');
 const con = require('../helper');
 const { checkBlogContent } = require('../validation');
-const comments = require('../data/comments')
+const comments = require('../data/comments');
+const xss = require('xss');
 
 // router.use("/", (req, res, next) => {
 //   //if session not logged in
@@ -351,33 +352,26 @@ router.get("details/:id/comment/:commentId", async (req, res) => {
 });
 
 
-router.delete("details/:id/comment", async (req, res) => {
+router.delete("details/:id", async (req, res) => {
   //check parameters
-  let outfitId, commentId;
+  let blogId, commentId;
+  return res.json({success:true});
+
+  // try{
+  //   blogId = validation.checkBlogID(req.params.id);
+  //   commentId  = validation.checkCommentID(req.body.commentId);
+  // }
+  // catch (e) {
+  //   return res.status(500).json({ error: e });
+  // }
+
   // try {
-  //   outfitId = validation2.checkId(req.params.id);
-  //   commentId = validation2.checkId(req.body.commentId);
+  //   let deletionInfo = await data.deleteComment(xss(blogId), xss(commentId));
+  //   if (!deletionInfo.deleted) throw "Error: could not delete comment";
+  //   return res.status(200).json({ success: true });
   // } catch (e) {
-  //   return res.status(400).render("pages/error/error", {
-  //     title: "Error",
-  //     stylesheet: "/public/styles/outfit_card_styles.css",
-  //     error: e,
-  //   });
+  //   return res.status(500).json({ error: e });
   // }
-  // if (!req.session.admin) {
-  //   return res.status(403).render("pages/error/error", {
-  //     title: "Error",
-  //     stylesheet: "/public/styles/outfit_card_styles.css",
-  //     error: "403: Forbidden",
-  //   });
-  // }
-  try {
-    let deletionInfo = await data.deleteComment(xss(outfitId), xss(commentId));
-    if (!deletionInfo.deleted) throw "Error: could not delete comment";
-    return res.status(200).json({ success: true });
-  } catch (e) {
-    return res.status(500).json({ error: e });
-  }
 });
 
 

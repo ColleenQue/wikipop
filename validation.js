@@ -369,6 +369,16 @@ module.exports = {
         }
         return comments;
     },
+    checkContent(content)
+    {
+        if(!content){
+            throw "must provide content"
+        }
+        if(typeof content!= string){
+            throw "content must be a string"
+        }
+
+    },
     checkListOfTags(tagsList)
     {
         if(!Array.isArray(tagsList))
