@@ -1,6 +1,6 @@
 <br><br><br><br><br><br>
-
-<section class="left">
+<div class="container2">
+<section class="box left">
 
     <h1>{{blog.title}}</h1>
     <p>By {{blog.name}}</p>
@@ -9,8 +9,8 @@
     <p>{{{blog.content}}}</p>
     <br> <br>
 </section>
-
-<section class="right">
+<p class="box"> &nbsp;&nbsp;</p>
+<section class="box right">
 
     <h2>Comments</h2>
 
@@ -27,7 +27,7 @@
     {{!-- <i class="fa-solid fa-circle-xmark"></i> --}}
 
     {{#if not_logged_in}}
-    <p>Log in to comment!</p>
+    <p class="alert">Log in to comment!</p>
     {{else}}
     {{#if error}}
     <p class="error">{{error}}</p>
@@ -38,11 +38,12 @@
     <form id="commentForm" method="POST" action="{{blog._id}}">
         <label for="comment_term">Comment</label> <br />
         <textarea id="comment_term" name="comment" rows="4" cols="50" placeholder="Enter comment"> </textarea>
-        <button type="submit" class="btn">Submit</button>
+        <br>
+        <button type="submit" class="submit-button">Submit</button>
     </form>
     {{/if}}
     <br>
      <br>
 
-
+</div>
 </section>

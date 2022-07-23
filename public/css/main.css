@@ -73,6 +73,9 @@ a:hover {
     zoom:150%;
     
 }
+.alert{
+    color:red;
+}
 
 .container2{
     display:flex;

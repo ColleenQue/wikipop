@@ -70,7 +70,7 @@
 
           del.on("click", function (event) {
             console.log("sad");
-            console.log(window.location.href+"/comments");
+            console.log(window.location.href + "/comments");
 
             var rc = {
               method: "DELETE",
@@ -108,21 +108,45 @@
 
         l.append(" ");
         l.append(comment);
+
+        //get subcomments
+
+        let subComments = $("<p></p>");
+        for(let z = 0;z<comments[i].comments.length;z++){
+          subComments.append("<br>");
+          subComments.append(comments[i].comments[z]);
+          subComments.append("<hr>");
+        } 
+
+
+        let text;
+      
+
+        if(user){
+           text =
+          $("<form id=\"commentForm\" method=\"POST\" action=\"{{}}\"><label for=\"comment_term\">Comment</label> <br /><textarea id=\"comment_term\" name=\"comment\" rows=\"2\" cols=\"30\"placeholder=\"Enter comment\"> </textarea><br><button type=\"submit\" class=\"submit-button\">Submit</button></form>");
+        }
+        else{
+           text = $("<p class = \"alert\">Log in to comment!</p>")
+        }
+        
+       l.append(subComments);
+        l.append(text);
+       subComments.hide();
+        text.hide();
+
+
+
         comment.on("click", function (event) {
-          let form = $("<form></form>");
-          form.attr("id","commentForm2" );
 
-          let text = $("<textarea></textarea>");
-
- 
-          //     <form id="commentForm" method="POST" action="{{blog._id}}">
-          //     <label for="comment_term">Comment</label> <br />
-          //     <textarea id="comment_term" name="comment" rows="4" cols="50" placeholder="Enter comment"> </textarea>
-          //     <button type="submit" class="btn">Submit</button>
-          // </form>
-
-          l.append(text);
-          l.append("&nbsp;&nbsp;&nbsp;add subcomments here<br>");
+          if (text.is(":visible")) {
+          subComments.hide();
+            text.hide();
+          }
+          else {
+          subComments.show();
+            text.show();
+          }
 
 
           // var requestConfig = {
@@ -147,14 +171,9 @@
 
 
 
-
-
-
-
-
         //need to empty
 
-        l.append("<br>");
+        l.append("<hr>");
         commentList.append(l);
         commentList.show();
 
