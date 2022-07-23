@@ -127,7 +127,13 @@
           $("<form id=\"commentForm\" method=\"POST\" action=\"{{}}\"><label for=\"comment_term\">Reply</label> <br /><textarea id=\"comment_term\" name=\"comment\" rows=\"2\" cols=\"30\"placeholder=\"Enter comment\"> </textarea><br><button type=\"submit\" class=\"submit-button\">Submit</button></form>");
         }
         else{
-           text = $("<p class = \"alert\">Log in to comment!</p>")
+          if(comments[i].comments.length == 0){
+
+            text = $("<br><p class = \"alert\">Log in to comment!</p>")
+          }
+          else{
+            text = $("<p class = \"alert\">Log in to comment!</p>")
+          }
         }
         
        l.append(subComments);
