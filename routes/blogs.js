@@ -4,7 +4,9 @@ const validation = require('../validation');
 const blogs = require('../data/blogs');
 const con = require('../helper');
 const { checkBlogContent } = require('../validation');
-const comments = require('../data/comments')
+const comments = require('../data/comments');
+const users= require("../data/users");
+const { findBlog } = require('../data/blogs');
 
 // router.use("/", (req, res, next) => {
 //   //if session not logged in
@@ -202,61 +204,117 @@ router.post("/:page", async (req, res) => {
 
 router.get("/details/:id", async (req, res, next) => {
 
+  /*
   let not_logged = false;
 
   if (!req.session.user) {
     not_logged = true;
   }
+  */
 
   try {
-
     let temp = await blogs.findBlog(req.params.id);
-    return res.render("posts/blogs/blog2", {
-      blog: temp,
-      title: "Blogs",
-      script: "/public/scripts/blogs.js", not_logged_in: not_logged
-    });
-
-
+    if(req.session.user)
+    {
+      const theUser=await users.findUser(req.session.user);
+      const blogsLiked=theUser[0].blogsLiked;
+      const blogId=req.params.id;
+      const getBlog=await blogs.findBlog(blogId);
+      const blogTitle=getBlog.title;
+      const blogLiked=false;
+      for(let i=0;i<blogsLiked.length;i++)
+      {
+        if(blogsLiked[i].blogID===blogId && blogsLiked[i].blogTitle===blogTitle)
+        {
+          blogLiked=true;
+          break;
+        }
+      }
+      //console.log(blogLiked);
+      return res.render("posts/blogs/blog2", {
+        blog: temp,
+        title: "Blogs",
+        script: "/public/scripts/blogs.js",
+        not_logged_in: false,
+        like: blogLiked,
+      });
+    }
+    else
+    {
+      return res.render("posts/blogs/blog2", {
+        blog: temp,
+        title: "Blogs",
+        script: "/public/scripts/blogs.js",
+        not_logged_in: true,
+        like: false,
+      });
+    }
   }
   catch (e) {
-
     return res.sendStatus(500);
   }
 
 })
 
 
-router.post("/details/:id", async (req, res, next) => {
-
+router.post("/details/:id", async (req, res) => {
   let not_logged = false;
 
   if (!req.session.user) {
     not_logged = true;
   }
-
   try {
     //add comment
-    let commenter = req.session.user;
-    let content = req.body.content;
+    //let commenter = req.session.user;
+    //let content = req.body.content;
 
     //await blogs.addComment(req.params.id,commenter,content)
 
     //TODO switch to ajax request
-    let temp = await blogs.findBlog(req.params.id);
-
-    return res.render("posts/blogs/blog2", {
-      blog: temp,
-      title: "Blogs",
-      script: "/public/scripts/blogs.js", not_logged_in: not_logged
-    });
+      return res.render("posts/blogs/blog2", {
+        blog: temp,
+        title: "Blogs",
+        script: "/public/scripts/blogs.js", 
+        not_logged_in: not_logged,
+      })
 
   }
   catch (e) {
-
     return res.sendStatus(500);
   }
 
+})
+
+router.get("/details/:id/like", async(req,res) =>
+{
+  if(req.session.user)
+  {
+    const findBlog=await blogs.findBlog(req.params.id);
+    const blogTitle=findBlog.title;
+    const addNewBlog=await users.addNewBlog(req.session.user,blogTitle,req.params.id);
+    const likeBlog=await blogs.likeBlog(req.params.id);
+    res.redirect('/details/'+req.params.id);
+  }
+  else
+  {
+    res.sendStatus(400);
+  }
+})
+
+router.get("/details/:id/unlike", async(req,res) =>
+{
+  if(req.session.user)
+  {
+    const findBlog=await blogs.findBlog(req.params.id);
+    const blogTitle=findBlog.title;
+    const removeBlog=await users.removeBlog(req.session.user,blogTitle,req.params.id);
+    const unlikeBlog=await blogs.unlikeBlog(req.params.id);
+    res.redirect('/details/'+req.params.id);
+  }
+  else
+  {
+    res.sendStatus(400);
+  }
 })
 
 

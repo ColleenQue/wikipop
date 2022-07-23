@@ -159,6 +159,34 @@ let exportedMethods =
         }
 
         return findComment;
+    },
+    async likeBlog(blogID)
+    {
+        blogID=validation.checkBlogID(blogID);
+        const theBlog=await this.findBlog(blogID);
+        let numOfLikes=theBlog.numOfLikes;
+        numOfLikes++;
+        const blogsCollection=await blogs();
+        const updateBlog=await blogsCollection.updateOne({_id:theBlog._id},{$set:{numOfLikes: numOfLikes}});
+        if(!updateBlog.matchedCount && !updateBlog.modifiedCount)
+        {
+            throw "Error: Update failed";
+        }
+        return blogID;
+    },
+    async unlikeBlog(blogID)
+    {
+        blogID=validation.checkBlogID(blogID);
+        const theBlog=await this.findBlog(blogID);
+        let numOfLikes=theBlog.numOfLikes;
+        numOfLikes=numOfLikes-1;
+        const blogsCollection=await blogs();
+        const updateBlog=await blogsCollection.updateOne({_id:theBlog._id},{$set:{numOfLikes: numOfLikes}});
+        if(!updateBlog.matchedCount && !updateBlog.modifiedCount)
+        {
+            throw "Error: Update failed";
+        }
+        return blogID;
     }
     //   },    
     //   async BlogsPerPageList(pageNumber,list){

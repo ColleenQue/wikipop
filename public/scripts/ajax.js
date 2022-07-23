@@ -9,7 +9,18 @@
             let parameter=document.getElementById("group");
             if(typeof parameter==="undefined" || parameter===null)
             {
-
+                let parameter=document.getElementById("blogTitle");
+                if(typeof parameter==="undefined" || parameter===null)
+                {
+                    let parameter=document.getElementsByClassName("blog-title");
+                    console.log(parameter[1].innerHTML);
+                }
+                else
+                {
+                    let thePath=window.location.pathname;
+                    let blogsPath=thePath.replace('/blogs/details/',"");
+                    theURL="/blogs/details/"+blogsPath+"/like";
+                }
             }
             else
             {
@@ -37,7 +48,11 @@
         {
             if(jqXHR.status ===400)
             {
-                alert("Not logged in");
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'You\'re not logged in!',
+                  });
             }
         });
 
@@ -52,7 +67,21 @@
             let parameter=document.getElementById("group");
             if(typeof parameter==="undefined" || parameter===null)
             {
-
+                let parameter=document.getElementById("blogTitle");
+                if(typeof parameter==="undefined" || parameter===null)
+                {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'The like button failed',
+                      });
+                }
+                else
+                {
+                    let thePath=window.location.pathname;
+                    let blogsPath=thePath.replace('/blogs/details/',"");
+                    theURL="/blogs/details/"+blogsPath+"/like";
+                }
             }
             else
             {
@@ -80,7 +109,11 @@
         {
             if(jqXHR.status ===400)
             {
-                alert("Not logged in");
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'You\'re not logged in!',
+                  });
             }
         });
 
@@ -95,7 +128,21 @@
             let parameter=document.getElementById("group");
             if(typeof parameter==="undefined" || parameter===null)
             {
-
+                let parameter=document.getElementById("blogTitle");
+                if(typeof parameter==="undefined" || parameter===null)
+                {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'The like button failed',
+                      });
+                }
+                else
+                {
+                    let thePath=window.location.pathname;
+                    let blogsPath=thePath.replace('/blogs/details/',"");
+                    theURL="/blogs/details/"+blogsPath+"/unlike";
+                }
             }
             else
             {
@@ -123,7 +170,11 @@
         {
             if(jqXHR.status ===400)
             {
-                alert("Not logged in");
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'You\'re not logged in!',
+                  });
             }
         });
     });
@@ -137,7 +188,21 @@
             let parameter=document.getElementById("group");
             if(typeof parameter==="undefined" || parameter===null)
             {
-
+                let parameter=document.getElementById("blogTitle");
+                if(typeof parameter==="undefined" || parameter===null)
+                {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'The like button failed',
+                      });
+                }
+                else
+                {
+                    let thePath=window.location.pathname;
+                    let blogsPath=thePath.replace('/blogs/details/',"");
+                    theURL="/blogs/details/"+blogsPath+"/unlike";
+                }
             }
             else
             {
@@ -165,7 +230,11 @@
         {
             if(jqXHR.status ===400)
             {
-                alert("Not logged in");
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'You\'re not logged in!',
+                  });
             }
         });
     });

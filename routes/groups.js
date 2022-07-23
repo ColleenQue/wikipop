@@ -4,6 +4,8 @@ const validation = require('../validation');
 const groups = require('../data/groups');
 const multer=require('multer');
 const users=require('../data/users');
+const Swal=require('sweetalert2');
+const e = require('express');
 
 var storage=multer.diskStorage({
     destination: function(req,file,cb)
@@ -22,7 +24,13 @@ router.get('', async(req,res) =>
 {
     try{
         const allGroups=await groups.getAllGroups();
-        res.render('posts/allGroups',{groups: allGroups});
+        if(req.session.user)
+        {
+            res.render('posts/allGroups',{groups: allGroups, not_logged_in: false});
+        }else
+        {
+            res.render('posts/allGroups',{groups: allGroups, not_logged_in: true});
+        }
 
     }catch(e)
     {
@@ -32,7 +40,14 @@ router.get('', async(req,res) =>
 
 router.get('/newGroup', async(req,res) =>
 {
-    res.render('posts/newGroup');
+    if(req.session.user)
+    {
+        res.render('posts/newGroup', {not_logged_in: false});
+    }
+    else
+    {
+        res.render('posts/newGroup', {not_logged_in: true});
+    }
 });
 
 
@@ -88,6 +103,8 @@ router.get('/:id/like', async(req,res) =>
     else
     {
         res.sendStatus(400);
+        //console.log("hi");
+        //await Swal.fire(  'Good job!',  'You clicked the button!',  'success')
     }
 });
 
@@ -119,13 +136,15 @@ router.get('/:id', async(req,res) =>
             const groupsLiked=theUser[0].groupsLiked;
             res.render('posts/groups',{name: theGroup.name, numOfMembers: theGroup.numOfMembers, 
             debutDate: theGroup.debutDate, awards: theGroup.awards, greeting: theGroup.greeting, 
-            fandomName: theGroup.fandomName, fandomColor: theGroup.fandomColor, socialMedia: theGroup.socialMedia, memberLinks: theGroup.membersLinks, groupImage: theGroup.groupImage, like: groupsLiked.includes(req.params.id)});
+            fandomName: theGroup.fandomName, fandomColor: theGroup.fandomColor, socialMedia: theGroup.socialMedia, memberLinks: theGroup.membersLinks, 
+            groupImage: theGroup.groupImage, like: groupsLiked.includes(req.params.id), not_logged_in: false});
         }
         else
         {
             res.render('posts/groups',{name: theGroup.name, numOfMembers: theGroup.numOfMembers, 
                 debutDate: theGroup.debutDate, awards: theGroup.awards, greeting: theGroup.greeting, 
-                fandomName: theGroup.fandomName, fandomColor: theGroup.fandomColor, socialMedia: theGroup.socialMedia, memberLinks: theGroup.membersLinks, groupImage: theGroup.groupImage, like: false});
+                fandomName: theGroup.fandomName, fandomColor: theGroup.fandomColor, socialMedia: theGroup.socialMedia, memberLinks: theGroup.membersLinks, 
+                groupImage: theGroup.groupImage, like: false, not_logged_in: true});
         }
     }
     catch(e)

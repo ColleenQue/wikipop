@@ -23,10 +23,15 @@ async function main()
     }
     try
     {
-        let name="albertchen546";
-        let title="albertchenthebest";
-        let content ="blahblahblah"
-        await blogs.createBlog(name,title,content);
+        let name1="albertchen546";
+        let title1="albertchenthebest";
+        let content1 ="blahblahblah"
+        await blogs.createBlog(name1,title1,content1);
+
+        let name2="albertchen546";
+        let title2="albertchennumber1";
+        let content2 ="blahblahblah"
+        await blogs.createBlog(name2,title2,content2);
 
     }catch(e)
     {

@@ -26,8 +26,14 @@ router.get('', async(req,res)=>
     try
     {
         const allIdols=await idols.getAllIdols();
-        console.log(allIdols);
-        res.render('posts/allIdols',{idols: allIdols});
+        if(req.session.user)
+        {
+            res.render('posts/allIdols',{idols: allIdols, not_logged_in: false});
+        }
+        else
+        {
+            res.render('posts/allIdols',{idols: allIdols, not_logged_in: true});
+        }
     }catch(e)
     {
         res.status(400).render('posts/allIdols',{error: e});
@@ -69,7 +75,14 @@ router.post('/newIdol', upload.single('idolImage'), async(req,res)=>
 
 router.get('/newIdol', async(req,res) =>
 {
-    res.render('posts/newIdol',{groupName: savedGroup});
+    if(req.session.user)
+    {
+        res.render('posts/newIdol',{groupName: savedGroup, not_logged_in: false});
+    }
+    else
+    {
+        res.render('posts/newIdol',{groupName: savedGroup, not_logged_in: true});
+    }
 });
 
 router.get('/:id/like',async(req,res) => 
@@ -144,13 +157,13 @@ router.get('/:id',async(req,res) =>
             }
             res.render('posts/idol',{name: theIdol.name, role: theIdol.role, group: theIdol.group, age: theIdol.age, dob: theIdol.dob, height: theIdol.height,
             weight: theIdol.weight, fandomName: theIdol.fandomName, fandomColor: theIdol.fandomColor, funFacts: theIdol.funfacts, socialMedia: theIdol.socialMedia,
-            idolImage: theIdol.idolImage, like: idolLiked});
+            idolImage: theIdol.idolImage, like: idolLiked, not_logged_in: false});
         }
         else
         {
             res.render('posts/idol',{name: theIdol.name, role: theIdol.role, group: theIdol.group, age: theIdol.age, dob: theIdol.dob, height: theIdol.height,
             weight: theIdol.weight, fandomName: theIdol.fandomName, fandomColor: theIdol.fandomColor, funFacts: theIdol.funfacts, socialMedia: theIdol.socialMedia,
-            idolImage: theIdol.idolImage, like: false});
+            idolImage: theIdol.idolImage, like: false, not_logged_in: true});
         }
     }catch(e)
     {

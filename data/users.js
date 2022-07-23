@@ -33,6 +33,7 @@ let exportedMethods =
             password: hash,
             groupsLiked: [],
             idolsLiked: [],
+            blogsLiked: [],
             blogsPosted: [],
             commentsPosted: [],
             pagesCreated: [],
@@ -209,8 +210,47 @@ let exportedMethods =
             throw "Error: Update failed";
         }
         return idolName;
-    }
-
+    },
+    async addNewBlog(username,blogTitle,blogID)
+    {
+        username=validation.checkUserName(username);
+        blogTitle=validation.checkBlogName(blogTitle);
+        blogID=validation.checkBlogID(blogID);
+        const oldUser= await this.findUser(username);
+        let blogsLiked=oldUser[0].blogsLiked;
+        let params={blogID,blogTitle};
+        blogsLiked.push(params);
+        const userCollection=await users();
+        const updateInfo = await userCollection.updateOne({ _id: oldUser[0]._id }, { $set: { blogsLiked: blogsLiked} });
+        if (!updateInfo.matchedCount && !updateInfo.modifiedCount) {
+            throw "Error: Update failed";
+        }
+        return blogTitle;
+    },
+    async removeBlog(username,blogTitle,blogID)
+    {
+        username=validation.checkUserName(username);
+        blogTitle=validation.checkBlogName(blogTitle);
+        blogID=validation.checkBlogID(blogID);
+        const oldUser= await this.findUser(username);
+        let blogsLiked=oldUser[0].blogsLiked;
+        let index=0;
+        for(let i=0;i<blogsLiked.length;i++)
+        {
+            if(blogsLiked[i].blogTitle===blogTitle && blogsLiked[i].blogID===blogID)
+            {
+                index=i;
+                break;
+            }
+        }
+        blogsLiked.splice(index,1);
+        const userCollection=await users();
+        const updateInfo = await userCollection.updateOne({ _id: oldUser[0]._id }, { $set: { blogsLiked: blogsLiked } });
+        if (!updateInfo.matchedCount && !updateInfo.modifiedCount) {
+            throw "Error: Update failed";
+        }
+        return blogTitle;
+    },
 };
 
 module.exports = exportedMethods;
