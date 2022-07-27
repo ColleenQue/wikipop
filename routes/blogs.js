@@ -298,6 +298,11 @@ router.get("/details/:id/comments", async (req, res, next) => {
 })
 
 
+router.post("/details/subComments/:id", async (req, res, next) => {
+  console.log("here");
+
+
+})
 
 router.post("/details/:id/comments", async (req, res, next) => {
 
