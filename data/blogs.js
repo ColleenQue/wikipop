@@ -114,8 +114,6 @@ let exportedMethods =
             comments: []
         }
 
-
-        console.log(theBlog);
         let theComments = theBlog.comments;
         theComments.push(newComment);
 
@@ -147,18 +145,87 @@ let exportedMethods =
         console.log(blogs2);
         return blogs2;
     },
-    async findComment(commentId) {
 
+    //helper function for comments
+    //find blog
+    async getComment(commentId) {
         commentId = validation.checkCommentID(commentId);
+        commentId = commentId.trim();
+        if (!ObjectId.isValid(commentId)) throw 'invalid object commentId';
 
-        const commentCollections = await comments();
-        const findComment = await commentCollections.findOne({ _id: ObjectId(commentId) });
 
-        if (!findComment) {
-            throw "Error: Could not find comment"
+        const blogCollection = await blogs();
+        const blog = await blogCollection.findOne({ "comments": { $elemMatch: { "_id": ObjectId(commentId) } } });
+
+
+        console.log(blog);
+        if (blog == null)
+            throw "comment does not exist";
+
+        const comments = blog.comments;
+        if (comments.length === 0)
+            throw "comment does not exist"
+
+        return blog;
+    },
+
+
+
+    async addSubComment(commentId, content, user) {
+
+        commentId = commentId.trim();
+        if (!ObjectId.isValid(commentId)) throw 'invalid object commentId';
+
+
+        const blogCollection = await blogs();
+        //unable to find blog this way
+        const blog = await blogCollection.findOne({ "comments": { $elemMatch: { "_id": ObjectId(commentId) } } });
+
+
+
+        console.log(blog);
+        
+        console.log(commentId,content,user);
+        commentId = validation.checkCommentID(commentId);
+        content = validation.checkContent(content);
+        user = validation.checkUserName(user);
+        
+
+        if (!ObjectId.isValid(commentId)) throw 'invalid object commentId';
+
+
+    
+        let newComment =
+        {
+            //name would be name of user
+            _id: ObjectId().toString(),
+            commenter: user,
+            content: content,
+            numOfLikes: 0,
+            comments: []
         }
 
-        return findComment;
+        if (comments.length === 0)
+            throw "comment does not exist"
+
+        //add sub comment 
+        for (let i = 0; i < comments.length; i++) {
+            if (comments[i]._id == commentId) {
+                //When given a albumId, this function will return an album from the band. 
+                comments[i].comments.push(newComment);
+                break;
+            }
+        }
+
+        blog.comments = comments;
+
+        const updateBlog = blogCollection.updateOne({ _id: blog._id }, { $set: { comments: blog.comments } });
+        if (!updateBlog || updateBlog.modifiedCount === 0) {
+            throw "Error: Update failed";
+        }
+
+        return newComment;
+
     },
 
     async editComment(blogId, commentId, newContent) {
@@ -209,8 +276,8 @@ let exportedMethods =
 
     },
 
-    async get(blogId){
-        blogId = validation.checkCommentID(blogId);
+    async get(blogId) {
+        blogId = validation.checkBlogID(blogId);
 
         const blogCollection = await blogs();
         const blog = await blogCollection.findOne({ _id: ObjectId(blogId) });
@@ -222,55 +289,34 @@ let exportedMethods =
         return blog;
     },
 
-    async deleteComment(commentId, blogId) {
-        blogId = validation.checkBlogID(blogId);
-        commentId = validation.checkId(commentId);
+
+    async deleteComment(commentId) {
+        commentId = validation.checkCommentID(commentId);
+        if (!ObjectId.isValid(commentId)) throw 'invalid object commentId';
+
+
         const blogCollection = await blogs();
-        const commentCollection = await comments();
-
-        let deletionInfo = await blogCollection.updateOne(
-            { _id: ObjectId(blogId) },
-            { $pull: { comments: { _id: ObjectId(commentId) } } }
-        );
+        const blog = await blogCollection.findOne({ "comments": { $elemMatch: { "_id": ObjectId(commentId) } } });
 
 
-        if (!deletionInfo) throw "Could not delete comment";
+        if (blog == null)
+            throw "comment does not exist";
 
+        const comments = blog.comments;
+        if (comments.length === 0)
+            throw "comment does not exist"
 
-        const deletionInfo2 = await commentCollection.deleteOne({
-            username: { _id: commentId },
-        });
+        for (let i = 0; i < comments.length; i++) {
+            if (comments[i]._id == commentId) {
+                //When given a albumId, this function will return an album from the band. 
+                let removedComment = comments.splice(i, i + 1);
+                return { removedComment: removedComment, comments: comments };
+            }
+        }
 
-        if (!deletionInfo2) throw "Could not delete comment";
-
-
-        return { deleted: true };
     },
 
 
-
-
-
-    //   },    
-    //   async BlogsPerPageList(pageNumber,list){
-    //     //gets 5 blogs per page
-
-    //     //sort by number of likes
-
-    //     const index = (pageNumber-1) * 5;
-    //     const end = index+5;
-    //     for (let i=index;i<end;i++){
-    //         if(i >= blogList.length) {return list;} 
-    //         list.push(blogList[i]);
-    //     }
-    //     return list;
-    // },
-    // async LastPageList(list){
-    //     const blogList = list;
-    //     let lastPage = (blogList.length/5);
-    //     //returns 5.5 or something
-    //     return lastPage;
-    // }
 };
 
 module.exports = exportedMethods;

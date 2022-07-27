@@ -227,7 +227,7 @@ router.get("/details/:id", async (req, res, next) => {
 
 })
 
-
+//add comment
 router.post("/details/:id", async (req, res, next) => {
 
   let not_logged = false;
@@ -299,8 +299,25 @@ router.get("/details/:id/comments", async (req, res, next) => {
 
 
 router.post("/details/subComments/:id", async (req, res, next) => {
-  console.log("here");
+  console.log("here2");
 
+  try{
+    //assuming logged in
+    let user = validation.checkUserName(req.session.user) ;
+    
+    let content = validation.checkContent(req.body.subComment);
+    console.log(req.body.subComment);
+    let commentId = validation.checkCommentID(req.params.id);
+
+    //insert new comment into comments category for commentId 
+    let newComment = await blogs.addSubComment(commentId,content,user);
+
+    console.log(newComment);
+  }
+  catch(e){
+    console.log(e);
+
+  }
 
 })
 
