@@ -123,6 +123,7 @@ let exportedMethods =
             throw "Error: Update failed";
         }
 
+        newComment._id = newComment._id.toString();
         return newComment;
     },
     //for searching
@@ -174,17 +175,14 @@ let exportedMethods =
     async addSubComment(commentId, content, user) {
 
         commentId = commentId.trim();
-        if (!ObjectId.isValid(commentId)) throw 'invalid object commentId';
 
+        if (!ObjectId.isValid(commentId)) throw 'invalid object commentId';
 
         const blogCollection = await blogs();
         //unable to find blog this way
-        const blog = await blogCollection.findOne({ "comments": { $elemMatch: { "_id": ObjectId(commentId) } } });
+        const blog = await blogCollection.findOne({ "comments": { $elemMatch: { "_id": commentId } } });
 
-
-
-        console.log(blog);
-        
+        //found blog
         console.log(commentId,content,user);
         commentId = validation.checkCommentID(commentId);
         content = validation.checkContent(content);
@@ -205,19 +203,20 @@ let exportedMethods =
             comments: []
         }
 
-        if (comments.length === 0)
-            throw "comment does not exist"
+        let commentList = blog.comments;
 
         //add sub comment 
-        for (let i = 0; i < comments.length; i++) {
-            if (comments[i]._id == commentId) {
+        for (let i = 0; i < commentList.length; i++) {
+            if (commentList[i]._id == commentId) {
                 //When given a albumId, this function will return an album from the band. 
-                comments[i].comments.push(newComment);
+                commentList[i].comments.push(newComment);
+                
                 break;
             }
         }
 
-        blog.comments = comments;
+        blog.comments = commentList;
+        console.log(commentList);
 
         const updateBlog = blogCollection.updateOne({ _id: blog._id }, { $set: { comments: blog.comments } });
         if (!updateBlog || updateBlog.modifiedCount === 0) {
