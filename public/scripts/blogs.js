@@ -111,38 +111,49 @@
 
         //get subcomments
 
-        let subComments = $("<p></p>");
-        for(let z = 0;z<comments[i].comments.length;z++){
-          subComments.append("<br>");
-          subComments.append(comments[i].comments[z]);
+        let subComments = $("<br><br><div class = \"subComments\" <p></p></div>");
+
+
+        for (let z = 0; z < comments[i].comments.length; z++) {
+
+          let l1 = $("<p></p>");
+          let s2 = comments[i].comments[z].commenter + ": " + comments[i].comments[z].content;
+          //add attribute to each li tag = <li id = "comments.id">
+          l1.attr("id", comments[i]._id);
+          l1.append(s2); //content
+          l1.append("&nbsp;&nbsp;&nbsp;");//for buttons
+
+          subComments.append(l1);
           subComments.append("<hr>");
-        } 
+        }
 
 
         let text;
-      
 
-        if(user){
-           text =
-          $("<form id=\"commentForm\" method=\"POST\" action=\"subComments/" + comments[i]._id+"\"><label for=\"comment_term\">Reply</label> <br /><textarea id=\"comment_term\" name=\"subComment\" rows=\"2\" cols=\"30\"placeholder=\"Enter comment\"> </textarea><br><button type=\"submit\" class=\"submit-button\">Submit</button></form>");
+
+        if (user) {
+          text =
+            $("<form id=\"commentForm\" method=\"POST\" action=\"subComments/" + comments[i]._id + "\"><label for=\"comment_term\">Reply</label> <br /><textarea id=\"comment_term\" name=\"subComment\" rows=\"2\" cols=\"30\"placeholder=\"Enter comment\"> </textarea><br><button type=\"submit\" class=\"submit-button\">Submit</button></form>");
           //get all subcomments for comment? 
 
 
           //detailed/subComments/:id
         }
-        else{
-          if(comments[i].comments.length == 0){
+        else {
+          if (comments[i].comments.length == 0) {
 
-            text = $("<br><p class = \"alert\">Log in to comment!</p>")
+            text = $("<br><p class = \"alert\">Log in to add subcomment!</p><br>")
           }
-          else{
-            text = $("<p class = \"alert\">Log in to comment!</p>")
+          else {
+            text = $("<p class = \"alert\">Log in to add subcomment!</p><br>")
           }
         }
-        
-       l.append(subComments);
-        l.append(text);
-       subComments.hide();
+
+        subComments.append(text);
+
+        l.append(subComments);
+        // l.append(text);
+        subComments.hide();
         text.hide();
 
 
@@ -150,11 +161,11 @@
         comment.on("click", function (event) {
 
           if (text.is(":visible")) {
-          subComments.hide();
+            subComments.hide();
             text.hide();
           }
           else {
-          subComments.show();
+            subComments.show();
             text.show();
           }
 

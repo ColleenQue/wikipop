@@ -304,9 +304,9 @@ router.post("/details/subComments/:id", async (req, res, next) => {
   try{
     //assuming logged in
     let user = validation.checkUserName(req.session.user) ;
-    
+
     let content = validation.checkContent(req.body.subComment);
-    console.log(req.body.subComment);
+
     let commentId = validation.checkCommentID(req.params.id);
 
     //insert new comment into comments category for commentId 
