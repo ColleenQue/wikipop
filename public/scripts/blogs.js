@@ -1,3 +1,87 @@
+(function ($)
+{
+  $("ul").on("click","i", function(e)
+  {
+    e.preventDefault();
+    $(this).parent().remove();
+    //console.log($(this).parent()[0].id);
+    var requestConfig = {
+      method: "DELETE",
+      url: window.location.pathname + "/deleteComment",
+      data: { commentId: $(this).parent()[0].id },
+      };
+      $.ajax(requestConfig).then(function(responseMessage){}).fail(function(jqXHR, exception)
+      {
+          if(jqXHR.status ===400)
+          {
+              Swal.fire("What is happening");
+          }
+      });
+      //console.log(requestConfig.url);
+  })
+  /*
+  var allComments=
+  {
+    method: "GET",
+    url: window.location.pathname+"/comments",
+    cache: false,
+  }
+  $.ajax(allComments).complete(function(responseMessage)
+  {
+    let comments=responseMessage.comments;
+    let ul=document.createElement("ul");
+    document.getElementById("comments").appendChild(ul);
+    for(let i=0;i<comments.length;i++)
+    {
+      let li=document.createElement("li");
+      li.setAttribute("id",comments[i]._id);
+      li.innerHTML=comments[i].commenter+": "+comments[i].content;
+      let image=document.createElement("i");
+      image.setAttribute('class',"fa-regular fa-trash-can");
+      li.appendChild(image);
+      ul.appendChild(li);
+    }
+    $("ul").on("click","i", function(e)
+    {
+      e.preventDefault();
+      $(this).parent().remove();
+      //console.log($(this).parent()[0].id);
+      var requestConfig = {
+        method: "GET",
+        url: window.location.pathname + "/comment/delete",
+        data: { commentId: $(this).parent()[0].id },
+        };
+        $.ajax(requestConfig).then(function(responseMessage){console.log("done")});
+        //console.log(requestConfig.url);
+    })
+  });
+  */
+  //adding comment
+  $("#commentForm").submit(function(event)
+  {
+    event.preventDefault();
+      var comment = $("#comment_term").val();
+      document.getElementById("commentForm").reset();
+  
+      //deal with commenter in routes
+      var requestConfig = {
+        method: "POST",
+        url: window.location.pathname + "/comments",
+        data: { comment: comment },
+      };
+      $.ajax(requestConfig).then(function(responseMessage)
+      {
+        let li=document.createElement("li");
+        li.setAttribute("id",responseMessage.comment._id);
+        li.innerHTML=responseMessage.comment.commenter+": "+responseMessage.comment.content;
+        let image=document.createElement("i");
+        image.setAttribute("class","fa-regular fa-trash-can");
+        li.appendChild(image);
+        document.getElementById("commentList").appendChild(li);
+      });
+  });
+})(window.jQuery);
+/*
 (function ($) {
   // Let's start writing AJAX calls!
   //page load
@@ -48,7 +132,8 @@
 
     } else {
       noComment.hide();
-      for (let i = 0; i < comments.length; i++) {
+      for (let i = 0; i < comments.length; i++) 
+      {
         //add each comment to the list
         let l = $("<p></p>");
         let s = comments[i].commenter + ": " + comments[i].content;
@@ -66,27 +151,27 @@
 
           let edit = $("<i></i>");
           edit.attr("class", "fa-regular fa-pen-to-square");
-
-
-          // deleteBtn.attr("class", "delete-comment-btn");
-          // deleteBtn.on("click", function (event) {
-          //   var requestConfig = {
-          //     method: "DELETE",
-          //     url: window.location.href + "/comment",
-          //     data: { commentId: comments[i]._id },
-          //   };
-          //   $.ajax(requestConfig).then(function (responseMessage) {
-          //     if (responseMessage.success) {
-          //       errorDiv.text("Comment has been successfully deleted");
-          //       $("#" + comments[i]._id).remove();
-          //     } else if (responseMessage.error) {
-          //       errorDiv.text(responseMessage.error);
-          //     } else {
-          //       errorDiv.text("Error: comment deletion failed");
-          //     }
-          //     errorDiv.show();
-          //   });
-          // });
+           deleteBtn.attr("class", "delete-comment-btn");
+           deleteBtn.on("click", function (event) {
+             var requestConfig = {
+             method: "DELETE",
+             url: window.location.href + "/comment",
+               data: { commentId: comments[i]._id },
+             };
+             $.ajax(requestConfig).then(function (responseMessage) {
+               if (responseMessage.success) {
+                 errorDiv.text("Comment has been successfully deleted");
+                 $("#" + comments[i]._id).remove();
+               } else if (responseMessage.error) {
+                 errorDiv.text(responseMessage.error);
+               } else {
+                 errorDiv.text("Error: comment deletion failed");
+               }
+              errorDiv.show();
+             });
+            console.log("deleting maybe");
+           });
+           
 
           l.append(del);
           l.append(" ");
@@ -153,8 +238,7 @@
 
       }
     }
-
-  });
+});
 
   //add comment
   commentForm.submit(function (event) {
@@ -243,5 +327,5 @@
       }
     });
   })
-
 })(window.jQuery);
+*/

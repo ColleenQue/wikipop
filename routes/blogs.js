@@ -7,6 +7,7 @@ const { checkBlogContent } = require('../validation');
 const comments = require('../data/comments');
 const users= require("../data/users");
 const { findBlog } = require('../data/blogs');
+const { data } = require('jquery');
 
 // router.use("/", (req, res, next) => {
 //   //if session not logged in
@@ -214,6 +215,7 @@ router.get("/details/:id", async (req, res, next) => {
 
   try {
     let temp = await blogs.findBlog(req.params.id);
+    const allComments=await blogs.getAllComments(req.params.id);
     if(req.session.user)
     {
       const theUser=await users.findUser(req.session.user);
@@ -237,6 +239,7 @@ router.get("/details/:id", async (req, res, next) => {
         script: "/public/scripts/blogs.js",
         not_logged_in: false,
         like: blogLiked,
+        comments: allComments,
       });
     }
     else
@@ -247,6 +250,7 @@ router.get("/details/:id", async (req, res, next) => {
         script: "/public/scripts/blogs.js",
         not_logged_in: true,
         like: false,
+        comments: allComments,
       });
     }
   }
@@ -352,7 +356,16 @@ router.get("/details/:id/comments", async (req, res, next) => {
     console.log("here1");
     return res.status(500).json({ error: e });
   }
-})
+});
+
+router.delete("/details/:id/deleteComment", async(req, res) =>
+{
+  //res.sendStatus(400);
+  let blogID=validation.checkBlogID(req.params.id);
+  let commentID=validation.checkCommentID(req.body.commentId);
+  let deleteComment=await blogs.deleteComment(blogID,commentID);
+  //return res.redirect('/details/'+blogID);
+});
 
 
 
@@ -372,6 +385,7 @@ router.post("/details/:id/comments", async (req, res, next) => {
     let comment = await blogs.addComment(req.params.id, user, req.body.comment);
 
     return res.json({ success: true, comment: comment, user: user });
+    //return res.redirect('/details/'+req.params.id);
 
   }
   catch (e) {
@@ -408,10 +422,14 @@ router.get("details/:id/comment/:commentId", async (req, res) => {
 
 });
 
-
+/*
 router.delete("details/:id/comment", async (req, res) => {
   //check parameters
-  let outfitId, commentId;
+  res.sendStatus(400);
+  //let blogID=validation.checkBlogID(req.params.id);
+  //let commentID=validation.checkCommentID(req.body.commentId);
+  //console.log("working now?");
+  //let deleteComment=await users.removeComment(blogID,commentID);
   // try {
   //   outfitId = validation2.checkId(req.params.id);
   //   commentId = validation2.checkId(req.body.commentId);
@@ -437,7 +455,7 @@ router.delete("details/:id/comment", async (req, res) => {
     return res.status(500).json({ error: e });
   }
 });
-
+*/
 
 router.post("/:page/search", async (req, res) => {
   //get 

@@ -14,7 +14,7 @@ const constructorMethod = (app) => {
   app.use('/idols',idolRoutes);
   app.use("/home", homeRoutes);
 
-  app.use("/", (req, res) => {
+  app.use("", (req, res) => {
     res.redirect("/home");
   });
 

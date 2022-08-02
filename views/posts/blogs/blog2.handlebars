@@ -30,7 +30,20 @@
     <p id="no_comments">No comments yet! Be the first one to comment.<br></p>
     {{/if}}
 
-    <div id="comments"></div>
+    {{!-- 
+    <ul id="comments" hidden></ul>
+    --}}
+    <div id="comments">
+        {{#if comments}}
+        <ul id="commentList">
+        {{#each comments}}
+            <li id={{this._id}}>{{this.commenter}}: {{this.content}} <i class="fa-regular fa-trash-can"></i></li>
+        {{/each}}
+        </ul>
+        {{else}}
+        <p>No comments yet!</p>
+        {{/if}}
+    </div>
     <br>
     {{!-- <i class="fa-solid fa-circle-xmark"></i> --}}
 
@@ -45,7 +58,7 @@
 
     <form id="commentForm" method="POST" action="{{blog._id}}">
         <label for="comment_term">Comment</label> <br />
-        <textarea id="comment_term" name="comment" rows="4" cols="50" placeholder="Enter comment"> </textarea>
+        <textarea id="comment_term" name="comment" rows="4" cols="50" placeholder="Enter comment" required> </textarea>
         <button type="submit" class="btn">Submit</button>
     </form>
     {{/if}}

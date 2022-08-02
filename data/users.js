@@ -82,6 +82,17 @@ let exportedMethods =
             return findUser;
         }
     },
+    async findUserByID(userID) {
+        userID = validation.checkUserID(userID);
+        const usersCollection = await users();
+        const findUser = await usersCollection.find({ _id: userID }).toArray();
+        if (!findUser) {
+            throw "Error: User cannot be found"
+        }
+        else {
+            return findUser;
+        }
+    },
     async addNewTag(username, tag) {
         username = validation.checkUserName(username);
         tag = validation.checkTag(tag);
@@ -114,6 +125,29 @@ let exportedMethods =
         const oldUser = await this.findUser(username);
         let theComments = oldUser[0].commentsPosted;
         theComments.push(commentID);
+        const usersCollection = await users();
+        const updateInfo = await usersCollection.updateOne({ _id: oldUser[0]._id }, { $set: { commentsPosted: theComments } });
+        if (!updateInfo.matchedCount && !updateInfo.modifiedCount) {
+            throw "Error: Update failed";
+        }
+        return commentID;
+    },
+    async removeComment(blogID, commentID) {
+        blogID = validation.checkBlogID(blogID);
+        commentID = validation.checkCommentID(commentID);
+        const oldUser = await this.findUserByID(blogID);
+        let theComments = oldUser[0].commentsPosted;
+        let index;
+        for(let i=0;i<theComments.length;i++)
+        {
+            if(theComments[i]._id===commentID)
+            {
+                console.log("match");
+                index=i;
+                break;
+            }
+        }
+        theComments.splice(index,1);
         const usersCollection = await users();
         const updateInfo = await usersCollection.updateOne({ _id: oldUser[0]._id }, { $set: { commentsPosted: theComments } });
         if (!updateInfo.matchedCount && !updateInfo.modifiedCount) {

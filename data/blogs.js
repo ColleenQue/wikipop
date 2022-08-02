@@ -4,6 +4,7 @@ const validation = require('../validation');
 const comments = require('../data/comments');
 const { ObjectId } = require('mongodb');
 const { search } = require('../routes/blogs');
+const { deleteComment } = require('../data/comments');
 
 
 let exportedMethods =
@@ -159,6 +160,46 @@ let exportedMethods =
         }
 
         return findComment;
+    },
+    async getAllComments(blogID) {
+
+        blogID=validation.checkBlogID(blogID);
+        const blogCollections = await blogs();
+        const findBlog = await blogCollections.findOne({ _id: ObjectId(blogID) });
+       
+        if (!findBlog) {
+            throw "Error: Could not find comment"
+        }
+
+        return findBlog.comments;
+    },
+    async deleteComment(blogID,commentID) 
+    {
+        blogID=validation.checkBlogID(blogID);
+        commentID=validation.checkCommentID(commentID);
+        const blogCollections = await blogs();
+        const findBlog = await blogCollections.findOne({ _id: ObjectId(blogID) });
+        if (!findBlog) {
+            throw "Error: Could not find comment"
+        }
+        let allComments=findBlog.comments;
+        let index;
+        for(let i=0;i<allComments.length;i++)
+        {
+            if(allComments[i]._id===commentID)
+            {
+                index=i;
+                break;
+            }
+        }
+        allComments.splice(index,1);
+        const updateBlog=await blogCollections.updateOne({_id: ObjectId(blogID)},{$set: {comments: allComments}});
+        if(!updateBlog.matchedCount && !updateBlog.modifiedCount)
+        { 
+            throw "Error: Update failed"
+        }
+       //console.log(newComments);
+        return blogID;
     },
     async likeBlog(blogID)
     {

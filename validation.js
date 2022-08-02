@@ -37,6 +37,14 @@ module.exports = {
         throw "Error: password must have at least eight characters";
     return password;
   },
+  checkUserID(userID)
+  {
+      if(!ObjectId.isValid(userID))
+      {
+          throw "Error: UserID is not valid"
+      }
+      return userID;
+  },
     checkTag(tag)
     {
         if(typeof tag != "string" || tag.indexOf(" ")>-1)
