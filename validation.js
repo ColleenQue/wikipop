@@ -374,9 +374,10 @@ module.exports = {
         if(!content){
             throw "must provide content"
         }
-        if(typeof content!= string){
+        if(typeof content!= "string"){
             throw "content must be a string"
         }
+        return content;
 
     },
     checkListOfTags(tagsList)
