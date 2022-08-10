@@ -144,7 +144,13 @@
 
             
             alert("successfully added comment! refresh to see")
-            //setTimeout(window.location.reload(true))
+            // Swal.fire(
+            //   'Good job!',
+            // )
+            
+            history.go(0);
+            window.location.href=window.location.href
+            setTimeout(window.location.reload(true))
             // l1 = $("<p></p>");
             // var subCommentInput = $("#sub_comment_term");
             // s2 = user + ": " + subCommentInput.val();
